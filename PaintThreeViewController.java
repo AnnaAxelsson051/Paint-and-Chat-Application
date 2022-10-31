@@ -21,7 +21,7 @@ public class PaintThreeViewController {
     //attach listener to the canvas with initialize method
     //will be called automatically by fxmlloader
 
-    public void initialize(){
+    /*public void initialize(){
         GraphicsContext graphics = canvas.getGraphicsContext2D();
         //get a graphicscontext to draw on
         canvas.setOnMouseDragged(e ->{
@@ -36,6 +36,25 @@ public class PaintThreeViewController {
             }else{
                 graphics.setFill(colorpicker.getValue());
         //otherwise draw with selected color
+                graphics.fillRect(x,y,size,size);
+            }
+        });
+    }*/
+    public void initialize(){
+        GraphicsContext graphics = canvas.getGraphicsContext2D();
+        //get a graphicscontext to draw on
+        canvas.setOnMouseDragged(e ->{
+            double size = Double.parseDouble(penSize.getText());
+            //get brushsize
+            double x = e.getX() - size /2;
+            double y = e.getY() - size /2;
+
+            if(eraser.isSelected()){
+                graphics.clearRect(x,y,size,size);
+                //if eraser is selected erase
+            }else{
+                graphics.setFill(colorpicker.getValue());
+                //otherwise draw with selected color
                 graphics.fillRect(x,y,size,size);
             }
         });
