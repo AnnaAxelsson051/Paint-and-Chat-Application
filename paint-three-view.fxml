@@ -24,13 +24,13 @@
         <Menu text="Predetermined Shapes">
             <MenuItem text="Circles"/>
             <MenuItem text="Rectangles"/>
-            <MenuItem text="Squares"/>
+            <MenuItem text="Squares" onAction="#onCanvasSquare"/>
             <MenuItem text="Triangles"/>
         </Menu>
-
     </MenuBar>
+
     <ToolBar>
-<HBox alignment="CENTER" spacing="5">
+<HBox alignment="CENTER" spacing="7">
     <ColorPicker fx:id="colorpicker"/>
     <TextField fx:id="penSize" text="10"/>
     <CheckBox fx:id="eraser" text="Eraser"/>
@@ -39,6 +39,6 @@
 </VBox>
 </top>
     <center>
-        <Canvas fx:id="canvas" width="900" height="900"/>
+        <Canvas fx:id="canvas" width="900" height="900" />
     </center>
 </BorderPane>
