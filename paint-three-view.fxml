@@ -14,14 +14,23 @@
 <top>
 <VBox>
     <MenuBar>
-<Menu text="File">
+<Menu text="File Actions">
     <MenuItem text="Save"/>
+    <MenuItem text="Connect to network"/>
     <MenuItem text="Exit" onAction="#onActionExit"/>
 </Menu>
+
+        <Menu text="Predetermined Shapes">
+            <MenuItem text="Circles"/>
+            <MenuItem text="Rectangles"/>
+            <MenuItem text="Squares"/>
+            <MenuItem text="Triangles"/>
+        </Menu>
+
     </MenuBar>
     <ToolBar>
 <HBox alignment="CENTER" spacing="5">
-    <TextField fx:id="brushSize" text="18"/>
+    <TextField fx:id="penSize" text="10"/>
     <ColorPicker fx:id="colorpicker"/>
     <CheckBox fx:id="eraser" text="Eraser"/>
 </HBox>

@@ -14,7 +14,7 @@ public class PaintThreeViewController {
     @FXML
     private ColorPicker colorpicker;
     @FXML
-    private TextField brushSize;
+    private TextField penSize;
     @FXML
     private CheckBox eraser;
 
@@ -25,7 +25,7 @@ public class PaintThreeViewController {
         GraphicsContext graphics = canvas.getGraphicsContext2D();
         //get a graphicscontext to draw on
         canvas.setOnMouseDragged(e ->{
-            double size = Double.parseDouble(brushSize.getText());
+            double size = Double.parseDouble(penSize.getText());
             //get brushsize
             double x = e.getX() - size /2;
             double y = e.getY() - size /2;
