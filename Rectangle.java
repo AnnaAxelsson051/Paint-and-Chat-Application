@@ -1,9 +1,8 @@
 package se.iths.tt.javafxtt.Paint;
 
-import se.iths.tt.javafxtt.Paint.PaintThreeModel;
+public class Rectangle extends Shape {
 
-public class Rectangle extends PaintThreeModel {
-
-    public Rectangle() {
+    public Rectangle(double x, double y) {
+        super(x, y);
     }
 }
