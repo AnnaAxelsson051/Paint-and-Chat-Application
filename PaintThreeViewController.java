@@ -1,6 +1,7 @@
 package se.iths.tt.javafxtt.Paint;
 
 import javafx.application.Platform;
+import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -19,6 +20,7 @@ public class PaintThreeViewController {
     @FXML
     public Canvas canvas;
     public Button undo;
+    public Button redo;
     @FXML
     private ColorPicker colorpicker;
     @FXML
@@ -31,18 +33,30 @@ public class PaintThreeViewController {
     public ChoiceBox <ShapeType> choiceBox;
     //choicebox with shapetype objects
 
-    public void canvasClicked(MouseEvent mouseEvent){
-        Shape shape = Shape.createShape(choiceBox.getValue(), mouseEvent.getX(), mouseEvent.getY());
-        //här skapar vi en circle där man klickar men vill vi ha tex rectangle kan vi det
-        //utan att koden som skapar den (factorymetoden) i shape behöver ändras
-    }
-
-    //fill it with shapetype values (the enum)
+    Model model = new Model();
     ObservableList<ShapeType> shapeTypesList=
+    //fill it with shapetype values (the enum)
             FXCollections.observableArrayList(ShapeType.values());
 
-    //attach listener to the canvas with initialize method
-    //will be called automatically by fxmlloader
+   private void listChanged(Observable observable){
+       var context = canvas.getGraphicsContext2D();
+       for (Shape s : model.getShapes()){
+           s.draw(context);
+       }
+   }
+
+    public void canvasClicked(MouseEvent mouseEvent){
+       if(mouseEvent.isControlDown()) {
+           model.getShapes().stream().reduce((first, second) -> second).ofPresent(shape -> shape.setColor(Color));
+       }
+           Shape shape = Shape.createShape(getCurrentShapeType(), mouseEvent.getX(), mouseEvent.getY());
+        //här skapar vi en circle där man klickar men vill vi ha tex rectangle kan vi det
+        //utan att koden som skapar den (factorymetoden) i shape behöver ändras
+    model.addShape(shape);
+    }
+
+
+
 
     //ÅNGRA
     Deque <Command> undoStack = new ArrayDeque<>();
@@ -82,6 +96,25 @@ public class PaintThreeViewController {
         Command firstUndoToExecute = undoStack.pop();
         firstUndoToExecute.execute();
         //behöver kopplas till speciella skapanden av former
+    }
+    
+    public void redo(ActionEvent actionEvent){
+        
+    }
+
+    public void changeSize(double newSize){
+     /*Shape oldSize = shape.getSize();
+     //spar nuv storlek i oldsize
+     shape.setSize(newSize);
+     //sets new size
+     Command undo = ()-> shape.setSize(oldSize);
+     //create undo
+     undoStack.push(undo);*/
+
+    }
+
+    public void changeColor(){
+
     }
 
 
