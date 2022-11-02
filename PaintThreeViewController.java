@@ -10,11 +10,15 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
+
 public class PaintThreeViewController {
 
 
     @FXML
     public Canvas canvas;
+    public Button undo;
     @FXML
     private ColorPicker colorpicker;
     @FXML
@@ -29,7 +33,7 @@ public class PaintThreeViewController {
 
     public void canvasClicked(MouseEvent mouseEvent){
         Shape shape = Shape.createShape(choiceBox.getValue(), mouseEvent.getX(), mouseEvent.getY());
-        //här skapar vi en circle men vill vi ha tex rectangle kan vi det
+        //här skapar vi en circle där man klickar men vill vi ha tex rectangle kan vi det
         //utan att koden som skapar den (factorymetoden) i shape behöver ändras
     }
 
@@ -40,10 +44,16 @@ public class PaintThreeViewController {
     //attach listener to the canvas with initialize method
     //will be called automatically by fxmlloader
 
+    //ÅNGRA
+    Deque <Command> undoStack = new ArrayDeque<>();
+    //Deque implements Command interface with execute method
+
+
     public void initialize(){
         choiceBox.setItems(shapeTypesList);
-        choiceBox.setValue(ShapeType.CIRCLE);
+        choiceBox.setValue(ShapeType.CIRCLE);  //sets initial value
 
+        //for manual drawing:
         GraphicsContext graphics = canvas.getGraphicsContext2D();
         //get a graphicscontext to draw on
         canvas.setOnMouseDragged(e ->{
@@ -66,6 +76,13 @@ public class PaintThreeViewController {
     //man skulle kunna välja från en drop down meny vad man vill skapa, eller med olika knappar
     // sä säter den ett fält i modellen som säger vad det är för type vi vill rita
 
+    //ÅNGRA
+//Återställer senaste ändring med klick på ångra knapp
+    public void undo(ActionEvent actionEvent) {
+        Command firstUndoToExecute = undoStack.pop();
+        firstUndoToExecute.execute();
+        //behöver kopplas till speciella skapanden av former
+    }
 
 
 
@@ -134,6 +151,8 @@ public class PaintThreeViewController {
 
     public void onCanvasLargeRectangle(ActionEvent actionEvent) {
     }
+
+
 
     //spara till fil
 
