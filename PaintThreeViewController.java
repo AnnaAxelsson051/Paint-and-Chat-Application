@@ -11,11 +11,12 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.util.ArrayDeque;
 import java.util.Deque;
-import java.util.List;
 
 public class PaintThreeViewController {
 
@@ -24,52 +25,47 @@ public class PaintThreeViewController {
     public Canvas canvas;
     public Button undo;
     public Button redo;
+
     @FXML
     private ColorPicker colorpicker;
     @FXML
     private TextField penSize;
+    //for manual drawing
     @FXML
     private CheckBox eraser;
-    @FXML
-    private Button button;
+    //for manual drawing
+
+    public TextField sizeField;  //***
+    public Slider sizeSlider;
 
     public ChoiceBox <ShapeType> choiceBox;
-    //choicebox with shapetype objects
+    //choicebox with objects square circle etc
 
     Model model = new Model();
     ObservableList<ShapeType> shapeTypesList=
     //fill it with shapetype values (the enum)
             FXCollections.observableArrayList(ShapeType.values());
 
-    //ÅNGRA
-    Deque <Command> undoStack = new ArrayDeque<>();
+
+    Deque <Command> undoStack = new ArrayDeque<>();          //***
     //Deque implements Command interface with execute method
-    Deque <Command> redoStack = new ArrayDeque<>();
+    Deque <Command> redoStack = new ArrayDeque<>();          //***
 
-
-
-   //factory method creating shapes:
+    //factory method
     public void canvasClicked(MouseEvent mouseEvent){
        if(mouseEvent.isControlDown()) {
            //if control is pressed last drawn circle turns red
            model.getShapes().stream().reduce((first, second) -> second).ifPresent(shape -> shape.setColor(Color.RED));
            return;
        }
-         Shape shape = Shape.createShape(model.getCurrentShapeType(), mouseEvent.getX(), mouseEvent.getY());
-        //skapar en ny shape där man klickar men vill vi ha tex rectangle kan vi göra det
-        //utan att koden som skapar den (factorymetoden) i shape behöver ändras
-        shape.setColor(model.getCurrentColor());
-
-    model.addShape(shape);
-    //adding shapes to a list in model w addShape method in model
-    //the above triggers listChanged method/lyssnaren below som triggar utritning
+       //creating shapes
+      model.createShape(mouseEvent.getX(),mouseEvent.getY());
         }
 
-        public void init(Stage stage){
 
-        }
+
     private void listChanged(Observable observable){
-        var context = canvas.getGraphicsContext2D();
+        var context = canvas.getGraphicsContext2D();              //---
         for (Shape s : model.getShapes()){
             s.draw(context);
     //Ritar ut det grafiska gränssnittet när listan uppdateras dvs när man ritar en shape
@@ -79,28 +75,44 @@ public class PaintThreeViewController {
 
 
     public void initialize(){
-        //sizeField.textProperty().bindBidirectional(model.sizeProperty());
-        //om man vill ha ett sizefild, + lägga till i modellklass osv m getters o setters mm
+        /*for auto convert:
+        Bindings.bindBidirectional(sizeField.textProperty(),model.widthHeightProperty(), new StringConverter<Point>(){
+            @Override
+            public String toString(Point object){
+                return null;
+            }
+            @Override
+            public Point fromString(String string){
+                return null;
+            }
+                }});*/
+        sizeSlider.valueProperty().bindBidirectional(model.doubleSizeProperty());
+        sizeField.textProperty().bindBidirectional(model.sizeProperty());                      //***
         colorpicker.valueProperty().bindBidirectional(model.currentColorProperty());
+
         choiceBox.setItems(shapeTypesList);
         choiceBox.valueProperty().bindBidirectional(model.currentShapeTypeProperty());
         model.getShapes().addListener(this::listChanged);
         //bc the list is an observable list we can add a listener to it that connects to method
         // listChangedMethod above för utritning i det grafiska gränssnittet
 
+
         //for manual drawing:
         GraphicsContext graphics = canvas.getGraphicsContext2D();
+
         //get a graphicscontext to draw on
         canvas.setOnMouseDragged(e ->{
             double size = Double.parseDouble(penSize.getText());
-            //get brushsize
+
+            //get pensize
             double x = e.getX() - size /2;
             double y = e.getY() - size /2;
 
+            //erase:
             if(eraser.isSelected()){
                 graphics.clearRect(x,y,size,size);
-                //if eraser is selected erase
             }else{
+            //draw:
                 graphics.setFill(colorpicker.getValue());
                 //otherwise draw with selected color
                 graphics.fillRect(x,y,size,size);
@@ -108,65 +120,38 @@ public class PaintThreeViewController {
         });
     }
 
-    //man skulle kunna välja från en drop down meny vad man vill skapa, eller med olika knappar
-    // sä säter den ett fält i modellen som säger vad det är för type vi vill rita
+    public void init(Stage stage){       //---
 
-    //ÅNGRA
-//Återställer senaste ändring med klick på ångra knapp
+    }
+
+
     public void undo(ActionEvent actionEvent) {
-        Command firstUndoToExecute = undoStack.pop();
+        Command firstUndoToExecute = undoStack.pop();              // Hur få detta att funka
         firstUndoToExecute.execute();
         //behöver kopplas till speciella skapanden av former
     }
     
     public void redo(ActionEvent actionEvent){
-
-        /*Command firstRedoToExecute = redoStack.push();
-        firstRedoToExecute.execute();*/
+        Command firstRedoToExecute = redoStack.push();
+        firstRedoToExecute.execute();
         //behöver kopplas till speciella skapanden av former
         
     }
 
-    public void changeSize(double newSize){
+    /*public void changeSize(double newSize){
      /*Shape oldSize = shape.getSize();
      //spar nuv storlek i oldsize
      shape.setSize(newSize);
      //sets new size
      Command undo = ()-> shape.setSize(oldSize);
      //create undo
-     undoStack.push(undo);*/
-
-    }
-
-    public void changeColor(){
-
-    }
-
-
-
-    /*public void onActionSave(){
-
-    }
-
-    public void onActionSelectShapes(){
-    }
-    */
-
-
-
-    /*public void onCanvasSquare(MouseEvent mouseEvent){
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-        gc.setFill(Color.BLUE);
-        gc.fillRect(mouseEvent.getX(), mouseEvent.getY(), 100, 100);
+     undoStack.push(undo);
 
     }*/
 
-    /*public void onCanvasSquare(MouseEvent mouseEvent){
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-        gc.setFill(Color.BLUE);
-        gc.fillRect(mouseEvent.getX(), mouseEvent.getY(), 100, 100);
+    public void changeColor(){                    //----> kunna välja ett item och välja ny färg
 
-    }*/
+    }
 
 
     public void onActionExit(){
@@ -174,47 +159,14 @@ public class PaintThreeViewController {
 
     }
 
-    public void onCanvasSmallCircle(ActionEvent actionEvent) {
-    }
-
-    public void onCanvasMediumCircle(ActionEvent actionEvent) {
-    }
-
-    public void onCanvasLargeCircle(ActionEvent actionEvent) {
-    }
-
-    public void onCanvasSmallTringle(ActionEvent actionEvent) {
-    }
-
-    public void onCanvasMediumTriangle(ActionEvent actionEvent) {
-    }
-
-    public void onCanvasLargeTriangle(ActionEvent actionEvent) {
-    }
-
-    public void onCanvasSmallSquare(ActionEvent actionEvent) {
-    }
-
-    public void onCanvasMediumSquare(ActionEvent actionEvent) {
-    }
-
-    public void onCanvasLargeSquare(ActionEvent actionEvent) {
-    }
-
-    public void onCanvasSmallRectangle(ActionEvent actionEvent) {
-    }
-
-    public void onCanvasMediumRectangle(ActionEvent actionEvent) {
-    }
-
-    public void onCanvasLargeRectangle(ActionEvent actionEvent) {
-    }
-
-
 
     //spara till fil
 
-    /*public void onSaveAction(ActionEvent actionEvent) {
+    public void saveNotes(ActionEvent actionEvent){
+
+    }
+
+    public void onSaveAction(ActionEvent actionEvent) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save as");
         //ska stå överst i filväljar fönstret
