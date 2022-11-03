@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
@@ -125,8 +126,14 @@ public class PaintThreeViewController {
     }
 
 
+    public void onActionExit(){
+        Platform.exit();
+
+    }
+
+
     public void undo(ActionEvent actionEvent) {
-        Command firstUndoToExecute = undoStack.pop();              // Hur få detta att funka
+        Command firstUndoToExecute = undoStack.pop();              // Hur få det här att funka?
         firstUndoToExecute.execute();
         //behöver kopplas till speciella skapanden av former
     }
@@ -149,24 +156,31 @@ public class PaintThreeViewController {
 
     }*/
 
-    public void changeColor(){                    //----> kunna välja ett item och välja ny färg
+    public void changeColor(){                 //----> hur implementera att
+                                               // kunna välja ett item och välja ny färg?
 
     }
 
 
-    public void onActionExit(){
-        Platform.exit();
-
-    }
 
 
-    //spara till fil
+    /*
+    spara till fil
+public void onSaveAction(){
+        try{
+            Image snapshot = canvas.snapshot(null, null);
+            ImageIO.write(SwingFXUtils.fromFXImage(snapshot,null), "png", new File("paint.png"));
+        }catch(Exception e){
+            System.out.println("Failed to save");
+        }
+}*/
 
-    public void saveNotes(ActionEvent actionEvent){
 
-    }
 
-    public void onSaveAction(ActionEvent actionEvent) {
+
+
+
+   /* public void onSaveAction(ActionEvent actionEvent) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save as");
         //ska stå överst i filväljar fönstret
