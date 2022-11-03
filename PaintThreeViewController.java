@@ -10,9 +10,12 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.List;
 
 public class PaintThreeViewController {
 
@@ -38,34 +41,52 @@ public class PaintThreeViewController {
     //fill it with shapetype values (the enum)
             FXCollections.observableArrayList(ShapeType.values());
 
-   private void listChanged(Observable observable){
-       var context = canvas.getGraphicsContext2D();
-       for (Shape s : model.getShapes()){
-           s.draw(context);
-       }
-   }
-
-    public void canvasClicked(MouseEvent mouseEvent){
-       if(mouseEvent.isControlDown()) {
-           model.getShapes().stream().reduce((first, second) -> second).ofPresent(shape -> shape.setColor(Color));
-       }
-           Shape shape = Shape.createShape(getCurrentShapeType(), mouseEvent.getX(), mouseEvent.getY());
-        //här skapar vi en circle där man klickar men vill vi ha tex rectangle kan vi det
-        //utan att koden som skapar den (factorymetoden) i shape behöver ändras
-    model.addShape(shape);
-    }
-
-
-
-
     //ÅNGRA
     Deque <Command> undoStack = new ArrayDeque<>();
     //Deque implements Command interface with execute method
+    Deque <Command> redoStack = new ArrayDeque<>();
+
+
+
+   //factory method creating shapes:
+    public void canvasClicked(MouseEvent mouseEvent){
+       if(mouseEvent.isControlDown()) {
+           //if control is pressed last drawn circle turns red
+           model.getShapes().stream().reduce((first, second) -> second).ifPresent(shape -> shape.setColor(Color.RED));
+           return;
+       }
+         Shape shape = Shape.createShape(model.getCurrentShapeType(), mouseEvent.getX(), mouseEvent.getY());
+        //skapar en ny shape där man klickar men vill vi ha tex rectangle kan vi göra det
+        //utan att koden som skapar den (factorymetoden) i shape behöver ändras
+        shape.setColor(model.getCurrentColor());
+
+    model.addShape(shape);
+    //adding shapes to a list in model w addShape method in model
+    //the above triggers listChanged method/lyssnaren below som triggar utritning
+        }
+
+        public void init(Stage stage){
+
+        }
+    private void listChanged(Observable observable){
+        var context = canvas.getGraphicsContext2D();
+        for (Shape s : model.getShapes()){
+            s.draw(context);
+    //Ritar ut det grafiska gränssnittet när listan uppdateras dvs när man ritar en shape
+    //triggas av add
+        }
+    }
 
 
     public void initialize(){
+        //sizeField.textProperty().bindBidirectional(model.sizeProperty());
+        //om man vill ha ett sizefild, + lägga till i modellklass osv m getters o setters mm
+        colorpicker.valueProperty().bindBidirectional(model.currentColorProperty());
         choiceBox.setItems(shapeTypesList);
-        choiceBox.setValue(ShapeType.CIRCLE);  //sets initial value
+        choiceBox.valueProperty().bindBidirectional(model.currentShapeTypeProperty());
+        model.getShapes().addListener(this::listChanged);
+        //bc the list is an observable list we can add a listener to it that connects to method
+        // listChangedMethod above för utritning i det grafiska gränssnittet
 
         //for manual drawing:
         GraphicsContext graphics = canvas.getGraphicsContext2D();
@@ -99,6 +120,10 @@ public class PaintThreeViewController {
     }
     
     public void redo(ActionEvent actionEvent){
+
+        /*Command firstRedoToExecute = redoStack.push();
+        firstRedoToExecute.execute();*/
+        //behöver kopplas till speciella skapanden av former
         
     }
 
