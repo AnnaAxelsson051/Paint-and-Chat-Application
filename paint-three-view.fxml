@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.*?>
 <?import javafx.scene.canvas.*?>
 <?import javafx.scene.control.*?>
@@ -7,9 +8,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 
-<BorderPane prefHeight="900.0" prefWidth="900.0" styleClass="borderPane" stylesheets="@application.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.iths.tt.javafxtt.Paint.PaintThreeViewController">
+<BorderPane prefHeight="600.0" prefWidth="700.0" styleClass="borderPane" stylesheets="@application.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.iths.tt.javafxtt.Paint.PaintThreeViewController">
     <top>
-<VBox prefHeight="136.0" prefWidth="880.0" styleClass="vBox">
+<VBox prefHeight="100.0" prefWidth="600.0" styleClass="vBox">
     <MenuBar>
 <Menu text="File Actions">
     <MenuItem text="Save" />
@@ -20,39 +21,25 @@
     </MenuBar>
 
 
-    <ToolBar prefHeight="92.0" prefWidth="900.0">
-<HBox alignment="CENTER" spacing="7">
-    <ColorPicker fx:id="colorpicker" />
-    <TextField fx:id="sizeField" />
-    <Slider fx:id="sizeSlider" />
-    <TextField fx:id="penSize" text="10" />
-    <CheckBox fx:id="eraser" text="Eraser" />
-    <Button fx:id="undo" onAction="#undo" text="undoButton" />
-    <Button fx:id="redo" onAction="#redo" text="redoButton" />
+    <ToolBar prefHeight="92.0" prefWidth="600.0">
+<HBox spacing="10">
+    <GridPane >
+    <ColorPicker fx:id="colorpicker" GridPane.rowIndex="0" GridPane.ColumnIndex="0"/>
+    <TextField fx:id="penSize" text="10" GridPane.rowIndex="0" GridPane.ColumnIndex="1"/>
+    <CheckBox fx:id="eraser" text="Eraser" GridPane.rowIndex="0" GridPane.ColumnIndex="2"/>
+    <ChoiceBox fx:id="choiceBox" prefWidth="150.0" GridPane.rowIndex="1" GridPane.ColumnIndex="0"/>
+    <Slider fx:id="sizeSlider" GridPane.rowIndex="1" GridPane.ColumnIndex="1"/>
+    <Button fx:id="undo" onAction="#undo" text="undoButton" GridPane.rowIndex="1" GridPane.ColumnIndex="2"/>
+    <Button fx:id="redo" onAction="#redo" text="redoButton" GridPane.rowIndex="1" GridPane.ColumnIndex="3"/>
+    </GridPane>
 </HBox>
-            <ChoiceBox fx:id="choiceBox" prefWidth="150.0" />
-            <TextField />
+
     </ToolBar>
 </VBox>
 </top>
     <center>
-        <Canvas fx:id="canvas" height="900" onMouseClicked="#canvasClicked" styleClass="canvas" width="900">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-         <effect>
-            <Lighting>
-               <bumpInput>
-                  <Shadow />
-               </bumpInput>
-               <light>
-                  <Light.Distant>
-                     <color>
-                        <Color red="1.0" green="0.8379629850387573" blue="0.8379629850387573" />
-                     </color>
-                  </Light.Distant>
-               </light>
-            </Lighting>
-         </effect></Canvas>
+        <Canvas fx:id="canvas" height="600" onMouseClicked="#canvasClicked" styleClass="canvas" width="800">
+
+        </Canvas>
     </center>
 </BorderPane>
