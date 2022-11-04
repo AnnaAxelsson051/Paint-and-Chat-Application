@@ -79,20 +79,10 @@ public class PaintThreeViewController {
 
 
     public void initialize(){
-        /*for auto convert:
-        Bindings.bindBidirectional(sizeField.textProperty(),model.widthHeightProperty(), new StringConverter<Point>(){
-            @Override
-            public String toString(Point object){
-                return null;
-            }
-            @Override
-            public Point fromString(String string){
-                return null;
-            }
-                }});*/
-        sizeSlider.valueProperty().bindBidirectional(model.doubleSizeProperty());
-        //sizeField.textProperty().bindBidirectional(model.sizeProperty());                      //***
         colorpicker.valueProperty().bindBidirectional(model.currentColorProperty());
+        sizeSlider.valueProperty().bindBidirectional(model.doubleSizeProperty());
+        sizeSlider.valueProperty().bindBidirectional(model.doubleHeightProperty());
+        sizeSlider.valueProperty().bindBidirectional(model.doubleWidthProperty());
 
         //titledPane.contentProperty().bindBidirectional(model.currentShapeTypeProperty());
         choiceBox.setItems(shapeTypesList);
@@ -149,35 +139,6 @@ public class PaintThreeViewController {
         
     }*/
 
-    /*public void changeSize(double newSize){
-     /*Shape oldSize = shape.getSize();
-     //spar nuv storlek i oldsize
-     shape.setSize(newSize);
-     //sets new size
-     Command undo = ()-> shape.setSize(oldSize);
-     //create undo
-     undoStack.push(undo);
-
-    }*/
-
-    public void changeColor(){                 //----> hur implementera att
-                                               // kunna välja ett item och välja ny färg?
-
-    }
-
-
-
-
-
-
-/*public void onSaveAction(){
-        try{
-            Image snapshot = canvas.snapshot(null, null);
-            ImageIO.write(SwingFXUtils.fromFXImage(snapshot,null), "png", new File("paint.png"));
-        }catch(Exception e){
-            System.out.println("Failed to save");
-        }
-}*/
 
 
 

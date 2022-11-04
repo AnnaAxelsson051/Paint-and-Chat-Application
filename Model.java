@@ -15,65 +15,78 @@ import java.nio.file.Path;
 
 public class Model {
 
-    public DoubleProperty doubleSize = new SimpleDoubleProperty();     //varför inget <> ?
-    //till slider
-    public ObjectProperty<Color> currentColor = new SimpleObjectProperty<>(Color.PINK);
-    public ObjectProperty<ShapeType> currentShapeType = new SimpleObjectProperty<>(ShapeType.CIRCLE);
-
-
     //observable list
     public ObservableList<? extends Shape> getShapes() {
         return shapes;
     }
 
     //what observable fields we wanna listen to:
-    ObservableList<Shape> shapes = FXCollections.observableArrayList(param -> new Observable[]{
-            param.colorProperty(),
-            param.sizeProperty()
-    });
     //som parameter till observerbaralistan skickar vi ett lambda som implementerar inerfacet extractor with a
     //method som tar objektet som vi stoppat in, tala om vilka observerbara fält ska vi få
     //notifieringar från
+    ObservableList<Shape> shapes = FXCollections.observableArrayList(param -> new Observable[]{
+            param.colorProperty(),
+            param.sizeProperty(),
+            param.heightProperty(),
+            param.widthProperty()
+    });
+
+
+
 
 
     //shapetype
+    public ObjectProperty<ShapeType> currentShapeType = new SimpleObjectProperty<>(ShapeType.CIRCLE);
+    public ObjectProperty<ShapeType> currentShapeTypeProperty() {return currentShapeType;}
     public ShapeType getCurrentShapeType() {
         return currentShapeType.get();
     }
-
-    public ObjectProperty<ShapeType> currentShapeTypeProperty() {
-        return currentShapeType;
-    }
-
     public void setCurrentShapeType(ShapeType currentShapeType) {
         this.currentShapeType.set(currentShapeType);
     }
 
 
     //color
-    public Color getCurrentColor() {
-        return currentColor.get();
-    }
-
+    public ObjectProperty<Color> currentColor = new SimpleObjectProperty<>(Color.PINK);
     public ObjectProperty<Color> currentColorProperty() {
         return currentColor;
     }
-
+    public Color getCurrentColor() {
+        return currentColor.get();
+    }
     public void setCurrentColor(Color currentColor) {
         this.currentColor.set(currentColor);
     }
 
     //size slider
-    public double getDoubleSize() {
-        return doubleSize.get();
-    }
-
+    public DoubleProperty doubleSize = new SimpleDoubleProperty();
     public DoubleProperty doubleSizeProperty() {
         return doubleSize;
     }
-
+    public double getDoubleSize() {
+        return doubleSize.get();
+    }
     public void setDoubleSize(double doubleSize) {
         this.doubleSize.set(doubleSize);
+    }
+
+  //height
+  public DoubleProperty doubleHeight = new SimpleDoubleProperty();     //varför inget <> ?
+    public DoubleProperty doubleHeightProperty() {return doubleHeight;}
+    public double getDoubleHeight() {
+        return doubleHeight.get();
+    }
+    public void setDoubleHeight(double doubleHeight) {
+        this.doubleHeight.set(doubleHeight);
+    }
+
+    public DoubleProperty doubleWidth = new SimpleDoubleProperty();
+    public DoubleProperty doubleWidthProperty() {return doubleWidth;}
+    public double getDoubleWidth() {
+        return doubleWidth.get();
+    }
+    public void setDoubleWidth(double doubleWidth) {
+        this.doubleWidth.set(doubleWidth);
     }
 
 
@@ -129,6 +142,8 @@ public class Model {
             shapes.add(shape);
             return shape;
         }
-    }
+
+
+}
 
 
