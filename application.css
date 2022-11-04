@@ -1,15 +1,36 @@
-.borderPane {
-    -fx-background-image:url('tech5.jpg');
+.undoButton{
+    -fx-background-image: url('undo15.png');
+    -fx-background-size: 40px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: 90%;
+    -fx-border-width:2px;
+    -fx-border-radius: 50%;
+    -fx-border-color: black;
+    -fx-background-radius: 20;
+    -fx-radius:20;
+    -fx-filter:
+}
 
+.redoButton{
+    -fx-background-image: url('redo8.png');
+    -fx-background-size: 40px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: 90%;
+    -fx-border-radius: 50%;
+    -fx-background-radius: 20;
+    -fx-radius:20;
+}
+
+.canvas{
+    -fx-border-radius: 20%;
+    -fx-background-image: url('tech6.jpeg');
+    -fx-border-width:2px;
+    -fx-border-radius: 50%;
+    -fx-border-color: black;
 
 }
 
-.vBox {
-    -fx-background-image:url('tech5.jpg');
-
-
-}
-
-.canvas {
-    -fx-background-image:url('tech6.jpeg');
+/*lägger bild bredvid text*/
+.undoButton{
+    /*-fx-graphic: url("undo1.jpeg");*/
 }

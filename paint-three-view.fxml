@@ -25,37 +25,42 @@
                      <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin></ColorPicker>
-    <TextField fx:id="penSize" text="10" GridPane.ColumnIndex="1" GridPane.rowIndex="0">
+        <Label text="Pen size: " GridPane.ColumnIndex="1" GridPane.rowIndex="0" />
+    <TextField fx:id="penSize" prefWidth="50.0" text="10" GridPane.ColumnIndex="2" GridPane.rowIndex="0">
                      <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin></TextField>
-    <CheckBox fx:id="eraser" text="Eraser" GridPane.ColumnIndex="2" GridPane.rowIndex="0">
+    <CheckBox fx:id="eraser" text="Eraser" GridPane.ColumnIndex="3" GridPane.rowIndex="0">
                      <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin></CheckBox>
-    <TitledPane fx:id="titledPane" text="Shapes" GridPane.ColumnIndex="3" GridPane.rowIndex="0">
+    <TitledPane fx:id="titledPane" text="Predefined shapes" GridPane.ColumnIndex="3" GridPane.rowIndex="0">
         <Label text="Circle" />
         <Label text="Rectangle" />
         <Label text="Square" />
         <Label text="Triangle" />
     </TitledPane>
+
     <ChoiceBox fx:id="choiceBox" prefWidth="150.0" GridPane.ColumnIndex="0" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin></ChoiceBox>
-    <Slider fx:id="sizeSlider" GridPane.ColumnIndex="1" GridPane.rowIndex="1">
+        <Label text="Shape size: " GridPane.ColumnIndex="1" GridPane.rowIndex="1" />
+    <Slider fx:id="sizeSlider" GridPane.ColumnIndex="2" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin></Slider>
-    <Button fx:id="undoButton" onAction="#undoButtonClicked" text="Undo" GridPane.ColumnIndex="2" GridPane.rowIndex="1">
-                     <GridPane.margin>
-                        <Insets bottom="5.0" left="5.0" top="5.0" />
+    <Button fx:id="undoButton" onAction="#undoButtonClicked" prefHeight="40.0" prefWidth="40.0" styleClass="undoButton" GridPane.ColumnIndex="4" GridPane.rowIndex="1">
+        <GridPane.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin></Button>
-    <Button fx:id="redoButton" text="Redo" GridPane.ColumnIndex="3" GridPane.rowIndex="1">
+    <Button fx:id="redoButton" prefHeight="40.0" prefWidth="40.0" styleClass="redoButton" GridPane.ColumnIndex="5" GridPane.rowIndex="1">
                      <GridPane.margin>
-                        <Insets />
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin></Button>
                   <columnConstraints>
+                     <ColumnConstraints />
+                     <ColumnConstraints />
                      <ColumnConstraints />
                      <ColumnConstraints />
                      <ColumnConstraints />
@@ -84,8 +89,9 @@
 </VBox>
 </top>
     <center>
-        <Canvas fx:id="canvas" height="600" onMouseClicked="#canvasClicked" styleClass="canvas" width="800">
-
-        </Canvas>
+        <Canvas fx:id="canvas" height="500" width="500" onMouseClicked="#canvasClicked" styleClass="canvas" >
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin></Canvas>
     </center>
 </BorderPane>
