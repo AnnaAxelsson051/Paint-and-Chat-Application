@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.*?>
+
+<?import javafx.geometry.*?>
 <?import javafx.scene.canvas.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.paint.*?>
 
 <BorderPane prefHeight="600.0" prefWidth="700.0" styleClass="borderPane" stylesheets="@application.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.iths.tt.javafxtt.Paint.PaintThreeViewController">
     <top>
@@ -23,18 +20,67 @@
 
     <ToolBar prefHeight="92.0" prefWidth="600.0">
 <HBox spacing="10">
-    <GridPane >
-    <ColorPicker fx:id="colorpicker" GridPane.rowIndex="0" GridPane.ColumnIndex="0"/>
-    <TextField fx:id="penSize" text="10" GridPane.rowIndex="0" GridPane.ColumnIndex="1"/>
-    <CheckBox fx:id="eraser" text="Eraser" GridPane.rowIndex="0" GridPane.ColumnIndex="2"/>
-    <ChoiceBox fx:id="choiceBox" prefWidth="150.0" GridPane.rowIndex="1" GridPane.ColumnIndex="0"/>
-    <Slider fx:id="sizeSlider" GridPane.rowIndex="1" GridPane.ColumnIndex="1"/>
-    <Button fx:id="undo" onAction="#undo" text="undoButton" GridPane.rowIndex="1" GridPane.ColumnIndex="2"/>
-    <Button fx:id="redo" onAction="#redo" text="redoButton" GridPane.rowIndex="1" GridPane.ColumnIndex="3"/>
+    <GridPane>
+    <ColorPicker fx:id="colorpicker" GridPane.ColumnIndex="0" GridPane.rowIndex="0">
+                     <GridPane.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </GridPane.margin></ColorPicker>
+    <TextField fx:id="penSize" text="10" GridPane.ColumnIndex="1" GridPane.rowIndex="0">
+                     <GridPane.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </GridPane.margin></TextField>
+    <CheckBox fx:id="eraser" text="Eraser" GridPane.ColumnIndex="2" GridPane.rowIndex="0">
+                     <GridPane.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </GridPane.margin></CheckBox>
+    <TitledPane fx:id="titledPane" text="Shapes" GridPane.ColumnIndex="3" GridPane.rowIndex="0">
+        <Label text="Circle" />
+        <Label text="Rectangle" />
+        <Label text="Square" />
+        <Label text="Triangle" />
+    </TitledPane>
+    <ChoiceBox fx:id="choiceBox" prefWidth="150.0" GridPane.ColumnIndex="0" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </GridPane.margin></ChoiceBox>
+    <Slider fx:id="sizeSlider" GridPane.ColumnIndex="1" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </GridPane.margin></Slider>
+    <Button fx:id="undoButton" onAction="#undoButtonClicked" text="Undo" GridPane.ColumnIndex="2" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets bottom="5.0" left="5.0" top="5.0" />
+                     </GridPane.margin></Button>
+    <Button fx:id="redoButton" text="Redo" GridPane.ColumnIndex="3" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin></Button>
+                  <columnConstraints>
+                     <ColumnConstraints />
+                     <ColumnConstraints />
+                     <ColumnConstraints />
+                     <ColumnConstraints />
+                  </columnConstraints>
+                  <rowConstraints>
+                     <RowConstraints />
+                     <RowConstraints />
+                  </rowConstraints>
+                  <HBox.margin>
+                     <Insets />
+                  </HBox.margin>
+                  <padding>
+                     <Insets bottom="5.0" left="5.0" right="5.0" />
+                  </padding>
     </GridPane>
 </HBox>
+            <VBox.margin>
+               <Insets />
+            </VBox.margin>
 
     </ToolBar>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
 </VBox>
 </top>
     <center>

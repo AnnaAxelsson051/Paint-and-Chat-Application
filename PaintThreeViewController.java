@@ -24,23 +24,26 @@ public class PaintThreeViewController {
 
     @FXML
     public Canvas canvas;
-    public Button undo;
+    public Button undoButton;
     public Button redo;
 
     @FXML
-    private ColorPicker colorpicker;
+    public ColorPicker colorpicker;
     @FXML
-    private TextField penSize;
+    public TextField penSize;
     //for manual drawing
     @FXML
-    private CheckBox eraser;
+    public CheckBox eraser;
     //for manual drawing
 
-    public TextField sizeField;  //***
+    //public TextField sizeField;  //***
     public Slider sizeSlider;
 
+    public TitledPane titledPane;
     public ChoiceBox <ShapeType> choiceBox;
     //choicebox with objects square circle etc
+
+    Stage stage;
 
     Model model = new Model();
     ObservableList<ShapeType> shapeTypesList=
@@ -88,9 +91,10 @@ public class PaintThreeViewController {
             }
                 }});*/
         sizeSlider.valueProperty().bindBidirectional(model.doubleSizeProperty());
-        sizeField.textProperty().bindBidirectional(model.sizeProperty());                      //***
+        //sizeField.textProperty().bindBidirectional(model.sizeProperty());                      //***
         colorpicker.valueProperty().bindBidirectional(model.currentColorProperty());
 
+        //titledPane.contentProperty().bindBidirectional(model.currentShapeTypeProperty());
         choiceBox.setItems(shapeTypesList);
         choiceBox.valueProperty().bindBidirectional(model.currentShapeTypeProperty());
         model.getShapes().addListener(this::listChanged);
@@ -121,7 +125,8 @@ public class PaintThreeViewController {
         });
     }
 
-    public void init(Stage stage){       //---
+    public void init(Stage stage){
+        this.stage=stage;
 
     }
 
@@ -132,18 +137,17 @@ public class PaintThreeViewController {
     }
 
 
-    public void undo(ActionEvent actionEvent) {
-        Command firstUndoToExecute = undoStack.pop();              // Hur få det här att funka?
+    public void undoButtonClicked(ActionEvent actionEvent) {
+        Command firstUndoToExecute = undoStack.pop();
         firstUndoToExecute.execute();
-        //behöver kopplas till speciella skapanden av former
     }
     
-    public void redo(ActionEvent actionEvent){
+    /*public void redo(ActionEvent actionEvent){
         Command firstRedoToExecute = redoStack.push();
         firstRedoToExecute.execute();
         //behöver kopplas till speciella skapanden av former
         
-    }
+    }*/
 
     /*public void changeSize(double newSize){
      /*Shape oldSize = shape.getSize();
@@ -164,9 +168,9 @@ public class PaintThreeViewController {
 
 
 
-    /*
-    spara till fil
-public void onSaveAction(){
+
+
+/*public void onSaveAction(){
         try{
             Image snapshot = canvas.snapshot(null, null);
             ImageIO.write(SwingFXUtils.fromFXImage(snapshot,null), "png", new File("paint.png"));
@@ -180,7 +184,7 @@ public void onSaveAction(){
 
 
 
-   /* public void onSaveAction(ActionEvent actionEvent) {
+   public void onSaveAction(ActionEvent actionEvent) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save as");
         //ska stå överst i filväljar fönstret
@@ -199,7 +203,7 @@ public void onSaveAction(){
         //stagen har vi i helloapplication så vi beh få över den så att controllen vet om stagen
         if (filePath != null)
             //om anv trycker på cancel
-            PaintThreeModel.saveToFile(filePath.toPath());
+            model.saveToFile(filePath.toPath());
     }
-    //ska va en listview av product*/
+    //ska va en listview av product
 }

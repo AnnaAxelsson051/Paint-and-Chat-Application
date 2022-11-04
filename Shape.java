@@ -4,8 +4,10 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.css.Size;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import se.iths.tt.javafxtt.model.Position;
 
 public abstract class Shape {
 
@@ -17,9 +19,14 @@ public abstract class Shape {
 
     private final double y;
 
+    //Observable objejt property color:
     private ObjectProperty <Color> color = new SimpleObjectProperty<>();
-//när vi stoppar in en shape ska man regga sig till notifieringar om dett aändras
-//och då trigga notifikering att listan ändrats
+//telling list that when we add a shape the list must bind to this field and registrera sig för
+//notifieringar om det ändras, och d ska du trigga notifiering att listan eller ngt i listan har ändrats
+// //Så alla fält man vill fånga händelser på ska vara observerbara
+private ObjectProperty <Double> size = new SimpleObjectProperty<>();
+
+//private ObjectProperty <Position> position = new SimpleObjectProperty<>();
 
 //all fields we wanna collect events on must be observable;
     public Shape(double x, double y) {
@@ -48,6 +55,18 @@ public abstract class Shape {
         return color;
     }
 
+    public Double getSize() {
+        return size.get();
+    }
+
+    public void setSize(Double size) {
+        this.size.set(size);
+    }
+
+    public ObjectProperty <Double> sizeProperty(){
+        return size;
+    }
+
     public abstract void draw(GraphicsContext context);
 
     //göra en statisk factory metod som returns en shape
@@ -57,7 +76,6 @@ public abstract class Shape {
             case RECTANGLE -> new Rectangle(x, y);
             case TRIANGLE -> new Triangle(x, y);
             case SQUARE -> new Square(x, y);
-            case OVAL -> new Oval(x, y);
             case ARC -> new Arc(x, y);
             default -> new Arc(x, y);
             //case ROUND_RECTANGLE -> new RoundRectangle(x, y);

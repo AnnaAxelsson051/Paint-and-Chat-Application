@@ -9,6 +9,10 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
 public class Model {
 
     public DoubleProperty doubleSize = new SimpleDoubleProperty();     //varför inget <> ?
@@ -23,7 +27,7 @@ public class Model {
     }
 
     //what observable fields we wanna listen to:
-    ObservableList<ObsShape> shapes = FXCollections.observableArrayList(param -> new Observable[]{
+    ObservableList<Shape> shapes = FXCollections.observableArrayList(param -> new Observable[]{
             param.colorProperty(),
             param.sizeProperty()
     });
@@ -77,83 +81,54 @@ public class Model {
     public void createShape(double x, double y) {
         Shape shape = Shape.createShape(getCurrentShapeType(), x, y);
         shape.setColor(getCurrentColor());
-        //shape.setSize(getDoubleSize());
+        shape.setSize(getDoubleSize());
         addShape(shape);
         //adding shapes to a list in model w addShape method in model
         //the above triggers listChanged method/lyssnaren below som triggar utritning
     }
 
+    //add save method
 
-    //Sizefield
-    public StringProperty size = new SimpleStringProperty("10x10");       //***
-
-    //left value in textfield
-    public double getWidth() {
-        String left = size.get().split("[Xx*,]")[0];
-        return Double.parseDouble(left);
+    public void saveToFile(Path file) {
+        StringBuffer outPut = new StringBuffer();
+        for (Shape p : shapes) {
+            if (p instanceof Circle) {
+                outPut.append("<circle cx= ");
+                //<circle cx="25" cy="75" r="20"/>
+                outPut.append(p.getX());
+                outPut.append(" cy= ");
+                outPut.append(p.getY());
+                outPut.append(" r= ");
+                outPut.append(p.getSize());
+                outPut.append("/>");
+            }
+            //<rect x="10" y="10" width="30" height="30"/>
+            if (p instanceof Rectangle) {
+                outPut.append("<rectangle x= ");
+                //<circle cx="25" cy="75" r="20"/>
+                outPut.append(p.getX());
+                outPut.append(" y= ");
+                outPut.append(p.getY());
+                outPut.append(" y= ");
+                //outPut.append(p.getWidth());
+                outPut.append(" y= ");
+                //outPut.append(p.getHeight());
+                outPut.append("/>");
+            }
+            try {
+                Files.writeString(file, outPut.toString());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
-    //right value
-    public double getHeight() {
-        String right = size.get().split("[Xx*,]")[0];
-        return Double.parseDouble(right);
 
+
+        public Shape addShape (Shape shape){
+            shapes.add(shape);
+            return shape;
+        }
     }
 
 
-    //add shapes to a list
-    //triggers listener
-    public Shape addShape(Shape shape) {
-        var oShape = new ObsShape(shape);
-        shapes.add(oShape);
-        return oShape;
-    }
-
-
-
-
-    public StringProperty sizeProperty() {
-        return size;
-    }
-
-    /*for auto conversion
-    public ObjectProperty<Point> widthHeightProperty(){
-     }
-}
-
-//for auto converting betw string n double in sixefield
-record Point(double w, double h){}*/
-
-
-class ObsShape extends Shape {
-    Shape shape;
-    ObjectProperty<Color> color = new SimpleObjectProperty<>();
-
-    public ObsShape(Shape shape){
-        super(shape.getX(), shape.getY());
-        this.shape = shape;
-        color.set(shape.getColor());
-    }
-
-    public ObjectProperty <Color> colorProperty(){
-    return color;
-    }
-    @Override
-    public Color getColor(){
-        return color.get();
-    }
-
-    @Override
-    public void setColor(Color color){
-        shape.setColor(color);
-        this.color.set(color);
-    }
-    @Override
-    public void draw(GraphicsContext context) {
-
-    }
-
-}
-
-
-}
