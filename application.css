@@ -12,8 +12,9 @@
     -fx-background-radius: 30;
     -fx-border-radius: 30;
     -fx-background-size: 40px;
-    -fx-border-color: black;
-    -fx-border-width:2px;
+    -fx-border-color: white;
+    -fx-border-width:5px;
+    -fx-effect: dropShadow(three-pass-box, rgba(0,0,0,0.1), 10.0, 0.0 , 0.0 ,10.0);
 
 }
 
@@ -22,9 +23,22 @@
     -fx-background-radius: 30;
     -fx-border-radius: 30;
     -fx-background-size: 40px;
-    -fx-border-color: black;
-    -fx-border-width:2px;
-    -fx-box-shadow: 0 10px 20px #110e0a35;
+    -fx-border-color: white;
+    -fx-border-width:5px;
+    -fx-effect: dropShadow(three-pass-box, rgba(0,0,0,0.1), 10.0, 0.0 , 0.0 ,10.0);
+
+
+}
+
+.shadow{
+    -fx-effect: dropShadow(three-pass-box, rgba(0,0,0,0.1), 10.0, 0.0 , 0.0 ,10.0);
+}
+/*text="Eraser"*/
+.eraser{
+    -fx-background-image: url('eraser5.png');
+    -fx-background-size: 40px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
 
 }
 
@@ -37,11 +51,7 @@
 
 }
 
-.checkBox{
-    -fx-background-radius: 30;
-    -fx-border-radius: 30;
 
-}
 
 .penSize{
     /*-fx-background-color: linear-gradient(to bottom, #b1f4e0, #99f1d5, #3bd6a8);*/

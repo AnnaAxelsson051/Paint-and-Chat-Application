@@ -6,12 +6,12 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane prefHeight="700.0" prefWidth="900.0" styleClass="borderPane" stylesheets="@application.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.iths.tt.javafxtt.Paint.PaintThreeViewController">
+<BorderPane prefHeight="700.0" prefWidth="700.0" styleClass="borderPane" stylesheets="@application.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.iths.tt.javafxtt.Paint.PaintThreeViewController">
     <top>
-<VBox prefHeight="140.0" prefWidth="900.0" styleClass="vBox">
+<VBox prefHeight="140.0" prefWidth="700.0" styleClass="vBox">
     <MenuBar>
 <Menu text="File Actions">
-    <MenuItem text="Save" />
+    <MenuItem onAction="#onActionSave" text="Save" />
     <MenuItem text="Open saved items" />
     <MenuItem text="Connect to network server" />
     <MenuItem onAction="#onActionExit" text="Exit" />
@@ -19,58 +19,73 @@
     </MenuBar>
 
 
-    <ToolBar prefHeight="92.0" prefWidth="900.0">
+    <ToolBar prefHeight="92.0" prefWidth="700.0">
 <HBox spacing="10" styleClass="hBox">
     <GridPane>
-    <ColorPicker fx:id="colorpicker" prefHeight="25.0" prefWidth="114.0" GridPane.ColumnIndex="0" GridPane.rowIndex="0">
+    <ColorPicker fx:id="colorpicker" prefHeight="25.0" prefWidth="157.0" GridPane.ColumnIndex="0" GridPane.rowIndex="0">
                      <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin></ColorPicker>
-        <Label text="Pen size: " GridPane.ColumnIndex="1" GridPane.rowIndex="0">
+        <Label prefHeight="35.0" prefWidth="115.0" text="Pen size: " GridPane.ColumnIndex="1" GridPane.rowIndex="0">
                      <font>
                         <Font name="AppleMyungjo Regular" size="15.0" />
-                     </font></Label>
-    <TextField fx:id="penSize" prefWidth="50.0" styleClass="penSize" text="10" GridPane.ColumnIndex="2" GridPane.rowIndex="0">
+                     </font>
+                     <padding>
+                        <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
+                     </padding></Label>
+    <TextField fx:id="penSize" prefWidth="186.0" styleClass="penSize" text="10" GridPane.ColumnIndex="2" GridPane.rowIndex="0">
                      <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin></TextField>
-    <CheckBox fx:id="eraser" styleClass="checkBox" text="Eraser" GridPane.ColumnIndex="3" GridPane.rowIndex="0">
+    <CheckBox fx:id="eraser" prefHeight="35.0" prefWidth="140.0" styleClass="eraser" GridPane.ColumnIndex="3" GridPane.rowIndex="0">
                      <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin>
                      <font>
                         <Font name="AppleMyungjo Regular" size="15.0" />
-                     </font></CheckBox>
-        <TitledPane fx:id="navigation" text="Navigation" GridPane.ColumnIndex="4" GridPane.rowIndex="0">
+                     </font>
+                     <padding>
+                        <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
+                     </padding></CheckBox>
+        <TitledPane fx:id="navigation" prefHeight="43.0" prefWidth="151.0" text="Navigation" GridPane.ColumnIndex="4" GridPane.rowIndex="0">
             <Label text="Notes" />
             <Label text="Calendar" />
             <Label text="Calculator" />
         </TitledPane>
 
-    <ChoiceBox fx:id="choiceBox" prefHeight="25.0" prefWidth="113.0" GridPane.ColumnIndex="0" GridPane.rowIndex="1">
+    <ChoiceBox fx:id="choiceBox" prefHeight="25.0" prefWidth="157.0" GridPane.ColumnIndex="0" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin></ChoiceBox>
-        <Label text="Shape size: " GridPane.ColumnIndex="1" GridPane.rowIndex="1">
+        <Label styleClass="textLabel" text="Shape size: " GridPane.ColumnIndex="1" GridPane.rowIndex="1">
                      <font>
                         <Font name="AppleMyungjo Regular" size="15.0" />
-                     </font></Label>
-    <Slider fx:id="sizeSlider" GridPane.ColumnIndex="2" GridPane.rowIndex="1">
+                     </font>
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                     <padding>
+                        <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
+                     </padding></Label>
+    <Slider fx:id="sizeSlider" styleClass="shadow" GridPane.ColumnIndex="2" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin></Slider>
-        <CheckBox fx:id="selectMode" styleClass="checkBox" text="Select" GridPane.ColumnIndex="3" GridPane.rowIndex="1">
+        <CheckBox fx:id="selectMode" styleClass="textLabel" text="Select" GridPane.ColumnIndex="3" GridPane.rowIndex="1">
             <GridPane.margin>
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
             </GridPane.margin>
                      <font>
                         <Font name="AppleMyungjo Regular" size="15.0" />
-                     </font></CheckBox>
+                     </font>
+                     <padding>
+                        <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
+                     </padding></CheckBox>
     <Button fx:id="undoButton" onAction="#undoButtonClicked" prefHeight="40.0" prefWidth="40.0" styleClass="undoButton" GridPane.ColumnIndex="7" GridPane.rowIndex="2">
         <GridPane.margin>
                         <Insets />
                      </GridPane.margin></Button>
-    <Button fx:id="redoButton" prefHeight="40.0" prefWidth="40.0" styleClass="redoButton" GridPane.ColumnIndex="8" GridPane.rowIndex="2">
+    <Button fx:id="redoButton" onAction="#redoButtonClicked" prefHeight="40.0" prefWidth="40.0" styleClass="redoButton" GridPane.ColumnIndex="8" GridPane.rowIndex="2">
                      <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin></Button>
@@ -110,9 +125,30 @@
 </VBox>
 </top>
     <center>
-        <Canvas fx:id="canvas" height="700" onMouseClicked="#canvasClicked" styleClass="canvas" width="900">
+        <Canvas fx:id="canvas" height="700" onMouseClicked="#canvasClicked" styleClass="canvas" width="500">
          <BorderPane.margin>
             <Insets />
          </BorderPane.margin></Canvas>
     </center>
+   <right>
+      <VBox prefHeight="500.0" prefWidth="150.0" BorderPane.alignment="CENTER">
+          <Label styleClass="textLabel" text="Calendar">
+            <VBox.margin>
+               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            </VBox.margin></Label>
+          <DatePicker fx:id="picker">
+            <padding>
+               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            </padding></DatePicker>
+          <TextArea fx:id="notes" />
+          <Button text ="Uppdate Notes" onAction="#uppdateNotes">
+              <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+              </VBox.margin></Button>
+          <Button fx:id="saveButton" onAction="#saveNotes" text="Save Notes">
+              <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" />
+              </VBox.margin></Button>
+      </VBox>
+   </right>
 </BorderPane>

@@ -6,6 +6,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
@@ -48,6 +49,16 @@ public class PaintThreeViewController {
     public CheckBox selectMode;
 
 
+    public Stage stage;
+    public DatePicker picker;
+    public TextArea notes;
+    public Button saveButton;
+    Model model = new Model();
+    ObservableList<ShapeType> shapeTypesList=
+            //fill it with shapetype values (the enum)
+            FXCollections.observableArrayList(ShapeType.values());
+
+
     //for select mode
     /*private List<Shape> selectedShapes = new ArrayList<>();
     @FXML
@@ -62,6 +73,10 @@ public class PaintThreeViewController {
 
 
 
+    public void init(Stage stage){
+        this.stage=stage;
+
+    }
 
 
     @FXML
@@ -69,19 +84,10 @@ public class PaintThreeViewController {
         // delelte all the shapes from selected shapes list
     }
 
-    Stage stage;
-
-    Model model = new Model();
-    ObservableList<ShapeType> shapeTypesList=
-    //fill it with shapetype values (the enum)
-            FXCollections.observableArrayList(ShapeType.values());
 
 
 
 
-    Deque <Command> undoStack = new ArrayDeque<>();          //***
-    //Deque implements Command interface with execute method
-    Deque <Command> redoStack = new ArrayDeque<>();          //***
 
     //factory method creates shapes
     /*public void canvasClicked(MouseEvent mouseEvent){
@@ -160,37 +166,48 @@ public class PaintThreeViewController {
         });
     }
 
-    public void init(Stage stage){
-        this.stage=stage;
 
+//undo function
+
+    public void undoButtonClicked(ActionEvent actionEvent) {
+       // if (model.history.isEmpty())
+      //      return;
+
+      //  model.undo();
     }
 
+public void redoButtonClicked(ActionEvent actionEvent){
+       // if (model.history.isEmpty())
+       //     return;
 
+       // model.redo;
+
+}
+
+
+
+
+    //Deque <Command> redoStack = new ArrayDeque<>();
+    /*public void undoButtonClicked(ActionEvent actionEvent) {
+        Command firstUndoToExecute = undoStack.pop();
+        firstUndoToExecute.execute();
+    }
+
+    /*public void redo(ActionEvent actionEvent){
+       Command firstRedoToExecute = redoStack.push();
+       firstRedoToExecute.execute();
+       //behöver kopplas till speciella skapanden av former
+
+   }*/
     public void onActionExit(){
         Platform.exit();
 
     }
 
 
-    public void undoButtonClicked(ActionEvent actionEvent) {
-        Command firstUndoToExecute = undoStack.pop();
-        firstUndoToExecute.execute();
-    }
-    
-    /*public void redo(ActionEvent actionEvent){
-        Command firstRedoToExecute = redoStack.push();
-        firstRedoToExecute.execute();
-        //behöver kopplas till speciella skapanden av former
-        
-    }*/
 
 
-
-
-
-
-
-   public void onSaveAction(ActionEvent actionEvent) {
+   public void onActionSave(ActionEvent actionEvent) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save as");
         //ska stå överst i filväljar fönstret
@@ -210,6 +227,19 @@ public class PaintThreeViewController {
         if (filePath != null)
             //om anv trycker på cancel
             model.saveToFile(filePath.toPath());
+    }
+    
+    
+    
+    
+
+    public void uppdateNotes(ActionEvent actionEvent) {
+    }
+
+    public void saveNotes(ActionEvent actionEvent) {
+    }
+
+    public void exitNotes(ActionEvent actionEvent) {
     }
     //ska va en listview av product
 }
