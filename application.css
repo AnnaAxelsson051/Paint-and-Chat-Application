@@ -1,32 +1,56 @@
 .undoButton{
-    -fx-background-image: url('undo15.png');
+    /*-fx-background-image: url('undo11.png');
     -fx-background-size: 40px;
     -fx-background-repeat: no-repeat;
-    -fx-background-position: 90%;
     -fx-border-width:2px;
     -fx-border-radius: 50%;
     -fx-border-color: black;
+    -fx-background-color: grey;
     -fx-background-radius: 20;
-    -fx-radius:20;
-    -fx-filter:
+    -fx-radius:20;*/
+    -fx-background-image: url('undo11.png');
+    -fx-background-radius: 30;
+    -fx-border-radius: 30;
+    -fx-background-size: 40px;
+    -fx-border-color: black;
+    -fx-border-width:2px;
+
 }
 
 .redoButton{
-    -fx-background-image: url('redo8.png');
+    -fx-background-image: url('redo3.png');
+    -fx-background-radius: 30;
+    -fx-border-radius: 30;
     -fx-background-size: 40px;
-    -fx-background-repeat: no-repeat;
-    -fx-background-position: 90%;
-    -fx-border-radius: 50%;
-    -fx-background-radius: 20;
-    -fx-radius:20;
+    -fx-border-color: black;
+    -fx-border-width:2px;
+    -fx-box-shadow: 0 10px 20px #110e0a35;
+
+}
+
+.hBox{
+    -fx-background-image: url('paint3.png');
 }
 
 .canvas{
-    -fx-border-radius: 20%;
     -fx-background-image: url('tech6.jpeg');
-    -fx-border-width:2px;
-    -fx-border-radius: 50%;
-    -fx-border-color: black;
+
+}
+
+.checkBox{
+    -fx-background-radius: 30;
+    -fx-border-radius: 30;
+
+}
+
+.penSize{
+    /*-fx-background-color: linear-gradient(to bottom, #b1f4e0, #99f1d5, #3bd6a8);*/
+    -fx-background-color: linear-gradient(to bottom, #faf4e896, #b9a27394, #a6906496);
+
+}
+
+.canvas{
+
 
 }
 

@@ -17,7 +17,9 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Deque;
+import java.util.List;
 
 public class PaintThreeViewController {
 
@@ -40,8 +42,32 @@ public class PaintThreeViewController {
     public Slider sizeSlider;
 
     public TitledPane titledPane;
+
+    //choicebox with objects square circle etc:
     public ChoiceBox <ShapeType> choiceBox;
-    //choicebox with objects square circle etc
+    public CheckBox selectMode;
+
+
+    //for select mode
+    /*private List<Shape> selectedShapes = new ArrayList<>();
+    @FXML
+    public void onShapeSelected(MouseEvent e) {
+        Shape shape = (Shape) e.getSource();
+
+        if (!selectedShapes.contains(shape)) {
+            selectedShapes.add(shape);
+        }
+    }*/
+
+
+
+
+
+
+    @FXML
+    public void delete(ActionEvent e) {
+        // delelte all the shapes from selected shapes list
+    }
 
     Stage stage;
 
@@ -51,20 +77,39 @@ public class PaintThreeViewController {
             FXCollections.observableArrayList(ShapeType.values());
 
 
+
+
     Deque <Command> undoStack = new ArrayDeque<>();          //***
     //Deque implements Command interface with execute method
     Deque <Command> redoStack = new ArrayDeque<>();          //***
 
-    //factory method
-    public void canvasClicked(MouseEvent mouseEvent){
+    //factory method creates shapes
+    /*public void canvasClicked(MouseEvent mouseEvent){
        if(mouseEvent.isControlDown()) {
            //if control is pressed last drawn circle turns red
            model.getShapes().stream().reduce((first, second) -> second).ifPresent(shape -> shape.setColor(Color.RED));
            return;
        }
-       //creating shapes
+       //creating shapes where canvas is cklicked
       model.createShape(mouseEvent.getX(),mouseEvent.getY());
+        }*/
+
+    public void canvasClicked(MouseEvent mouseEvent){
+        if(mouseEvent.isControlDown()) {
+            //if control is pressed last drawn circle turns red
+            model.getShapes().stream().reduce((first, second) -> second).ifPresent(shape -> shape.setColor(Color.RED));
+            return;
         }
+        /*if(selectMode.isSelected()) {
+            model.getShapes().stream()
+        }*/
+
+        //creating shapes where canvas is cklicked
+        model.createShape(mouseEvent.getX(),mouseEvent.getY());
+    }
+
+
+
 
 
 
@@ -81,8 +126,8 @@ public class PaintThreeViewController {
     public void initialize(){
         colorpicker.valueProperty().bindBidirectional(model.currentColorProperty());
         sizeSlider.valueProperty().bindBidirectional(model.doubleSizeProperty());
-        sizeSlider.valueProperty().bindBidirectional(model.doubleHeightProperty());
-        sizeSlider.valueProperty().bindBidirectional(model.doubleWidthProperty());
+        /*sizeSlider.valueProperty().bindBidirectional(model.doubleHeightProperty());
+        sizeSlider.valueProperty().bindBidirectional(model.doubleWidthProperty());*/
 
         //titledPane.contentProperty().bindBidirectional(model.currentShapeTypeProperty());
         choiceBox.setItems(shapeTypesList);

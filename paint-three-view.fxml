@@ -4,10 +4,11 @@
 <?import javafx.scene.canvas.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<BorderPane prefHeight="600.0" prefWidth="700.0" styleClass="borderPane" stylesheets="@application.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.iths.tt.javafxtt.Paint.PaintThreeViewController">
+<BorderPane prefHeight="700.0" prefWidth="900.0" styleClass="borderPane" stylesheets="@application.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.iths.tt.javafxtt.Paint.PaintThreeViewController">
     <top>
-<VBox prefHeight="100.0" prefWidth="600.0" styleClass="vBox">
+<VBox prefHeight="140.0" prefWidth="900.0" styleClass="vBox">
     <MenuBar>
 <Menu text="File Actions">
     <MenuItem text="Save" />
@@ -18,43 +19,58 @@
     </MenuBar>
 
 
-    <ToolBar prefHeight="92.0" prefWidth="600.0">
-<HBox spacing="10">
+    <ToolBar prefHeight="92.0" prefWidth="900.0">
+<HBox spacing="10" styleClass="hBox">
     <GridPane>
-    <ColorPicker fx:id="colorpicker" GridPane.ColumnIndex="0" GridPane.rowIndex="0">
+    <ColorPicker fx:id="colorpicker" prefHeight="25.0" prefWidth="114.0" GridPane.ColumnIndex="0" GridPane.rowIndex="0">
                      <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin></ColorPicker>
-        <Label text="Pen size: " GridPane.ColumnIndex="1" GridPane.rowIndex="0" />
-    <TextField fx:id="penSize" prefWidth="50.0" text="10" GridPane.ColumnIndex="2" GridPane.rowIndex="0">
+        <Label text="Pen size: " GridPane.ColumnIndex="1" GridPane.rowIndex="0">
+                     <font>
+                        <Font name="AppleMyungjo Regular" size="15.0" />
+                     </font></Label>
+    <TextField fx:id="penSize" prefWidth="50.0" styleClass="penSize" text="10" GridPane.ColumnIndex="2" GridPane.rowIndex="0">
                      <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin></TextField>
-    <CheckBox fx:id="eraser" text="Eraser" GridPane.ColumnIndex="3" GridPane.rowIndex="0">
+    <CheckBox fx:id="eraser" styleClass="checkBox" text="Eraser" GridPane.ColumnIndex="3" GridPane.rowIndex="0">
                      <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </GridPane.margin></CheckBox>
-    <TitledPane fx:id="titledPane" text="Predefined shapes" GridPane.ColumnIndex="3" GridPane.rowIndex="0">
-        <Label text="Circle" />
-        <Label text="Rectangle" />
-        <Label text="Square" />
-        <Label text="Triangle" />
-    </TitledPane>
+                     </GridPane.margin>
+                     <font>
+                        <Font name="AppleMyungjo Regular" size="15.0" />
+                     </font></CheckBox>
+        <TitledPane fx:id="navigation" text="Navigation" GridPane.ColumnIndex="4" GridPane.rowIndex="0">
+            <Label text="Notes" />
+            <Label text="Calendar" />
+            <Label text="Calculator" />
+        </TitledPane>
 
-    <ChoiceBox fx:id="choiceBox" prefWidth="150.0" GridPane.ColumnIndex="0" GridPane.rowIndex="1">
+    <ChoiceBox fx:id="choiceBox" prefHeight="25.0" prefWidth="113.0" GridPane.ColumnIndex="0" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin></ChoiceBox>
-        <Label text="Shape size: " GridPane.ColumnIndex="1" GridPane.rowIndex="1" />
+        <Label text="Shape size: " GridPane.ColumnIndex="1" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="AppleMyungjo Regular" size="15.0" />
+                     </font></Label>
     <Slider fx:id="sizeSlider" GridPane.ColumnIndex="2" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin></Slider>
-    <Button fx:id="undoButton" onAction="#undoButtonClicked" prefHeight="40.0" prefWidth="40.0" styleClass="undoButton" GridPane.ColumnIndex="4" GridPane.rowIndex="1">
+        <CheckBox fx:id="selectMode" styleClass="checkBox" text="Select" GridPane.ColumnIndex="3" GridPane.rowIndex="1">
+            <GridPane.margin>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            </GridPane.margin>
+                     <font>
+                        <Font name="AppleMyungjo Regular" size="15.0" />
+                     </font></CheckBox>
+    <Button fx:id="undoButton" onAction="#undoButtonClicked" prefHeight="40.0" prefWidth="40.0" styleClass="undoButton" GridPane.ColumnIndex="7" GridPane.rowIndex="2">
         <GridPane.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                        <Insets />
                      </GridPane.margin></Button>
-    <Button fx:id="redoButton" prefHeight="40.0" prefWidth="40.0" styleClass="redoButton" GridPane.ColumnIndex="5" GridPane.rowIndex="1">
+    <Button fx:id="redoButton" prefHeight="40.0" prefWidth="40.0" styleClass="redoButton" GridPane.ColumnIndex="8" GridPane.rowIndex="2">
                      <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin></Button>
@@ -65,8 +81,12 @@
                      <ColumnConstraints />
                      <ColumnConstraints />
                      <ColumnConstraints />
+                     <ColumnConstraints />
+                     <ColumnConstraints />
+                     <ColumnConstraints />
                   </columnConstraints>
                   <rowConstraints>
+                     <RowConstraints />
                      <RowConstraints />
                      <RowConstraints />
                   </rowConstraints>
@@ -78,6 +98,7 @@
                   </padding>
     </GridPane>
 </HBox>
+
             <VBox.margin>
                <Insets />
             </VBox.margin>
@@ -89,7 +110,7 @@
 </VBox>
 </top>
     <center>
-        <Canvas fx:id="canvas" height="500" width="500" onMouseClicked="#canvasClicked" styleClass="canvas" >
+        <Canvas fx:id="canvas" height="700" onMouseClicked="#canvasClicked" styleClass="canvas" width="900">
          <BorderPane.margin>
             <Insets />
          </BorderPane.margin></Canvas>

@@ -5,6 +5,7 @@ import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.css.Size;
+import javafx.scene.Node;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -12,8 +13,23 @@ import javafx.scene.paint.Color;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Model {
+    //Model Contains info to display to user
+    //Remember: Models can be used to feed multiple View objects
+
+    //to select
+    List<Node> selectionModel = new ArrayList<>();
+
+
+
+
+
+
+
+
 
     //observable list
     public ObservableList<? extends Shape> getShapes() {
@@ -47,7 +63,7 @@ public class Model {
 
 
     //color
-    public ObjectProperty<Color> currentColor = new SimpleObjectProperty<>(Color.PINK);
+    public ObjectProperty<Color> currentColor = new SimpleObjectProperty<>(Color.BLACK);
     public ObjectProperty<Color> currentColorProperty() {
         return currentColor;
     }
@@ -106,26 +122,25 @@ public class Model {
         StringBuffer outPut = new StringBuffer();
         for (Shape p : shapes) {
             if (p instanceof Circle) {
-                outPut.append("<circle cx= ");
+                outPut.append("<circle cx=");
                 //<circle cx="25" cy="75" r="20"/>
                 outPut.append(p.getX());
-                outPut.append(" cy= ");
+                outPut.append(" cy=");
                 outPut.append(p.getY());
-                outPut.append(" r= ");
+                outPut.append(" r=");
                 outPut.append(p.getSize());
                 outPut.append("/>");
             }
             //<rect x="10" y="10" width="30" height="30"/>
             if (p instanceof Rectangle) {
-                outPut.append("<rectangle x= ");
-                //<circle cx="25" cy="75" r="20"/>
+                outPut.append("<rectangle x=");
                 outPut.append(p.getX());
-                outPut.append(" y= ");
+                outPut.append(" y=");
                 outPut.append(p.getY());
-                outPut.append(" y= ");
-                //outPut.append(p.getWidth());
-                outPut.append(" y= ");
-                //outPut.append(p.getHeight());
+                outPut.append(" width=");
+                outPut.append(p.getWidth());
+                outPut.append(" height=");
+                outPut.append(p.getHeight());
                 outPut.append("/>");
             }
             try {
