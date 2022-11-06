@@ -31,7 +31,7 @@
 }
 
 .shadow{
-    -fx-effect: dropShadow(three-pass-box, rgba(0,0,0,0.1), 10.0, 0.0 , 0.0 ,10.0);
+    -fx-effect: dropShadow(three-pass-box, rgba(0,0,0,0.2), 10.0, 0.0 , 0.0 ,10.0);
 }
 /*text="Eraser"*/
 .eraser{
@@ -44,6 +44,7 @@
 
 .hBox{
     -fx-background-image: url('paint3.png');
+
 }
 
 .canvas{
@@ -67,4 +68,13 @@
 /*lägger bild bredvid text*/
 .undoButton{
     /*-fx-graphic: url("undo1.jpeg");*/
+}
+
+.calendarSection{
+    -fx-background-color: linear-gradient(to bottom, #faf4e896, #b9a27394, #a6906496);
+
+}
+
+.notePadLabel{
+    -fx-background-color: linear-gradient(to bottom, #faf4e896, #b9a27394, #a6906496);
 }

@@ -120,22 +120,37 @@ public class Model {
 
     public Shape addShape (Shape shape){
         shapes.add(shape);
-       // history.add(shape);
+       history.add(shape);
         return shape;
     }
 
 
-    //public Deque<Shape> history = new ArrayDeque<>();
+    public Deque<Shape> history = new ArrayDeque<>();
 
-    /*public void undo(){
-        history.pop();
-        shapes.remove(Shape);
+    public void undo(){
+        int index = shapes.size()-1;
+        shapes.remove(index);
+       // history.add(index)
     }
 
     public void redo(){
-        history.addLast(lastAction);
-    }*/
+     if (history.isEmpty())
+                return;
+        history.removeLast();
+    }
 
+    //Deque <Command> redoStack = new ArrayDeque<>();
+    /*public void undoButtonClicked(ActionEvent actionEvent) {
+        Command firstUndoToExecute = undoStack.pop();
+        firstUndoToExecute.execute();
+    }
+
+    /*public void redo(ActionEvent actionEvent){
+       Command firstRedoToExecute = redoStack.push();
+       firstRedoToExecute.execute();
+       //behöver kopplas till speciella skapanden av former
+
+   }*/
 
 
 

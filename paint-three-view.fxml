@@ -7,7 +7,7 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane prefHeight="700.0" prefWidth="700.0" styleClass="borderPane" stylesheets="@application.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.iths.tt.javafxtt.Paint.PaintThreeViewController">
+<BorderPane prefHeight="900" prefWidth="700.0" styleClass="borderPane" stylesheets="@application.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.iths.tt.javafxtt.Paint.PaintThreeViewController">
     <top>
 <VBox prefHeight="140.0" prefWidth="700.0" styleClass="vBox">
     <MenuBar>
@@ -20,7 +20,7 @@
     </MenuBar>
 
 
-    <ToolBar prefHeight="92.0" prefWidth="700.0">
+    <ToolBar prefHeight="138.0" prefWidth="700.0">
 <HBox spacing="10" styleClass="hBox">
     <GridPane>
     <ColorPicker fx:id="colorpicker" prefHeight="25.0" prefWidth="205.0" GridPane.ColumnIndex="0" GridPane.rowIndex="0">
@@ -54,7 +54,7 @@
                      <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin></ChoiceBox>
-        <Label styleClass="textLabel" text="Shape size: " GridPane.ColumnIndex="1" GridPane.rowIndex="1">
+        <Label text="Shape size: " GridPane.ColumnIndex="1" GridPane.rowIndex="1">
                      <font>
                         <Font name="AppleMyungjo Regular" size="15.0" />
                      </font>
@@ -68,7 +68,7 @@
                      <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin></Slider>
-        <CheckBox fx:id="selectMode" styleClass="textLabel" text="Select" GridPane.ColumnIndex="3" GridPane.rowIndex="1">
+        <CheckBox fx:id="selectMode" text="Select" GridPane.ColumnIndex="3" GridPane.rowIndex="1">
             <GridPane.margin>
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
             </GridPane.margin>
@@ -84,7 +84,7 @@
                      </GridPane.margin></Button>
     <Button fx:id="redoButton" onAction="#redoButtonClicked" prefHeight="40.0" prefWidth="40.0" styleClass="redoButton" GridPane.ColumnIndex="8" GridPane.rowIndex="2">
                      <GridPane.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                        <Insets bottom="5.0" left="5.0" right="5.0" />
                      </GridPane.margin></Button>
                   <columnConstraints>
                      <ColumnConstraints />
@@ -122,13 +122,11 @@
 </VBox>
 </top>
     <center>
-        <Canvas fx:id="canvas" height="700" onMouseClicked="#canvasClicked" styleClass="canvas" width="550">
-         <BorderPane.margin>
-            <Insets />
-         </BorderPane.margin></Canvas>
+        <Canvas fx:id="canvas" height="300" onMouseClicked="#canvasClicked" styleClass="canvas" width="500">
+           </Canvas>
     </center>
    <right>
-      <VBox prefHeight="500.0" prefWidth="160" styleClass="calendarSection" BorderPane.alignment="CENTER">
+      <VBox prefHeight="614.0" prefWidth="145" styleClass="calendarSection" BorderPane.alignment="CENTER">
           <Label styleClass="textLabel" text="Calendar">
             <VBox.margin>
                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -137,7 +135,7 @@
             <padding>
                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
             </padding></DatePicker>
-          <TextArea fx:id="notes" />
+          <TextArea fx:id="notes" prefHeight="131.0" prefWidth="145.0" />
           <Button onAction="#uppdateNotes" text="Uppdate Notes">
               <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -149,38 +147,84 @@
       </VBox>
    </right>
 
-    <left><VBox prefHeight="500" prefWidth="130" spacing="5">
+    <left><VBox prefHeight="603.0" prefWidth="125.0">
         <fx:define>
             <Font fx:id="FONT" size="18" />
         </fx:define>
-         <Rectangle fill="TRANSPARENT" height="30" stroke="GRAY" width="130" />
-        <StackPane BorderPane.alignment="CENTER">
+         <Rectangle fill="TRANSPARENT" height="30" stroke="GRAY" width="115.0">
+            <VBox.margin>
+               <Insets left="3.0" top="20.0" />
+            </VBox.margin></Rectangle>
+        <StackPane prefHeight="16.0" prefWidth="119.0">
             <Text fx:id="output" />
         </StackPane>
-        <HBox spacing="5">
-            <Button fx:id="numButton" onAction="#processNumPad" prefWidth="30" text="7" />
-            <Button onAction="#processNumPad" prefWidth="30" text="8" />
-            <Button onAction="#processNumPad" prefWidth="30" text="9" />
-            <Button onAction="#processOperator" prefWidth="30" text="/" />
+        <HBox spacing="3">
+            <Button fx:id="numButton" onAction="#processNumPad" prefWidth="25" text="7">
+               <HBox.margin>
+                  <Insets left="3.0" />
+               </HBox.margin></Button>
+            <Button onAction="#processNumPad" prefWidth="25" text="8" />
+            <Button onAction="#processNumPad" prefWidth="25" text="9" />
+            <Button onAction="#processOperator" prefWidth="25" text="/" />
         </HBox>
-        <HBox spacing="5">
-            <Button onAction="#processNumPad" prefWidth="30" text="4" />
-            <Button onAction="#processNumPad" prefWidth="30" text="5" />
-            <Button onAction="#processNumPad" prefWidth="30" text="6" />
-            <Button onAction="#processOperator" prefWidth="30" text="+" />
+        <HBox spacing="3">
+            <Button onAction="#processNumPad" prefWidth="25" text="4">
+               <HBox.margin>
+                  <Insets left="3.0" />
+               </HBox.margin></Button>
+            <Button onAction="#processNumPad" prefWidth="25" text="5" />
+            <Button onAction="#processNumPad" prefWidth="25" text="6" />
+            <Button onAction="#processOperator" prefWidth="25" text="*" />
         </HBox>
-        <HBox spacing="5">
-            <Button onAction="#processNumPad" prefWidth="30" text="1" />
-            <Button onAction="#processNumPad" prefWidth="30" text="2" />
-            <Button onAction="#processNumPad" prefWidth="30" text="3" />
-            <Button onAction="#processOperator" prefWidth="30" text="-" />
+        <HBox spacing="3">
+            <Button onAction="#processNumPad" prefWidth="27" text="1">
+               <HBox.margin>
+                  <Insets left="3.0" />
+               </HBox.margin></Button>
+            <Button onAction="#processNumPad" prefWidth="27" text="2" />
+            <Button onAction="#processNumPad" prefWidth="27" text="3" />
+            <Button onAction="#processOperator" prefWidth="25" text="-" />
         </HBox>
-        <HBox spacing="5">
-            <Button onAction="#processNumPad" prefWidth="65" text="0" />
-            <Button onAction="#processOperator" prefWidth="30" text="=" />
-            <Button onAction="#processOperator" prefWidth="30" text="+" />
+        <HBox spacing="3">
+            <Button onAction="#processNumPad" prefWidth="57" text="0">
+               <HBox.margin>
+                  <Insets left="3.0" />
+               </HBox.margin></Button>
+            <Button onAction="#processOperator" prefWidth="25" text="=" />
+            <Button onAction="#processOperator" prefWidth="23" text="+" />
         </HBox>
     </VBox>
 
     </left>
+    <bottom><HBox prefHeight="120" prefWidth="700.0">
+        <children>
+        <VBox>
+            <Label styleClass="notePadlabel" text="Note Pad">
+                <VBox.margin>
+                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                </VBox.margin></Label>
+            <MenuBar>
+              <menus>
+                <Menu mnemonicParsing="false" text="File">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Open" />
+                      <MenuItem mnemonicParsing="false" text="Save" />
+                      <MenuItem mnemonicParsing="false" text="Full View" />
+                      <MenuItem mnemonicParsing="false" text="Minimize" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Edit">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Delete" />
+                      <MenuItem mnemonicParsing="false" text="Undo" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
+        </VBox>
+            <TextArea prefHeight="120.0" prefWidth="630.0" />
+
+         </children></HBox>
+
+    </bottom>
 </BorderPane>

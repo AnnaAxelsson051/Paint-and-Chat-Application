@@ -30,39 +30,49 @@ public class PaintThreeViewController {
 
 
     @FXML
-    public Canvas canvas;
-    public Button undoButton;
-    public Button redo;
+    private Canvas canvas;
+    @FXML
+    private Button undoButton;
 
     @FXML
-    public ColorPicker colorpicker;
+    private Button redoButton;
+
     @FXML
-    public TextField penSize;
+    private ColorPicker colorpicker;
+    @FXML
+    private TextField penSize;
+
     //for manual drawing
     @FXML
-    public CheckBox eraser;
+    private CheckBox eraser;
     //for manual drawing
 
     //public TextField sizeField;  //***
-    public Slider sizeSlider;
-
-    public TitledPane titledPane;
+    @FXML
+    private Slider sizeSlider;
 
     //choicebox with objects square circle etc:
-    public ChoiceBox <ShapeType> choiceBox;
-    public CheckBox selectMode;
+    @FXML
+    private ChoiceBox <ShapeType> choiceBox;
+    @FXML
+    private CheckBox selectMode;
 
-
-    public Stage stage;
+    @FXML
+    private Stage stage;
 
     // Calendar
-    public DatePicker picker;
-    public TextArea notes;
-    public Button saveButton;
+    @FXML
+    private DatePicker picker;
+    @FXML
+    private TextArea notes;
+    @FXML
+    private Button saveButton;
 
     //Cal
-    public Text output;
-    public Button numButton;
+    @FXML
+    private Text output;
+    @FXML
+    private Button numButton;
 
 
     Model model = new Model();
@@ -90,27 +100,10 @@ public class PaintThreeViewController {
 
     }
 
-
-    @FXML
     public void delete(ActionEvent e) {
         // delelte all the shapes from selected shapes list
     }
 
-
-
-
-
-
-    //factory method creates shapes
-    /*public void canvasClicked(MouseEvent mouseEvent){
-       if(mouseEvent.isControlDown()) {
-           //if control is pressed last drawn circle turns red
-           model.getShapes().stream().reduce((first, second) -> second).ifPresent(shape -> shape.setColor(Color.RED));
-           return;
-       }
-       //creating shapes where canvas is cklicked
-      model.createShape(mouseEvent.getX(),mouseEvent.getY());
-        }*/
 
     public void canvasClicked(MouseEvent mouseEvent){
         if(mouseEvent.isControlDown()) {
@@ -118,7 +111,7 @@ public class PaintThreeViewController {
             model.getShapes().stream().reduce((first, second) -> second).ifPresent(shape -> shape.setColor(Color.RED));
             return;
         }
-        /*if(selectMode.isSelected()) {
+        /*if(selectMode.isSelected()) {         //if selectmode is on select shapes....
             model.getShapes().stream()
         }*/
 
@@ -144,10 +137,6 @@ public class PaintThreeViewController {
     public void initialize(){
         colorpicker.valueProperty().bindBidirectional(model.currentColorProperty());
         sizeSlider.valueProperty().bindBidirectional(model.doubleSizeProperty());
-        /*sizeSlider.valueProperty().bindBidirectional(model.doubleHeightProperty());
-        sizeSlider.valueProperty().bindBidirectional(model.doubleWidthProperty());*/
-
-        //titledPane.contentProperty().bindBidirectional(model.currentShapeTypeProperty());
         choiceBox.setItems(shapeTypesList);
         choiceBox.valueProperty().bindBidirectional(model.currentShapeTypeProperty());
         model.getShapes().addListener(this::listChanged);
@@ -164,7 +153,7 @@ public class PaintThreeViewController {
 
             //get pensize
             double x = e.getX() - size /2;
-            double y = e.getY() - size /2;
+            double y = e.getY() - size /2;                         //bryta ut till metod?
 
             //erase:
             if(eraser.isSelected()){
@@ -188,7 +177,7 @@ public class PaintThreeViewController {
             //an empty string will be returned
         });
         picker.setValue(LocalDate.now());
-        //by default picker does not have a value so we set it to today
+        //picker is set to todays date
 
     }
 
@@ -197,35 +186,16 @@ public class PaintThreeViewController {
 //undo function
 
     public void undoButtonClicked(ActionEvent actionEvent) {
-       // if (model.history.isEmpty())
-      //      return;
-
-      //  model.undo();
+        model.undo();
     }
 
 public void redoButtonClicked(ActionEvent actionEvent){
-       // if (model.history.isEmpty())
-       //     return;
-
-       // model.redo;
+        model.redo();
 
 }
 
 
 
-
-    //Deque <Command> redoStack = new ArrayDeque<>();
-    /*public void undoButtonClicked(ActionEvent actionEvent) {
-        Command firstUndoToExecute = undoStack.pop();
-        firstUndoToExecute.execute();
-    }
-
-    /*public void redo(ActionEvent actionEvent){
-       Command firstRedoToExecute = redoStack.push();
-       firstRedoToExecute.execute();
-       //behöver kopplas till speciella skapanden av former
-
-   }*/
     public void onActionExit(){
         Platform.exit();
 
