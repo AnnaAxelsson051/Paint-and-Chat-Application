@@ -13,7 +13,9 @@ import javafx.scene.paint.Color;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.List;
 
 public class Model {
@@ -116,7 +118,30 @@ public class Model {
         //the above triggers listChanged method/lyssnaren below som triggar utritning
     }
 
-    //add save method
+    public Shape addShape (Shape shape){
+        shapes.add(shape);
+       // history.add(shape);
+        return shape;
+    }
+
+
+    //public Deque<Shape> history = new ArrayDeque<>();
+
+    /*public void undo(){
+        history.pop();
+        shapes.remove(Shape);
+    }
+
+    public void redo(){
+        history.addLast(lastAction);
+    }*/
+
+
+
+
+
+
+
 
     public void saveToFile(Path file) {
         StringBuffer outPut = new StringBuffer();
@@ -153,10 +178,6 @@ public class Model {
 
 
 
-        public Shape addShape (Shape shape){
-            shapes.add(shape);
-            return shape;
-        }
 
 
 }

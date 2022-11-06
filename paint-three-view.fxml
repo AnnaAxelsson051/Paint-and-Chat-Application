@@ -4,6 +4,7 @@
 <?import javafx.scene.canvas.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
 <BorderPane prefHeight="700.0" prefWidth="700.0" styleClass="borderPane" stylesheets="@application.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.iths.tt.javafxtt.Paint.PaintThreeViewController">
@@ -22,7 +23,7 @@
     <ToolBar prefHeight="92.0" prefWidth="700.0">
 <HBox spacing="10" styleClass="hBox">
     <GridPane>
-    <ColorPicker fx:id="colorpicker" prefHeight="25.0" prefWidth="157.0" GridPane.ColumnIndex="0" GridPane.rowIndex="0">
+    <ColorPicker fx:id="colorpicker" prefHeight="25.0" prefWidth="205.0" GridPane.ColumnIndex="0" GridPane.rowIndex="0">
                      <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin></ColorPicker>
@@ -33,7 +34,7 @@
                      <padding>
                         <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
                      </padding></Label>
-    <TextField fx:id="penSize" prefWidth="186.0" styleClass="penSize" text="10" GridPane.ColumnIndex="2" GridPane.rowIndex="0">
+    <TextField fx:id="penSize" prefWidth="196.0" styleClass="penSize" text="10" GridPane.ColumnIndex="2" GridPane.rowIndex="0">
                      <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin></TextField>
@@ -47,13 +48,9 @@
                      <padding>
                         <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
                      </padding></CheckBox>
-        <TitledPane fx:id="navigation" prefHeight="43.0" prefWidth="151.0" text="Navigation" GridPane.ColumnIndex="4" GridPane.rowIndex="0">
-            <Label text="Notes" />
-            <Label text="Calendar" />
-            <Label text="Calculator" />
-        </TitledPane>
 
-    <ChoiceBox fx:id="choiceBox" prefHeight="25.0" prefWidth="157.0" GridPane.ColumnIndex="0" GridPane.rowIndex="1">
+
+    <ChoiceBox fx:id="choiceBox" prefHeight="25.0" prefWidth="205.0" GridPane.ColumnIndex="0" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin></ChoiceBox>
@@ -67,7 +64,7 @@
                      <padding>
                         <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
                      </padding></Label>
-    <Slider fx:id="sizeSlider" styleClass="shadow" GridPane.ColumnIndex="2" GridPane.rowIndex="1">
+    <Slider fx:id="sizeSlider" prefWidth="196.0" styleClass="shadow" GridPane.ColumnIndex="2" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin></Slider>
@@ -125,13 +122,13 @@
 </VBox>
 </top>
     <center>
-        <Canvas fx:id="canvas" height="700" onMouseClicked="#canvasClicked" styleClass="canvas" width="500">
+        <Canvas fx:id="canvas" height="700" onMouseClicked="#canvasClicked" styleClass="canvas" width="550">
          <BorderPane.margin>
             <Insets />
          </BorderPane.margin></Canvas>
     </center>
    <right>
-      <VBox prefHeight="500.0" prefWidth="150.0" BorderPane.alignment="CENTER">
+      <VBox prefHeight="500.0" prefWidth="160" styleClass="calendarSection" BorderPane.alignment="CENTER">
           <Label styleClass="textLabel" text="Calendar">
             <VBox.margin>
                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -141,7 +138,7 @@
                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
             </padding></DatePicker>
           <TextArea fx:id="notes" />
-          <Button text ="Uppdate Notes" onAction="#uppdateNotes">
+          <Button onAction="#uppdateNotes" text="Uppdate Notes">
               <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
               </VBox.margin></Button>
@@ -151,4 +148,39 @@
               </VBox.margin></Button>
       </VBox>
    </right>
+
+    <left><VBox prefHeight="500" prefWidth="130" spacing="5">
+        <fx:define>
+            <Font fx:id="FONT" size="18" />
+        </fx:define>
+         <Rectangle fill="TRANSPARENT" height="30" stroke="GRAY" width="130" />
+        <StackPane BorderPane.alignment="CENTER">
+            <Text fx:id="output" />
+        </StackPane>
+        <HBox spacing="5">
+            <Button fx:id="numButton" onAction="#processNumPad" prefWidth="30" text="7" />
+            <Button onAction="#processNumPad" prefWidth="30" text="8" />
+            <Button onAction="#processNumPad" prefWidth="30" text="9" />
+            <Button onAction="#processOperator" prefWidth="30" text="/" />
+        </HBox>
+        <HBox spacing="5">
+            <Button onAction="#processNumPad" prefWidth="30" text="4" />
+            <Button onAction="#processNumPad" prefWidth="30" text="5" />
+            <Button onAction="#processNumPad" prefWidth="30" text="6" />
+            <Button onAction="#processOperator" prefWidth="30" text="+" />
+        </HBox>
+        <HBox spacing="5">
+            <Button onAction="#processNumPad" prefWidth="30" text="1" />
+            <Button onAction="#processNumPad" prefWidth="30" text="2" />
+            <Button onAction="#processNumPad" prefWidth="30" text="3" />
+            <Button onAction="#processOperator" prefWidth="30" text="-" />
+        </HBox>
+        <HBox spacing="5">
+            <Button onAction="#processNumPad" prefWidth="65" text="0" />
+            <Button onAction="#processOperator" prefWidth="30" text="=" />
+            <Button onAction="#processOperator" prefWidth="30" text="+" />
+        </HBox>
+    </VBox>
+
+    </left>
 </BorderPane>

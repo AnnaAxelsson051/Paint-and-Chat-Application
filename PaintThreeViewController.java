@@ -13,14 +13,18 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Deque;
-import java.util.List;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.util.*;
 
 public class PaintThreeViewController {
 
@@ -50,9 +54,17 @@ public class PaintThreeViewController {
 
 
     public Stage stage;
+
+    // Calendar
     public DatePicker picker;
     public TextArea notes;
     public Button saveButton;
+
+    //Cal
+    public Text output;
+    public Button numButton;
+
+
     Model model = new Model();
     ObservableList<ShapeType> shapeTypesList=
             //fill it with shapetype values (the enum)
@@ -164,7 +176,22 @@ public class PaintThreeViewController {
                 graphics.fillRect(x,y,size,size);
             }
         });
+
+        //for notes
+        picker.valueProperty().addListener((o, oldDate, date) ->{
+            //add listener for value property so when we change the value of the datepicker
+            //to a new date then the textarea notes is gon be updated to contain the note for that date
+            //o = observablevalue
+            notes.setText(data.getOrDefault(date,""));
+            //notes.setText refers to textarea
+            //Returns a value if there is a key called date, if there is no such key then
+            //an empty string will be returned
+        });
+        picker.setValue(LocalDate.now());
+        //by default picker does not have a value so we set it to today
+
     }
+
 
 
 //undo function
@@ -231,15 +258,56 @@ public void redoButtonClicked(ActionEvent actionEvent){
     
     
     
-    
+    //Notes
 
-    public void uppdateNotes(ActionEvent actionEvent) {
+    private Map<LocalDate, String> data = new HashMap<>();
+    //map that maps the date to a note
+
+    public void uppdateNotes() {
+        load();
+        //load the data when program starts
+
+        data.put(picker.getValue(), notes.getText());
+        //inserts values into map
     }
 
-    public void saveNotes(ActionEvent actionEvent) {
+    public void saveNotes(ActionEvent actionEvent){
+        //we save the data object (name of the list)
+        try(ObjectOutputStream stream = new ObjectOutputStream(Files.newOutputStream(Paths.get("notes.data")))){
+            //create a stream of the file, call the file notes.data,
+            stream.writeObject(data);
+            //and write the dataobject to the file
+        }catch (Exception e){
+            System.out.println("Failed to save: " + e);
+        }
+
+
     }
 
-    public void exitNotes(ActionEvent actionEvent) {
+    private void load(){
+        Path file = Paths.get("notes.data");
+        //obtain a reference to the file and see if it exists so we can load
+
+        if (Files.exists(file)){
+            try (ObjectInputStream stream =
+                         new ObjectInputStream(Files.newInputStream(file))){
+                data = (Map<LocalDate, String>) stream.readObject();
+                //read the object, its the same object we read back, we typecast it to map of localdate and string
+                //because we know the type bc we saved the data to it
+            }catch (Exception e){
+                System.out.println("Failed to load: " + e);
+            }
+        }
     }
-    //ska va en listview av product
+    //Cal
+
+    public void processNumPad(ActionEvent event){
+        String value = numButton.getText();
+        System.out.println(value);
+
+    }
+
+
+    public void processOperator(ActionEvent actionEvent) {
+    }
 }
