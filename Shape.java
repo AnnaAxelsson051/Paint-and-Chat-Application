@@ -2,12 +2,8 @@ package se.iths.tt.javafxtt.Paint;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.css.Size;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import se.iths.tt.javafxtt.model.Position;
 
 public abstract class Shape {
 
@@ -25,12 +21,17 @@ public abstract class Shape {
     private ObjectProperty <Double> width = new SimpleObjectProperty<>();
 
 
+
+
+
     //constructor for shape:
     public Shape(double x, double y) {
         this.x = x;
         this.y = y;
         color.set(Color.BLACK);
     }
+
+    public abstract boolean isInside(double x, double y);
 
     //for color:
     public Color getColor(){
@@ -65,16 +66,15 @@ public abstract class Shape {
     public ObjectProperty <Double> heightProperty(){
         return height;
     }
-    public Double getHeight(){return height.get();}
+    public double getHeight(){return height.get();}
     public void setHeight(Double height) { this.height.set(height);}
 
     //width
     public ObjectProperty <Double> widthProperty(){
         return width;
     }
-    public Double getWidth(){return width.get();}
+    public double getWidth(){return width.get();}
     public void setWidth(Double height) {this.height.set(height);}
-
 
     //draw method overridden in individual classes:
     public abstract void draw(GraphicsContext context);
@@ -93,4 +93,6 @@ public abstract class Shape {
         };
 
     }
+
+
 }

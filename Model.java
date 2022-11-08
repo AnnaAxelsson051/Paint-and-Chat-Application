@@ -13,12 +13,10 @@ import javafx.scene.paint.Color;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Deque;
-import java.util.List;
+import java.time.LocalDate;
+import java.util.*;
 
-public class Model {
+public class Model implements Runnable {
     //Model Contains info to display to user
     //Remember: Models can be used to feed multiple View objects
 
@@ -46,9 +44,8 @@ public class Model {
             param.colorProperty(),
             param.sizeProperty(),
             param.heightProperty(),
-            param.widthProperty()
+            param.widthProperty(),
     });
-
 
 
 
@@ -98,6 +95,7 @@ public class Model {
         this.doubleHeight.set(doubleHeight);
     }
 
+    //width
     public DoubleProperty doubleWidth = new SimpleDoubleProperty();
     public DoubleProperty doubleWidthProperty() {return doubleWidth;}
     public double getDoubleWidth() {
@@ -106,6 +104,10 @@ public class Model {
     public void setDoubleWidth(double doubleWidth) {
         this.doubleWidth.set(doubleWidth);
     }
+
+    //calendar
+    public Property<LocalDate> dateProperty;
+
 
 
     //create shapes with mouse coordinates:
@@ -118,46 +120,52 @@ public class Model {
         //the above triggers listChanged method/lyssnaren below som triggar utritning
     }
 
+
     public Shape addShape (Shape shape){
         shapes.add(shape);
-       history.add(shape);
+        CommandPair commandpair = new CommandPair();
+        commandpair.undo = () -> shapes.remove(shape);
+        commandpair.redo = () -> shapes.add(shape);
+        undoStack.push(commandpair);
+        //Skapa ett command o spar det i undostack för undoanvändning
         return shape;
     }
 
-
-    public Deque<Shape> history = new ArrayDeque<>();
+    Deque<CommandPair> undoStack = new ArrayDeque<>();     //TODO: make undo redo work
+    Deque<CommandPair> redoStack = new ArrayDeque<>();
 
     public void undo(){
-        int index = shapes.size()-1;
-        shapes.remove(index);
-       // history.add(index)
+        var commandPair= undoStack.pop();
+        commandPair.undo.execute();
+        redoStack.push(commandPair);
     }
 
     public void redo(){
-     if (history.isEmpty())
-                return;
-        history.removeLast();
+        var commandPair= redoStack.pop();
+        commandPair.redo.execute();
+        undoStack.push(commandPair);
     }
 
-    //Deque <Command> redoStack = new ArrayDeque<>();
-    /*public void undoButtonClicked(ActionEvent actionEvent) {
-        Command firstUndoToExecute = undoStack.pop();
-        firstUndoToExecute.execute();
+    interface Command{
+        void execute();
     }
 
-    /*public void redo(ActionEvent actionEvent){
-       Command firstRedoToExecute = redoStack.push();
-       firstRedoToExecute.execute();
-       //behöver kopplas till speciella skapanden av former
 
-   }*/
+    @Override
+    public void run() {
+
+    }
+
+    public class CommandPair{
+
+       Command undo;
+       Command redo;
+    }
 
 
 
 
-
-
-
+    //Save shapes to excell
     public void saveToFile(Path file) {
         StringBuffer outPut = new StringBuffer();
         for (Shape p : shapes) {
@@ -189,9 +197,21 @@ public class Model {
                 throw new RuntimeException(e);
             }
         }
+
+
+    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Model model = (Model) o;
+        return Objects.equals(selectionModel, model.selectionModel) && Objects.equals(shapes, model.shapes) && Objects.equals(currentShapeType, model.currentShapeType) && Objects.equals(currentColor, model.currentColor) && Objects.equals(doubleSize, model.doubleSize) && Objects.equals(doubleHeight, model.doubleHeight) && Objects.equals(doubleWidth, model.doubleWidth) && Objects.equals(undoStack, model.undoStack);
     }
 
-
+    @Override
+    public int hashCode() {
+        return Objects.hash(selectionModel, shapes, currentShapeType, currentColor, doubleSize, doubleHeight, doubleWidth, undoStack);
+    }
 
 
 

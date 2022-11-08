@@ -3,13 +3,41 @@ package se.iths.tt.javafxtt.Paint;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
+import static java.lang.Math.sqrt;
+
 public class Circle extends Shape {
 
+    //gets x and y from super (Shape):
     public Circle (double x, double y){
         super(x, y);
-        //Kunna rita cirklar   2.33.20
     }
 
+    @Override
+    public boolean isInside(double x, double y) {
+        double px = x;
+        double py = y;
+        double cx = getX();
+        double cy = getY();
+        double radius = (getSize() /2);
+        boolean hit = pointCircle(px,py, cx,cy, radius);
+        if (hit) {
+            setColor(getColor());       //TODO få select att funka
+            setSize(getSize());
+        }
+        return false;
+    }
+
+    public boolean pointCircle(double px, double py, double cx, double cy, double r){
+        double distX = px - cx;
+        double distY = py - cy;
+        double distance = sqrt( (distX*distX) + (distY*distY) );
+        if(distance <= r) {
+            return true;
+        }
+        return false;
+    }
+
+    //draws a circle:
     @Override
     public void draw(GraphicsContext context){
         context.setFill(getColor());
@@ -19,33 +47,7 @@ public class Circle extends Shape {
         context.strokeOval(getX()-getSize()/2, getY()-getSize()/2, getSize(), getSize());
     }    //skapa ytterkant av 
 
-    //Om man har en metod som ska ta x y som är cenyrum fr
-    // cirkeln och radius  så kan man ist för x och y skicka med ett
-    // point objekt som innehåller x och y
 
-    /*private final double x;
-    private final double y;
-    //private final double radius;
-
-    public Circle(double x, double y) {
-        this.x = x;
-        this.y = y;
-
-    }
-
-    public double getX() {
-        return x;
-    }
-
-    public double getY() {
-        return y;
-    }
-
-
-
-    /*public void build(){
-        return new Circle().setX(x).setY(y).setRadius(radius).setCategory(category).createProduct();
-    }*/
 
 
 }

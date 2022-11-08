@@ -81,16 +81,7 @@ public class PaintThreeViewController {
             FXCollections.observableArrayList(ShapeType.values());
 
 
-    //for select mode
-    /*private List<Shape> selectedShapes = new ArrayList<>();
-    @FXML
-    public void onShapeSelected(MouseEvent e) {
-        Shape shape = (Shape) e.getSource();
 
-        if (!selectedShapes.contains(shape)) {
-            selectedShapes.add(shape);
-        }
-    }*/
 
 
 
@@ -104,24 +95,27 @@ public class PaintThreeViewController {
         // delelte all the shapes from selected shapes list
     }
 
+    public List<Shape> selectedShapes = new ArrayList<>();
 
-    public void canvasClicked(MouseEvent mouseEvent){
-        if(mouseEvent.isControlDown()) {
+    public void canvasClicked(MouseEvent mouseEvent) {
+        if (mouseEvent.isControlDown()) {
             //if control is pressed last drawn circle turns red
             model.getShapes().stream().reduce((first, second) -> second).ifPresent(shape -> shape.setColor(Color.RED));
             return;
         }
-        /*if(selectMode.isSelected()) {         //if selectmode is on select shapes....
-            model.getShapes().stream()
-        }*/
+        if (selectMode.isSelected()) {
+            Shape shape = (Shape) mouseEvent.getSource();
+            shape.isInside(shape.getX(), shape.getY());
+            //anropa metoden i shape som overridits i circle o rect pass mouseklick
+            //model.getShapes().stream().
+                //loopa objekten och välja det sista eftersom man vill välja det översta
+            model.getShapes().stream().reduce((first, second) -> second)
+                    .orElse(null);       //TODO välja ut sista
 
-        //creating shapes where canvas is cklicked
-        model.createShape(mouseEvent.getX(),mouseEvent.getY());
-    }
-
-
-
-
+            } else {
+                //creating shapes where canvas is clicked
+               model.createShape(mouseEvent.getX(), mouseEvent.getY());}
+        }
 
 
     private void listChanged(Observable observable){
@@ -134,7 +128,10 @@ public class PaintThreeViewController {
     }
 
 
-    public void initialize(){
+
+
+
+        public void initialize(){
         colorpicker.valueProperty().bindBidirectional(model.currentColorProperty());
         sizeSlider.valueProperty().bindBidirectional(model.doubleSizeProperty());
         choiceBox.setItems(shapeTypesList);
@@ -142,37 +139,9 @@ public class PaintThreeViewController {
         model.getShapes().addListener(this::listChanged);
         //bc the list is an observable list we can add a listener to it that connects to method
         // listChangedMethod above för utritning i det grafiska gränssnittet
-
-
-        //for manual drawing:
-        GraphicsContext graphics = canvas.getGraphicsContext2D();
-
-        //get a graphicscontext to draw on
-        canvas.setOnMouseDragged(e ->{
-            double size = Double.parseDouble(penSize.getText());
-
-            //get pensize
-            double x = e.getX() - size /2;
-            double y = e.getY() - size /2;                         //bryta ut till metod?
-
-            //erase:
-            if(eraser.isSelected()){
-                graphics.clearRect(x,y,size,size);
-            }else{
-            //draw:
-                graphics.setFill(colorpicker.getValue());
-                //otherwise draw with selected color
-                graphics.fillRect(x,y,size,size);
-            }
-        });
-
-        //for notes
         picker.valueProperty().addListener((o, oldDate, date) ->{
-            //add listener for value property so when we change the value of the datepicker
-            //to a new date then the textarea notes is gon be updated to contain the note for that date
-            //o = observablevalue
-            notes.setText(data.getOrDefault(date,""));
-            //notes.setText refers to textarea
+            //listen for when we select a new date and present info connected to it
+        notes.setText(data.getOrDefault(date,""));
             //Returns a value if there is a key called date, if there is no such key then
             //an empty string will be returned
         });
@@ -181,11 +150,33 @@ public class PaintThreeViewController {
 
     }
 
+    //manual drawing
+    public void onCanvasDragged(MouseEvent mouseEvent){
+        //for manual drawing:
+        GraphicsContext graphics = canvas.getGraphicsContext2D();
+        //get a graphicscontext to draw on
+        canvas.setOnMouseDragged(e ->{
+            double size = Double.parseDouble(penSize.getText());
+            //get pensize
+            double x = e.getX() - size /2;
+            double y = e.getY() - size /2;
+
+            if(eraser.isSelected()){
+                graphics.clearRect(x,y,size,size);
+            }else{
+                //draw:
+                graphics.setFill(colorpicker.getValue());
+                //otherwise draw with selected color
+                graphics.fillRect(x,y,size,size);
+            }
+        });
+    }
+
 
 
 //undo function
 
-    public void undoButtonClicked(ActionEvent actionEvent) {
+    public void undoButtonClicked (ActionEvent actionEvent) {
         model.undo();
     }
 
@@ -206,10 +197,8 @@ public void redoButtonClicked(ActionEvent actionEvent){
 
    public void onActionSave(ActionEvent actionEvent) {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Save as");
-        //ska stå överst i filväljar fönstret
-        fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
-        //vad för filändelse ska man ha, till att den ska vara på vår hemkatalog
+        fileChooser.setTitle("Save as");   //totle of filechooser
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.home"))); //hamnar i hemkatalog
         fileChooser.getExtensionFilters().clear();
         //vi tar bort allt som finns i den
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV", "*.csv"));
@@ -225,7 +214,6 @@ public void redoButtonClicked(ActionEvent actionEvent){
             //om anv trycker på cancel
             model.saveToFile(filePath.toPath());
     }
-    
     
     
     //Notes
@@ -269,7 +257,7 @@ public void redoButtonClicked(ActionEvent actionEvent){
             }
         }
     }
-    //Cal
+    //Calculator
 
     public void processNumPad(ActionEvent event){
         String value = numButton.getText();
@@ -280,4 +268,12 @@ public void redoButtonClicked(ActionEvent actionEvent){
 
     public void processOperator(ActionEvent actionEvent) {
     }
+
+    //notes
+
+    public void onFullViewClicked(ActionEvent actionEvent) {
+    }
+
+
+
 }
