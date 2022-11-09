@@ -11,12 +11,16 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.NetworkInterface;
+import java.net.Socket;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.*;
 
-public class Model implements Runnable {
+public class Model {
     //Model Contains info to display to user
     //Remember: Models can be used to feed multiple View objects
 
@@ -24,21 +28,11 @@ public class Model implements Runnable {
     List<Node> selectionModel = new ArrayList<>();
 
 
-
-
-
-
-
-
-
-    //observable list
     public ObservableList<? extends Shape> getShapes() {
         return shapes;
     }
-
-    //what observable fields we wanna listen to:
     //som parameter till observerbaralistan skickar vi ett lambda som implementerar inerfacet extractor with a
-    //method som tar objektet som vi stoppat in, tala om vilka observerbara fält ska vi få
+    //method observable som tar objektet som vi stoppat in, tala om vilka observerbara fält ska vi få
     //notifieringar från
     ObservableList<Shape> shapes = FXCollections.observableArrayList(param -> new Observable[]{
             param.colorProperty(),
@@ -46,9 +40,6 @@ public class Model implements Runnable {
             param.heightProperty(),
             param.widthProperty(),
     });
-
-
-
 
     //shapetype
     public ObjectProperty<ShapeType> currentShapeType = new SimpleObjectProperty<>(ShapeType.CIRCLE);
@@ -105,10 +96,6 @@ public class Model implements Runnable {
         this.doubleWidth.set(doubleWidth);
     }
 
-    //calendar
-    public Property<LocalDate> dateProperty;
-
-
 
     //create shapes with mouse coordinates:
     public void createShape(double x, double y) {
@@ -131,7 +118,7 @@ public class Model implements Runnable {
         return shape;
     }
 
-    Deque<CommandPair> undoStack = new ArrayDeque<>();     //TODO: make undo redo work
+    Deque<CommandPair> undoStack = new ArrayDeque<>();
     Deque<CommandPair> redoStack = new ArrayDeque<>();
 
     public void undo(){
@@ -149,18 +136,49 @@ public class Model implements Runnable {
     interface Command{
         void execute();
     }
-
-
-    @Override
-    public void run() {
-
-    }
-
     public class CommandPair{
 
-       Command undo;
-       Command redo;
+        Command undo;
+        Command redo;
     }
+
+
+
+
+    static class ConnectToNetwork implements Runnable{
+
+    public static void connectToNetwork(){
+    }
+
+        public static void main(String[] args) {
+            ConnectToNetwork p = new ConnectToNetwork();
+            Thread thread = new Thread(p);
+            thread.start();
+
+        }
+        @Override
+        public void run() {
+            NetworkInterface nif = NetworkInterface.getByName("lo");
+            Enumeration<InetAddress> nifAddresses = nif.getInetAddresses();
+            Socket socket = new Socket();
+            socket.bind(new InetSocketAddress(nifAddresses.nextElement(), 0));
+            socket.connect(new InetSocketAddress(address, port));
+            //connecting to the loopback interface with the name IO
+            //So we retrieve the network interface attached to lo first, retrieve
+            // the addresses attached to it, create a socket, bind it to any of the
+            // enumerated addresses which we don't even know at compile time and then connect.
+
+            //– public void run( )
+            //– Implementera Runnable interfacet och skicka till en ny instans av
+            //Thread för att köra din klass som en egen tråd.
+            //– Normalt vill vi inte ärva Thread om vi bara behöver overrida run
+            //metoden.
+        }
+
+
+    }
+
+
 
 
 
@@ -171,7 +189,7 @@ public class Model implements Runnable {
         for (Shape p : shapes) {
             if (p instanceof Circle) {
                 outPut.append("<circle cx=");
-                //<circle cx="25" cy="75" r="20"/>
+                //<circle cx="25" cy="75" r="20"/>      //TODO Create seperate tread for this?
                 outPut.append(p.getX());
                 outPut.append(" cy=");
                 outPut.append(p.getY());

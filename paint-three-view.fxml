@@ -14,7 +14,7 @@
 <Menu text="File Actions">
     <MenuItem onAction="#onActionSave" text="Save" />
     <MenuItem text="Open saved items" />
-    <MenuItem text="Connect to network server" />
+    <MenuItem text="Connect to network server" onAction="#connectToNetworkClicked"/>
     <MenuItem onAction="#onActionExit" text="Exit" />
 </Menu>
     </MenuBar>
@@ -68,7 +68,7 @@
                      <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin></Slider>
-        <CheckBox fx:id="selectMode" text="Select" GridPane.ColumnIndex="3" GridPane.rowIndex="1">
+        <CheckBox fx:id="selectMode" text="Select shape" GridPane.ColumnIndex="3" GridPane.rowIndex="1">
             <GridPane.margin>
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
             </GridPane.margin>
@@ -84,7 +84,7 @@
                      </GridPane.margin></Button>
     <Button fx:id="redoButton" onAction="#redoButtonClicked" prefHeight="40.0" prefWidth="40.0" styleClass="redoButton" GridPane.ColumnIndex="8" GridPane.rowIndex="2">
                      <GridPane.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" />
+                        <Insets left="5.0" right="5.0" />
                      </GridPane.margin></Button>
                   <columnConstraints>
                      <ColumnConstraints />
@@ -122,7 +122,7 @@
 </VBox>
 </top>
     <center>
-        <Canvas fx:id="canvas" height="300" onMouseClicked="#canvasClicked" styleClass="canvas" width="500">
+        <Canvas fx:id="canvas" height="300" onMouseClicked="#canvasClicked" onDragDetected="#onCanvasDragged" styleClass="canvas" width="500">
            </Canvas>
     </center>
    <right>
@@ -161,7 +161,7 @@
         <HBox spacing="3">
             <Button fx:id="numButton" onAction="#processNumPad" prefWidth="25" text="7">
                <HBox.margin>
-                  <Insets left="3.0" />
+                  <Insets bottom="3.0" left="3.0" />
                </HBox.margin></Button>
             <Button onAction="#processNumPad" prefWidth="25" text="8" />
             <Button onAction="#processNumPad" prefWidth="25" text="9" />
@@ -170,7 +170,7 @@
         <HBox spacing="3">
             <Button onAction="#processNumPad" prefWidth="25" text="4">
                <HBox.margin>
-                  <Insets left="3.0" />
+                  <Insets bottom="3.0" left="3.0" />
                </HBox.margin></Button>
             <Button onAction="#processNumPad" prefWidth="25" text="5" />
             <Button onAction="#processNumPad" prefWidth="25" text="6" />
@@ -179,7 +179,7 @@
         <HBox spacing="3">
             <Button onAction="#processNumPad" prefWidth="27" text="1">
                <HBox.margin>
-                  <Insets left="3.0" />
+                  <Insets bottom="3.0" left="3.0" />
                </HBox.margin></Button>
             <Button onAction="#processNumPad" prefWidth="27" text="2" />
             <Button onAction="#processNumPad" prefWidth="27" text="3" />
@@ -209,7 +209,7 @@
                   <items>
                     <MenuItem mnemonicParsing="false" text="Open" />
                       <MenuItem mnemonicParsing="false" text="Save" />
-                      <MenuItem mnemonicParsing="false" text="Full View" />
+                      <MenuItem mnemonicParsing="false" text="Full View" onAction="#onFullViewClicked"/>
                       <MenuItem mnemonicParsing="false" text="Minimize" />
                   </items>
                 </Menu>
