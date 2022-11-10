@@ -116,26 +116,27 @@ public class PaintThreeViewController {
 
     public void connectToNetworkClicked(ActionEvent actionEvent) {
         connectToNetwork.disableProperty();
-        Model.ConnectToNetwork.connectToNetwork();
+        ConnectToNetworkShapes.connectToNetwork();
+        ConnectToNetworkChat.connectToNetwork();
     }
 
     public void canvasClicked(MouseEvent mouseEvent) {
-        if (mouseEvent.isControlDown()) {
+        /*if (mouseEvent.isControlDown()) {
             //if control is pressed last drawn circle turns red
             model.getShapes().stream().reduce((first, second) -> second).ifPresent(shape -> shape.setColor(Color.RED));
             return;
-        }
+        }*/
         if (selectMode.isSelected()) {
             Shape shape = (Shape) mouseEvent.getSource();
             shape.isInside(shape.getX(), shape.getY());
-            //anropa metoden i shape som overridits i circle o rect pass mouseklick
-            //model.getShapes().stream().
-            //loopa objekten och välja det sista eftersom man vill välja det översta
+            //passing mouseklick se if a shape is selected
+
             model.getShapes().stream().reduce((first, second) -> second)
-                    .orElse(null);       //TODO välja ut sista
+                    .orElse(null);
+            //selecting last element in list (översta shapen)
 
         } else {
-            //creating shapes where canvas is clicked
+            //creating shapes where canvas is clicked and no selectmode
             model.createShape(mouseEvent.getX(), mouseEvent.getY());}
     }
 
