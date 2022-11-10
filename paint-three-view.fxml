@@ -14,7 +14,7 @@
 <Menu text="File Actions">
     <MenuItem onAction="#onActionSave" text="Save" />
     <MenuItem text="Open saved items" />
-    <MenuItem text="Connect to network server" onAction="#connectToNetworkClicked"/>
+    <MenuItem fx:id="connectToNetwork" text="Connect to network server" onAction="#connectToNetworkClicked"/>
     <MenuItem onAction="#onActionExit" text="Exit" />
 </Menu>
     </MenuBar>
@@ -50,7 +50,7 @@
                      </padding></CheckBox>
 
 
-    <ChoiceBox fx:id="choiceBox" prefHeight="25.0" prefWidth="205.0" GridPane.ColumnIndex="0" GridPane.rowIndex="1">
+    <ChoiceBox fx:id="choiceBox" prefHeight="25.0" prefWidth="205.0" GridPane.ColumnIndex="0" GridPane.rowIndex="1" >
                      <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin></ChoiceBox>
@@ -64,7 +64,7 @@
                      <padding>
                         <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
                      </padding></Label>
-    <Slider fx:id="sizeSlider" prefWidth="196.0" styleClass="shadow" GridPane.ColumnIndex="2" GridPane.rowIndex="1">
+    <Slider fx:id="sizeSlider" prefWidth="196.0" GridPane.ColumnIndex="2" GridPane.rowIndex="1" showTickLabels = "true" showTickMarks="true" minorTickCount="4" snapToTicks ="true">
                      <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin></Slider>

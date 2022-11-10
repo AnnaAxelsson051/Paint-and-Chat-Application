@@ -1,23 +1,17 @@
 package se.iths.tt.javafxtt.Paint;
 
+import javafx.application.Platform;
 import javafx.beans.Observable;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.css.Size;
 import javafx.scene.Node;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
-import java.io.IOException;
-import java.net.InetAddress;
-import java.net.InetSocketAddress;
-import java.net.NetworkInterface;
+import java.io.*;
 import java.net.Socket;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.time.LocalDate;
 import java.util.*;
 
 public class Model {
@@ -40,6 +34,22 @@ public class Model {
             param.heightProperty(),
             param.widthProperty(),
     });
+
+    //connect to network
+
+    public BooleanProperty connectToNetwork = new SimpleBooleanProperty();
+
+    public BooleanProperty connectToNetworkProperty(){
+        return connectToNetwork;
+    }
+
+    public boolean getConnectToNetwork() {
+        return connectToNetwork.get();
+    }
+
+    public void setConnectToNetwork(boolean connectToNetwork) {
+        this.connectToNetwork.set(connectToNetwork);
+    }
 
     //shapetype
     public ObjectProperty<ShapeType> currentShapeType = new SimpleObjectProperty<>(ShapeType.CIRCLE);
@@ -113,8 +123,8 @@ public class Model {
         CommandPair commandpair = new CommandPair();
         commandpair.undo = () -> shapes.remove(shape);
         commandpair.redo = () -> shapes.add(shape);
+        //Skapa ett command o spar det i undo/redostack för undoanvändning
         undoStack.push(commandpair);
-        //Skapa ett command o spar det i undostack för undoanvändning
         return shape;
     }
 
@@ -145,24 +155,81 @@ public class Model {
 
 
 
-    static class ConnectToNetwork implements Runnable{
+    static class ConnectToNetwork {
 
-    public static void connectToNetwork(){
+        ObjectProperty shape = new SimpleObjectProperty();
+
+        ObservableList<Shape> observableList = FXCollections.observableArrayList();
+        private Socket socket;
+        private final PrintWriter writer;
+        private final BufferedReader reader;
+
+        ConnectToNetwork() {
+            reader = null;
+        }
+
+
+        public static void connectToNetwork() {
+
+            try {
+                socket = new Socket("localhost", 8000);
+                OutputStream output = socket.getOutputStream();
+                writer = new PrintWriter(output, true);
+                InputStream input = socket.getInputStream();
+                reader = new BufferedReader(new InputStreamReader(input));
+
+                var thread = new Thread(() -> {
+                    try {
+                        while (true) {
+                            Shape shape = reader.readLine();
+                            Platform.runLater(() -> observableList.add(shape));
+                        }
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+                thread.setDaemon(true);
+                thread.start();
+
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        public Shape getShape() {
+            return shape.get();
+        }
+
+        public ObjectProperty shapeProperty() {
+            return shape;
+        }
+
+        public void setShape(String message) {
+            this.shape.set(shape);
+        }
+
+        public ObservableList<Shape> getObservableList() {
+            return observableList;
+        }
+
+        public void setObservableList(ObservableList<Shape> observableList) {
+            this.observableList = observableList;
+        }
+
+        public void sendShape() {
+            writer.println(getShape());
+            //getObservableList().add(getMessage());
+            setShape("");
+        }
     }
 
-        public static void main(String[] args) {
-            ConnectToNetwork p = new ConnectToNetwork();
-            Thread thread = new Thread(p);
-            thread.start();
 
-        }
-        @Override
-        public void run() {
-            NetworkInterface nif = NetworkInterface.getByName("lo");
+            /*NetworkInterface nif = NetworkInterface.getByName("localhost");
             Enumeration<InetAddress> nifAddresses = nif.getInetAddresses();
+            socket = new Socket("localhost", 8000);
             Socket socket = new Socket();
-            socket.bind(new InetSocketAddress(nifAddresses.nextElement(), 0));
-            socket.connect(new InetSocketAddress(address, port));
+            socket(new InetSocketAddress(nifAddresses.nextElement(), 0));
+            socket.connect(new InetSocketAddress(x,y));*/
             //connecting to the loopback interface with the name IO
             //So we retrieve the network interface attached to lo first, retrieve
             // the addresses attached to it, create a socket, bind it to any of the
@@ -172,11 +239,11 @@ public class Model {
             //– Implementera Runnable interfacet och skicka till en ny instans av
             //Thread för att köra din klass som en egen tråd.
             //– Normalt vill vi inte ärva Thread om vi bara behöver overrida run
-            //metoden.
+            //metoden.*/
         }
 
 
-    }
+
 
 
 

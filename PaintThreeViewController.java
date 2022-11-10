@@ -2,6 +2,8 @@ package se.iths.tt.javafxtt.Paint;
 
 import javafx.application.Platform;
 import javafx.beans.Observable;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -28,7 +30,8 @@ import java.util.*;
 
 public class PaintThreeViewController {
 
-
+    @FXML
+    private MenuItem connectToNetwork;
     @FXML
     private Canvas canvas;
     @FXML
@@ -80,12 +83,6 @@ public class PaintThreeViewController {
             //fill it with shapetype values (the enum)
             FXCollections.observableArrayList(ShapeType.values());
 
-
-
-
-
-
-
     public void init(Stage stage){
         this.stage=stage;
 
@@ -95,7 +92,32 @@ public class PaintThreeViewController {
         // delelte all the shapes from selected shapes list
     }
 
-    public List<Shape> selectedShapes = new ArrayList<>();
+        public void initialize(){
+        colorpicker.valueProperty().bindBidirectional(model.currentColorProperty());
+        sizeSlider.valueProperty().bindBidirectional(model.doubleSizeProperty());
+
+        //connectToNetwork.booleanProperty.bindBidirectional(model.booleanProperty());
+        choiceBox.valueProperty().bindBidirectional(model.currentShapeTypeProperty());
+        choiceBox.setItems(shapeTypesList);
+        model.getShapes().addListener(this::listChanged);
+        //bc the list is an observable list we can add a listener to it that connects to method
+        // listChangedMethod above för utritning i det grafiska gränssnittet
+
+        picker.valueProperty().addListener((o, oldDate, date) ->{    //TODO ändra till en bindbidirectional?
+            //listen for when we select a new date and present info connected to it
+        notes.setText(data.getOrDefault(date,""));
+            //Returns a value if there is a key called date, if there is no such key then
+            //an empty string will be returned
+        });
+        picker.setValue(LocalDate.now());
+        //picker is set to todays date
+
+    }
+
+    public void connectToNetworkClicked(ActionEvent actionEvent) {
+        connectToNetwork.disableProperty();
+        Model.ConnectToNetwork.connectToNetwork();
+    }
 
     public void canvasClicked(MouseEvent mouseEvent) {
         if (mouseEvent.isControlDown()) {
@@ -108,73 +130,41 @@ public class PaintThreeViewController {
             shape.isInside(shape.getX(), shape.getY());
             //anropa metoden i shape som overridits i circle o rect pass mouseklick
             //model.getShapes().stream().
-                //loopa objekten och välja det sista eftersom man vill välja det översta
+            //loopa objekten och välja det sista eftersom man vill välja det översta
             model.getShapes().stream().reduce((first, second) -> second)
                     .orElse(null);       //TODO välja ut sista
 
-            } else {
-                //creating shapes where canvas is clicked
-               model.createShape(mouseEvent.getX(), mouseEvent.getY());}
-        }
+        } else {
+            //creating shapes where canvas is clicked
+            model.createShape(mouseEvent.getX(), mouseEvent.getY());}
+    }
 
 
     private void listChanged(Observable observable){
         var context = canvas.getGraphicsContext2D();              //---
         for (Shape s : model.getShapes()){
             s.draw(context);
-    //Ritar ut det grafiska gränssnittet när listan uppdateras dvs när man ritar en shape
-    //triggas av add
+            //Ritar ut det grafiska gränssnittet när listan uppdateras dvs när man ritar en shape
+            //triggas av add
         }
     }
 
 
-
-
-
-        public void initialize(){
-        colorpicker.valueProperty().bindBidirectional(model.currentColorProperty());
-        sizeSlider.valueProperty().bindBidirectional(model.doubleSizeProperty());
-        choiceBox.setItems(shapeTypesList);
-        choiceBox.valueProperty().bindBidirectional(model.currentShapeTypeProperty());
-        model.getShapes().addListener(this::listChanged);
-        //bc the list is an observable list we can add a listener to it that connects to method
-        // listChangedMethod above för utritning i det grafiska gränssnittet
-        picker.valueProperty().addListener((o, oldDate, date) ->{
-            //listen for when we select a new date and present info connected to it
-        notes.setText(data.getOrDefault(date,""));
-            //Returns a value if there is a key called date, if there is no such key then
-            //an empty string will be returned
-        });
-        picker.setValue(LocalDate.now());
-        //picker is set to todays date
-
-    }
-
-    //manual drawing
     public void onCanvasDragged(MouseEvent mouseEvent){
-        //for manual drawing:
         GraphicsContext graphics = canvas.getGraphicsContext2D();
-        //get a graphicscontext to draw on
         canvas.setOnMouseDragged(e ->{
             double size = Double.parseDouble(penSize.getText());
-            //get pensize
             double x = e.getX() - size /2;
             double y = e.getY() - size /2;
-
             if(eraser.isSelected()){
                 graphics.clearRect(x,y,size,size);
             }else{
-                //draw:
                 graphics.setFill(colorpicker.getValue());
-                //otherwise draw with selected color
                 graphics.fillRect(x,y,size,size);
             }
         });
     }
 
-
-
-//undo function
 
     public void undoButtonClicked (ActionEvent actionEvent) {
         model.undo();
@@ -184,7 +174,6 @@ public void redoButtonClicked(ActionEvent actionEvent){
         model.redo();
 
 }
-
 
 
     public void onActionExit(){
@@ -199,12 +188,10 @@ public void redoButtonClicked(ActionEvent actionEvent){
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save as");   //totle of filechooser
         fileChooser.setInitialDirectory(new File(System.getProperty("user.home"))); //hamnar i hemkatalog
-        fileChooser.getExtensionFilters().clear();
-        //vi tar bort allt som finns i den
+        fileChooser.getExtensionFilters().clear(); //vi tar bort allt som finns i den
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV", "*.csv"));
 //constructor som tar två parametrar
-
-        File filePath = fileChooser.showSaveDialog(stage);
+       File filePath = fileChooser.showSaveDialog(stage);
         //så vill vi köra filechooserobjektet o den returnerar en file det är den filen vi vlt att spara till
         //showsaveDialog vill ha ett window för man måste tala om för den vilket fönster ska vi köras ovanpå
         //medan vi är inne i dialogen och ska välja vilken fil vi ska spara som ska vi inte kunna klicka på
@@ -216,15 +203,13 @@ public void redoButtonClicked(ActionEvent actionEvent){
     }
     
     
-    //Notes
-
+    //Calendar
     private Map<LocalDate, String> data = new HashMap<>();
-    //map that maps the date to a note
+    //maps date to a note
 
     public void uppdateNotes() {
         load();
         //load the data when program starts
-
         data.put(picker.getValue(), notes.getText());
         //inserts values into map
     }
@@ -233,7 +218,7 @@ public void redoButtonClicked(ActionEvent actionEvent){
         //we save the data object (name of the list)
         try(ObjectOutputStream stream = new ObjectOutputStream(Files.newOutputStream(Paths.get("notes.data")))){
             //create a stream of the file, call the file notes.data,
-            stream.writeObject(data);
+            stream.writeObject(data);      //TODO få savemetoden för calendar att funka
             //and write the dataobject to the file
         }catch (Exception e){
             System.out.println("Failed to save: " + e);
