@@ -20,11 +20,7 @@ public class Circle extends Shape {
         double cy = getY();
         double radius = (getSize() /2);
         boolean hit = pointCircle(px,py, cx,cy, radius);
-        if (hit) {
-            setColor(getColor());       //TODO få select att funka
-            setSize(getSize());
-        }
-        return false;
+        return hit;
     }
 
     public boolean pointCircle(double px, double py, double cx, double cy, double r){

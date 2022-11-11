@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane prefHeight="400" prefWidth="350" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.iths.tt.javafxtt.controller.ChatViewController">
+   <bottom>
+      <HBox prefHeight="50.0" prefWidth="286.0" spacing="10.0" BorderPane.alignment="CENTER">
+         <children>
+            <TextField fx:id="messageField" />
+            <Button fx:id="sendButton" mnemonicParsing="false" onAction="#sendMessageClicked" text="Send Message" />
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+         <BorderPane.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </BorderPane.margin></HBox>
+   </bottom>
+   <HBox.margin>
+      <Insets />
+   </HBox.margin>
+   <center>
+      <ListView fx:id="messagesListView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </center>
+</BorderPane>

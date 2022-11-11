@@ -18,6 +18,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import se.iths.tt.javafxtt.model.ChatViewModel;
 
 import java.io.File;
 import java.io.ObjectInputStream;
@@ -30,9 +31,15 @@ import java.util.*;
 
 public class PaintThreeViewController {
 
+    //chat
+    public Button sendButton;
+    public ListView<String> messagesListView;
+    public TextArea messageField;
     @FXML
-    private MenuItem connectToNetwork;
+    //network
+    private MenuItem connectToNetworkLabel;
     @FXML
+    //paint
     private Canvas canvas;
     @FXML
     private Button undoButton;
@@ -79,29 +86,32 @@ public class PaintThreeViewController {
 
 
     Model model = new Model();
+    //ChatViewModel model = new ChatViewModel();
     ObservableList<ShapeType> shapeTypesList=
             //fill it with shapetype values (the enum)
             FXCollections.observableArrayList(ShapeType.values());
+
+
 
     public void init(Stage stage){
         this.stage=stage;
 
     }
 
-    public void delete(ActionEvent e) {
-        // delelte all the shapes from selected shapes list
-    }
-
         public void initialize(){
         colorpicker.valueProperty().bindBidirectional(model.currentColorProperty());
         sizeSlider.valueProperty().bindBidirectional(model.doubleSizeProperty());
-
         //connectToNetwork.booleanProperty.bindBidirectional(model.booleanProperty());
         choiceBox.valueProperty().bindBidirectional(model.currentShapeTypeProperty());
         choiceBox.setItems(shapeTypesList);
         model.getShapes().addListener(this::listChanged);
-        //bc the list is an observable list we can add a listener to it that connects to method
-        // listChangedMethod above för utritning i det grafiska gränssnittet
+
+        messageField.textProperty().bindBidirectional(model.messageProperty());
+        messagesListView.setItems(model.getObservableListMessages());
+        sendButton.disableProperty().bind(model.messageProperty().isEmpty());
+        /*sendButton.textProperty().bind(Bindings.when(model.messageProperty().isEqualTo("secret"))
+                    .then("Hemligt")
+                    .otherwise("Send message"));*/
 
         picker.valueProperty().addListener((o, oldDate, date) ->{    //TODO ändra till en bindbidirectional?
             //listen for when we select a new date and present info connected to it
@@ -110,47 +120,50 @@ public class PaintThreeViewController {
             //an empty string will be returned
         });
         picker.setValue(LocalDate.now());
-        //picker is set to todays date
-
     }
 
     public void connectToNetworkClicked(ActionEvent actionEvent) {
-        connectToNetwork.disableProperty();
-        ConnectToNetworkShapes.connectToNetwork();
-        ConnectToNetworkChat.connectToNetwork();
+        connectToNetworkLabel.disableProperty();
+        model.connectToNetwork();
     }
 
+    public void sendMessageClicked() {
+        model.sendMessage();
+    }
+
+    /*public void sendMessageClicked() {
+        //Handle button action
+        ConnectToNetwork.sendShape();
+    }*/
+
+    //TODO move to model?
     public void canvasClicked(MouseEvent mouseEvent) {
-        /*if (mouseEvent.isControlDown()) {
-            //if control is pressed last drawn circle turns red
-            model.getShapes().stream().reduce((first, second) -> second).ifPresent(shape -> shape.setColor(Color.RED));
-            return;
-        }*/
         if (selectMode.isSelected()) {
-            Shape shape = (Shape) mouseEvent.getSource();
-            shape.isInside(shape.getX(), shape.getY());
-            //passing mouseklick se if a shape is selected
-
-            model.getShapes().stream().reduce((first, second) -> second)
-                    .orElse(null);
-            //selecting last element in list (översta shapen)
-
+            model.getShapes()
+                    .stream()
+                    .filter((shape)-> shape.isInside(mouseEvent.getX(), mouseEvent.getY()))
+                    .reduce((first, second) -> second)
+                    .ifPresent(s -> {
+                        s.setColor(model.getCurrentColor());
+                        s.setSize(model.getDoubleSize());   //TODO bryta ut till metod
+                    });
+            //selecting elementet som ligger överst
         } else {
-            //creating shapes where canvas is clicked and no selectmode
             model.createShape(mouseEvent.getX(), mouseEvent.getY());}
     }
 
-
+//TODO ska det här vara i model?
     private void listChanged(Observable observable){
-        var context = canvas.getGraphicsContext2D();              //---
+        var context = canvas.getGraphicsContext2D();
+        context.clearRect(0,0, canvas.getWidth(), canvas.getHeight());
+        //när man tar bort så vill man sudda allt o rita om från början
         for (Shape s : model.getShapes()){
             s.draw(context);
-            //Ritar ut det grafiska gränssnittet när listan uppdateras dvs när man ritar en shape
-            //triggas av add
+            //Ritar ut det grafiska gränssnittet när en shape läggs till
         }
     }
 
-
+//TODO move to model
     public void onCanvasDragged(MouseEvent mouseEvent){
         GraphicsContext graphics = canvas.getGraphicsContext2D();
         canvas.setOnMouseDragged(e ->{
@@ -183,7 +196,7 @@ public void redoButtonClicked(ActionEvent actionEvent){
     }
 
 
-
+//TODO skapa tråd att spara i parallellt med att programmet körs + move below to model
 
    public void onActionSave(ActionEvent actionEvent) {
         FileChooser fileChooser = new FileChooser();
@@ -193,24 +206,21 @@ public void redoButtonClicked(ActionEvent actionEvent){
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV", "*.csv"));
 //constructor som tar två parametrar
        File filePath = fileChooser.showSaveDialog(stage);
-        //så vill vi köra filechooserobjektet o den returnerar en file det är den filen vi vlt att spara till
-        //showsaveDialog vill ha ett window för man måste tala om för den vilket fönster ska vi köras ovanpå
-        //medan vi är inne i dialogen och ska välja vilken fil vi ska spara som ska vi inte kunna klicka på
-        //de knappar o grejer som finns i fönstret bakom  så den kräver en stage
-        //stagen har vi i helloapplication så vi beh få över den så att controllen vet om stagen
+        //filechooserobjektet returns a file to save to
+        //showsaveDialog tar ett window dvs det fönster vi körs ovanpå och ej kunna klicka
         if (filePath != null)
             //om anv trycker på cancel
             model.saveToFile(filePath.toPath());
     }
     
     
-    //Calendar
+    //TODO move Calendar to model/seperate class
     private Map<LocalDate, String> data = new HashMap<>();
     //maps date to a note
 
     public void uppdateNotes() {
         load();
-        //load the data when program starts
+        //load the data when program starts               //TODO fungerar ej
         data.put(picker.getValue(), notes.getText());
         //inserts values into map
     }

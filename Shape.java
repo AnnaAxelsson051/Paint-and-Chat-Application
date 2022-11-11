@@ -1,5 +1,6 @@
 package se.iths.tt.javafxtt.Paint;
 
+import javafx.beans.Observable;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.canvas.GraphicsContext;
@@ -93,6 +94,7 @@ public abstract class Shape {
         };
 
     }
+
 
 
 }

@@ -15,10 +15,8 @@ import java.nio.file.Path;
 import java.util.*;
 
 public class Model {
-    //Model Contains info to display to user
-    //Remember: Models can be used to feed multiple View objects
+    //Models can be used to feed multiple View objects
 
-    //to select
     List<Node> selectionModel = new ArrayList<>();
 
 
@@ -32,11 +30,58 @@ public class Model {
             param.colorProperty(),
             param.sizeProperty(),
             param.heightProperty(),
-            param.widthProperty(),
+            param.widthProperty()
     });
 
     //connect to network
 
+
+    ObservableList<Shape> observableListShapes = FXCollections.observableArrayList();
+    ObservableList<String> observableListMessages = FXCollections.observableArrayList();
+
+    private Socket socket;
+    private PrintWriter writer;
+    private BufferedReader reader;
+
+
+    public void connectToNetwork() {
+
+        try {
+            socket = new Socket("localhost", 8000);
+            OutputStream output = socket.getOutputStream();
+            writer = new PrintWriter(output, true);
+            InputStream input = socket.getInputStream();
+            reader = new BufferedReader(new InputStreamReader(input));
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        createThreadShapes();
+
+    }
+    public void createThreadShapes() {
+        var threadShapes = new Thread(() -> {
+            try {
+                while (true) {
+                    String string = reader.readLine();
+                    if (string.contains("Shape")) {
+                        System.out.println("Shape");
+                        //skickar som kommaseparerad lista o anv string.split för att dela
+                        //Platform.runLater(() -> observableListShapes.add((Shape) shape));
+                    }else
+                        Platform.runLater(() -> observableListMessages.add(string));
+                    System.out.println("Message");
+
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);       //TODO deleta catch?
+            }
+        });
+        threadShapes.setDaemon(true);
+        threadShapes.start();
+    }
+
+//connect to network
     public BooleanProperty connectToNetwork = new SimpleBooleanProperty();
 
     public BooleanProperty connectToNetworkProperty(){
@@ -50,6 +95,70 @@ public class Model {
     public void setConnectToNetwork(boolean connectToNetwork) {
         this.connectToNetwork.set(connectToNetwork);
     }
+
+
+    //shapes
+
+    ObjectProperty shape = new SimpleObjectProperty();
+
+    public Object getShape() {
+        return shape.get();
+    }
+
+    public ObjectProperty shapeProperty() {
+        return shape;
+    }
+
+    public void setShape(Shape shape) {
+        this.shape.set(shape);
+    }
+
+    public ObservableList<Shape> getObservableListShapes() {
+        return observableListShapes;
+    }
+
+    public void setObservableListShapes (ObservableList<Shape> observableListShapes) {
+        this.observableListShapes = observableListShapes;
+    }
+
+    public void sendShape() {
+        writer.println(getShape());
+        //getObservableList().add(getMessage());
+        setShape(null);
+    }
+
+    //messages
+
+    public StringProperty message = new SimpleStringProperty();
+
+    public String getMessage() {
+        return message.get();
+    }
+
+    public StringProperty messageProperty() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message.set(message);
+    }
+
+    public ObservableList<String> getObservableListMessages() {
+        return observableListMessages;
+    }
+
+    public void setObservableListMessages(ObservableList<String> observableListMessages) {
+        this.observableListMessages = observableListMessages;
+    }
+
+    public void sendMessage() {
+        writer.println(getMessage());
+        //getObservableList().add(getMessage());
+        setMessage("");
+    }
+
+
+
 
     //shapetype
     public ObjectProperty<ShapeType> currentShapeType = new SimpleObjectProperty<>(ShapeType.CIRCLE);
@@ -107,7 +216,7 @@ public class Model {
     }
 
 
-    //create shapes with mouse coordinates:
+    //create shapes with mouse coordinates:   //TODO make create/add seperate class
     public void createShape(double x, double y) {
         Shape shape = Shape.createShape(getCurrentShapeType(), x, y);
         shape.setColor(getCurrentColor());
@@ -128,10 +237,13 @@ public class Model {
         return shape;
     }
 
+
+//TODO make undo redo seperate class
     Deque<CommandPair> undoStack = new ArrayDeque<>();
     Deque<CommandPair> redoStack = new ArrayDeque<>();
 
     public void undo(){
+        System.out.println("test");
         var commandPair= undoStack.pop();
         commandPair.undo.execute();
         redoStack.push(commandPair);
@@ -142,6 +254,8 @@ public class Model {
         commandPair.redo.execute();
         undoStack.push(commandPair);
     }
+
+
 
     interface Command{
         void execute();
@@ -155,100 +269,9 @@ public class Model {
 
 
 
-    static class ConnectToNetwork {
 
-        ObjectProperty shape = new SimpleObjectProperty();
-
-        ObservableList<Shape> observableList = FXCollections.observableArrayList();
-        private Socket socket;
-        private final PrintWriter writer;
-        private final BufferedReader reader;
-
-        ConnectToNetwork() {
-            reader = null;
-        }
-
-
-        public static void connectToNetwork() {
-
-            try {
-                socket = new Socket("localhost", 8000);
-                OutputStream output = socket.getOutputStream();
-                writer = new PrintWriter(output, true);
-                InputStream input = socket.getInputStream();
-                reader = new BufferedReader(new InputStreamReader(input));
-
-                var thread = new Thread(() -> {
-                    try {
-                        while (true) {
-                            Shape shape = reader.readLine();
-                            Platform.runLater(() -> observableList.add(shape));
-                        }
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                });
-                thread.setDaemon(true);
-                thread.start();
-
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-        public Shape getShape() {
-            return shape.get();
-        }
-
-        public ObjectProperty shapeProperty() {
-            return shape;
-        }
-
-        public void setShape(String message) {
-            this.shape.set(shape);
-        }
-
-        public ObservableList<Shape> getObservableList() {
-            return observableList;
-        }
-
-        public void setObservableList(ObservableList<Shape> observableList) {
-            this.observableList = observableList;
-        }
-
-        public void sendShape() {
-            writer.println(getShape());
-            //getObservableList().add(getMessage());
-            setShape("");
-        }
-    }
-
-
-            /*NetworkInterface nif = NetworkInterface.getByName("localhost");
-            Enumeration<InetAddress> nifAddresses = nif.getInetAddresses();
-            socket = new Socket("localhost", 8000);
-            Socket socket = new Socket();
-            socket(new InetSocketAddress(nifAddresses.nextElement(), 0));
-            socket.connect(new InetSocketAddress(x,y));*/
-            //connecting to the loopback interface with the name IO
-            //So we retrieve the network interface attached to lo first, retrieve
-            // the addresses attached to it, create a socket, bind it to any of the
-            // enumerated addresses which we don't even know at compile time and then connect.
-
-            //– public void run( )
-            //– Implementera Runnable interfacet och skicka till en ny instans av
-            //Thread för att köra din klass som en egen tråd.
-            //– Normalt vill vi inte ärva Thread om vi bara behöver overrida run
-            //metoden.*/
-        }
-
-
-
-
-
-
-
-
+//TODO make save to file seperate class
+    //TODO add function for saving as an image?
 
     //Save shapes to excell
     public void saveToFile(Path file) {
