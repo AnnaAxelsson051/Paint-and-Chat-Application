@@ -2,7 +2,6 @@ package se.iths.tt.javafxtt.Paint;
 
 import javafx.application.Platform;
 import javafx.beans.Observable;
-import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -30,6 +29,7 @@ public class PaintController {
     public Button sendButton;
     public ListView<String> messagesListView;
     public TextArea messageField;
+    public MenuItem disConnectFromNetworkLabel;
     @FXML
     //network
     private MenuItem connectToNetworkLabel;
@@ -110,6 +110,8 @@ public class PaintController {
         /*sendButton.textProperty().bind(Bindings.when(model.messageProperty().isEqualTo("secret"))
                     .then("Hemligt")
                     .otherwise("Send message"));*/
+        disConnectFromNetworkLabel.setDisable(true);
+
 
         picker.valueProperty().addListener((o, oldDate, date) ->{    //TODO ändra till en bindbidirectional?
             //listen for when we select a new date and present info connected to it
@@ -121,12 +123,25 @@ public class PaintController {
     }
 
     public void onConnectToNetworkLabelClicked(ActionEvent actionEvent) {
+        connectToNetworkLabel.setDisable(true);
+        disConnectFromNetworkLabel.setDisable(false);
         connectToNetworkLabel.disableProperty(); //TODO hur disablar man den?
         connectToNetwork.connect();
     }
 
-    public void sendMessageClicked() {
+    public void onDisConnectFromNetworkLabelClicked(ActionEvent actionEvent) {
+        connectToNetworkLabel.setDisable(false);
+    }
+
+    public void onSendButtonClicked() {
         connectToNetwork.sendMessage();
+    }
+
+
+    public void enableSendButton(){
+        String message = messageField.getText();
+        boolean disableButtons = message.isEmpty() || message.trim().isEmpty();
+        sendButton.setDisable(disableButtons);
     }
 
     public void onCanvasClicked(MouseEvent mouseEvent) {
@@ -142,7 +157,7 @@ public class PaintController {
     public void onCanvasDragged(MouseEvent mouseEvent){
         GraphicsContext graphics = canvas.getGraphicsContext2D();
         canvas.setOnMouseDragged(e ->{
-            double size = Double.parseDouble(penSize.getText());
+            double size = Double.parseDouble(penSize.getText());   //TODO ha den här eller i model?
             double x = e.getX() - size /2;
             double y = e.getY() - size /2;
             if(eraser.isSelected()){

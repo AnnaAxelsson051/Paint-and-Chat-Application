@@ -7,15 +7,16 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane prefHeight="900" prefWidth="700.0" styleClass="borderPane" stylesheets="@application.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.iths.tt.javafxtt.Paint.PaintThreeViewController">
+<BorderPane prefHeight="900" prefWidth="700.0" styleClass="borderPane" stylesheets="@application.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.iths.tt.javafxtt.Paint.PaintController">
     <top>
 <VBox prefHeight="140.0" prefWidth="700.0" styleClass="vBox">
     <MenuBar>
 <Menu text="File Actions">
-    <MenuItem onAction="#onActionSave" text="Save" />
+    <MenuItem onAction="#onSaveLabelClicked" text="Save" />
     <MenuItem text="Open saved items" />
-    <MenuItem fx:id="connectToNetwork" text="Connect to network server" onAction="#connectToNetworkClicked"/>
-    <MenuItem onAction="#onActionExit" text="Exit" />
+    <MenuItem fx:id="connectToNetworkLabel" onAction="#onConnectToNetworkLabelClicked" text="Connect to network server" />
+    <MenuItem fx:id="disConnectFromNetworkLabel" onAction="#onDisConnectFromNetworkLabelClicked" text="Disconnect from network server" />
+    <MenuItem onAction="#onExitButtonClicked" text="Exit" />
 </Menu>
     </MenuBar>
 
@@ -50,7 +51,7 @@
                      </padding></CheckBox>
 
 
-    <ChoiceBox fx:id="choiceBox" prefHeight="25.0" prefWidth="205.0" GridPane.ColumnIndex="0" GridPane.rowIndex="1" >
+    <ChoiceBox fx:id="choiceBox" prefHeight="25.0" prefWidth="205.0" GridPane.ColumnIndex="0" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin></ChoiceBox>
@@ -64,7 +65,7 @@
                      <padding>
                         <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
                      </padding></Label>
-    <Slider fx:id="sizeSlider" prefWidth="196.0" GridPane.ColumnIndex="2" GridPane.rowIndex="1" showTickLabels = "true" showTickMarks="true" minorTickCount="4" snapToTicks ="true">
+    <Slider fx:id="sizeSlider" minorTickCount="4" prefWidth="196.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" GridPane.ColumnIndex="2" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin></Slider>
@@ -78,11 +79,11 @@
                      <padding>
                         <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
                      </padding></CheckBox>
-    <Button fx:id="undoButton" onAction="#undoButtonClicked" prefHeight="40.0" prefWidth="40.0" styleClass="undoButton" GridPane.ColumnIndex="7" GridPane.rowIndex="2">
+    <Button fx:id="undoButton" onAction="#onUndoButtonClicked" prefHeight="40.0" prefWidth="40.0" styleClass="undoButton" GridPane.ColumnIndex="7" GridPane.rowIndex="2">
         <GridPane.margin>
                         <Insets />
                      </GridPane.margin></Button>
-    <Button fx:id="redoButton" onAction="#redoButtonClicked" prefHeight="40.0" prefWidth="40.0" styleClass="redoButton" GridPane.ColumnIndex="8" GridPane.rowIndex="2">
+    <Button fx:id="redoButton" onAction="#onRedoButtonClicked" prefHeight="40.0" prefWidth="40.0" styleClass="redoButton" GridPane.ColumnIndex="8" GridPane.rowIndex="2">
                      <GridPane.margin>
                         <Insets left="5.0" right="5.0" />
                      </GridPane.margin></Button>
@@ -122,7 +123,7 @@
 </VBox>
 </top>
     <center>
-        <Canvas fx:id="canvas" height="300" onMouseClicked="#canvasClicked" onDragDetected="#onCanvasDragged" styleClass="canvas" width="500">
+        <Canvas fx:id="canvas" height="300" onDragDetected="#onCanvasDragged" onMouseClicked="#onCanvasClicked" styleClass="canvas" width="500">
            </Canvas>
     </center>
    <right>
@@ -136,14 +137,15 @@
                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
             </padding></DatePicker>
           <TextArea fx:id="notes" prefHeight="131.0" prefWidth="145.0" />
-          <Button onAction="#uppdateNotes" text="Uppdate Notes">
+          <Button onAction="#onUpdateNotesButtonClicked" text="Uppdate Notes">
               <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
               </VBox.margin></Button>
-          <Button fx:id="saveButton" onAction="#saveNotes" text="Save Notes">
+          <Button fx:id="saveButton" onAction="#onSaveNotesButtonClicked" text="Save Notes">
               <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" />
               </VBox.margin></Button>
+         <ListView fx:id="messagesListView" prefHeight="162.0" prefWidth="145.0" />
       </VBox>
    </right>
 
@@ -199,7 +201,7 @@
     <bottom><HBox prefHeight="120" prefWidth="700.0">
         <children>
         <VBox>
-            <Label styleClass="notePadlabel" text="Note Pad">
+            <Label styleClass="notePadlabel" text="Chat">
                 <VBox.margin>
                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                 </VBox.margin></Label>
@@ -209,7 +211,7 @@
                   <items>
                     <MenuItem mnemonicParsing="false" text="Open" />
                       <MenuItem mnemonicParsing="false" text="Save" />
-                      <MenuItem mnemonicParsing="false" text="Full View" onAction="#onFullViewClicked"/>
+                      <MenuItem mnemonicParsing="false" onAction="#onFullViewClicked" text="Full View" />
                       <MenuItem mnemonicParsing="false" text="Minimize" />
                   </items>
                 </Menu>
@@ -222,7 +224,12 @@
               </menus>
             </MenuBar>
         </VBox>
-            <TextArea prefHeight="120.0" prefWidth="630.0" />
+            <TextArea fx:id="messageField" onKeyReleased="#enableSendButton" prefHeight="120.0" prefWidth="526.0" />
+            <Button fx:id="sendButton" mnemonicParsing="false" onAction="#onSendButtonClicked" prefHeight="25.0" prefWidth="54.0" text="Send">
+               <HBox.margin>
+                  <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
+               </HBox.margin>
+            </Button>
 
          </children></HBox>
 
