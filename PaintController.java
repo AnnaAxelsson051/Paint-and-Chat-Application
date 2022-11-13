@@ -90,7 +90,6 @@ public class PaintController {
             FXCollections.observableArrayList(ShapeType.values());
 
 
-
     public void init(Stage stage){
         this.stage=stage;
 
@@ -125,8 +124,10 @@ public class PaintController {
     public void onConnectToNetworkLabelClicked(ActionEvent actionEvent) {
         connectToNetworkLabel.setDisable(true);
         disConnectFromNetworkLabel.setDisable(false);
-        connectToNetworkLabel.disableProperty(); //TODO hur disablar man den?
+        connectToNetworkLabel.disableProperty();
         connectToNetwork.connect();
+        //connectToNetwork.createThreads(ListView<String> messagesListView);
+        connectToNetwork.createThreads();
     }
 
     public void onDisConnectFromNetworkLabelClicked(ActionEvent actionEvent) {

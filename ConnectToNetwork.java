@@ -4,9 +4,11 @@ import javafx.application.Platform;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.ListView;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.List;
 
 public class ConnectToNetwork {
     //ConnectToNetwork
@@ -29,7 +31,7 @@ public class ConnectToNetwork {
             OutputStream output = socket.getOutputStream();
             writer = new PrintWriter(output, true);
             InputStream input = socket.getInputStream();
-            reader = new BufferedReader(new InputStreamReader(input));
+            reader = new BufferedReader(new InputStreamReader(input));   //TODO se viden om connect to network
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -42,14 +44,15 @@ public class ConnectToNetwork {
             try {
                 while (true) {
                     String string = reader.readLine();  //TODO göra
-                    //String string = reader.readLine().split(",");
+                    //BufferedReader bufferedReader = new BufferedReader(getMessage());
+                    //String listWiewString = String.valueOf(bufferedReader.readLine().split(" "));
                     if (string.contains("Shape")) {
-                        System.out.println("Shape");
-                        //skickar som kommaseparerad lista o anv string.split för att dela
+                       // Platform.runLater(() -> observableListShapes.add(shape));
                         //Platform.runLater(() -> observableListShapes.add((Shape) shape));
-                    }else
+                        //skickar som kommaseparerad lista o anv string.split för att dela
+                    }else {
                         Platform.runLater(() -> observableListMessages.add(string));
-                    System.out.println("Message");
+                    }
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -85,7 +88,7 @@ public class ConnectToNetwork {
         return shape;
     }
 
-    public void setShape(Shape shape) {
+    public void setShape(Shape shape) {   //TODO ta bort dessa med shapes för att alla är messages?
         this.shape.set(shape);
     }
 
