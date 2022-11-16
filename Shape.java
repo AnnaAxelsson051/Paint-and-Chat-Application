@@ -85,9 +85,6 @@ public abstract class Shape {
         return switch (type) {
             case CIRCLE -> new Circle(x, y);
             case RECTANGLE -> new Rectangle(x, y);
-            case TRIANGLE -> new Triangle(x, y);
-            case SQUARE -> new Square(x, y);
-            case ARC -> new Arc(x, y);
             default -> new Arc(x, y);
             //case ROUND_RECTANGLE -> new RoundRectangle(x, y);
             //case TRIANGLE -> new Triangle(x,y);

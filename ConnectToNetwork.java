@@ -4,15 +4,13 @@ import javafx.application.Platform;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.ListView;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.List;
 
 public class ConnectToNetwork {
     //ConnectToNetwork
-
+boolean connected;
 
     ObservableList<Shape> observableListShapes = FXCollections.observableArrayList();
     ObservableList<String> observableListMessages = FXCollections.observableArrayList();
@@ -31,25 +29,29 @@ public class ConnectToNetwork {
             OutputStream output = socket.getOutputStream();
             writer = new PrintWriter(output, true);
             InputStream input = socket.getInputStream();
-            reader = new BufferedReader(new InputStreamReader(input));   //TODO se viden om connect to network
+            reader = new BufferedReader(new InputStreamReader(input));
 
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         createThreads();
+        connected = true;
 
     }
     public void createThreads() {
         var threadShapes = new Thread(() -> {
             try {
                 while (true) {
-                    String string = reader.readLine();  //TODO göra
-                    //BufferedReader bufferedReader = new BufferedReader(getMessage());
-                    //String listWiewString = String.valueOf(bufferedReader.readLine().split(" "));
+                    String string = reader.readLine();  //TODO Skapa tråd och läsa meddelanden
+                    String [] temp = string.split(",");
+                    string.substring(1,3);
+                    //Shape shape = new Shape(string[0], string[1]);
+                    //får in en textsträng göra om fr textsträng tillbaka till shape
+                    // kommer hit kommaseparerat sätta varje värde till shape konstruktorn
                     if (string.contains("Shape")) {
-                       // Platform.runLater(() -> observableListShapes.add(shape));
-                        //Platform.runLater(() -> observableListShapes.add((Shape) shape));
-                        //skickar som kommaseparerad lista o anv string.split för att dela
+                      //  Platform.runLater(() -> observableListShapes.add((Shape) shape));
+                        //när man klippt strängen här göra new shape o stoppa i add i shapelistan
+
                     }else {
                         Platform.runLater(() -> observableListMessages.add(string));
                     }
@@ -130,10 +132,9 @@ public class ConnectToNetwork {
         this.observableListMessages = observableListMessages;
     }
 
-    public void sendMessage() {
-        writer.println(getMessage());
-        //getObservableList().add(getMessage());
-        setMessage("");
-    }
 
+    public void sendMessage(String networkFormat) {
+        writer.println(networkFormat);
+    }
 }
+

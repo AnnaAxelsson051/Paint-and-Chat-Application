@@ -5,23 +5,14 @@ import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.time.LocalDate;
-import java.util.*;
 
 public class PaintController {
 
@@ -30,61 +21,56 @@ public class PaintController {
     public ListView<String> messagesListView;
     public TextArea messageField;
     public MenuItem disConnectFromNetworkLabel;
-    @FXML
+
     //network
-    private MenuItem connectToNetworkLabel;
+    public MenuItem connectToNetworkLabel;
 
     //paint
     public Canvas canvas;
-    @FXML
-    private Button undoButton;
 
-    @FXML
-    private Button redoButton;
+    public Button undoButton;
 
-    @FXML
-    private ColorPicker colorpicker;
-    @FXML
-    private TextField penSize;
+
+    public Button redoButton;
+
+
+    public ColorPicker colorpicker;
+
+    public TextField penSize;
 
     //for manual drawing
-    @FXML
-    private CheckBox eraser;
+
+    public CheckBox eraser;
     //for manual drawing
 
     //public TextField sizeField;  //***
-    @FXML
-    private Slider sizeSlider;
+
+    public Slider sizeSlider;
 
     //choicebox with objects square circle etc:
-    @FXML
-    private ChoiceBox <ShapeType> choiceBox;
-    @FXML
-    private CheckBox selectMode;
 
-    @FXML
+    public ChoiceBox <ShapeType> choiceBox;
+
+    public CheckBox selectMode;
+
+
     public Stage stage;
 
     // Calendar
-    @FXML
-    private DatePicker picker;
-    @FXML
-    private TextArea notes;
-    @FXML
-    private Button saveButton;
 
-    //Cal
-    @FXML
-    private Text output;
-    @FXML
-    private Button numButton;
+    public DatePicker picker;
+
+    public TextArea notes;
+
+    public Button saveButton;
+
+
 
 
     PaintModel model = new PaintModel();
     //ChatViewModel model = new ChatViewModel();
 
-    ConnectToNetwork connectToNetwork = new ConnectToNetwork();
-    //ChatViewModel model = new ChatViewModel();
+
     ObservableList<ShapeType> shapeTypesList=
             //fill it with shapetype values (the enum)
             FXCollections.observableArrayList(ShapeType.values());
@@ -102,32 +88,32 @@ public class PaintController {
         choiceBox.valueProperty().bindBidirectional(model.currentShapeTypeProperty());
         choiceBox.setItems(shapeTypesList);
         model.getShapes().addListener(this::listChanged);
-
-        messageField.textProperty().bindBidirectional(connectToNetwork.messageProperty());
-        messagesListView.setItems(connectToNetwork.getObservableListMessages());
-        sendButton.disableProperty().bind(connectToNetwork.messageProperty().isEmpty());
+        sendButton.disableProperty().bind(model.connectToNetwork.messageProperty().isEmpty());
+        messageField.textProperty().bindBidirectional(model.connectToNetwork.messageProperty());
+        messagesListView.setItems(model.connectToNetwork.getObservableListMessages());
+        sendButton.disableProperty().bind(model.connectToNetwork.messageProperty().isEmpty());
         /*sendButton.textProperty().bind(Bindings.when(model.messageProperty().isEqualTo("secret"))
                     .then("Hemligt")
                     .otherwise("Send message"));*/
         disConnectFromNetworkLabel.setDisable(true);
 
 
-        picker.valueProperty().addListener((o, oldDate, date) ->{    //TODO ändra till en bindbidirectional?
+       /* picker.valueProperty().addListener((o, oldDate, date) ->{    //TODO ändra till en bindbidirectional?
             //listen for when we select a new date and present info connected to it
         notes.setText(data.getOrDefault(date,""));
             //Returns a value if there is a key called date, if there is no such key then
             //an empty string will be returned
         });
-        picker.setValue(LocalDate.now());
+        picker.setValue(LocalDate.now());*/
     }
 
     public void onConnectToNetworkLabelClicked(ActionEvent actionEvent) {
         connectToNetworkLabel.setDisable(true);
         disConnectFromNetworkLabel.setDisable(false);
         connectToNetworkLabel.disableProperty();
-        connectToNetwork.connect();
+        model.connectToNetwork.connect();
         //connectToNetwork.createThreads(ListView<String> messagesListView);
-        connectToNetwork.createThreads();
+        model.connectToNetwork.createThreads();
     }
 
     public void onDisConnectFromNetworkLabelClicked(ActionEvent actionEvent) {
@@ -135,15 +121,12 @@ public class PaintController {
     }
 
     public void onSendButtonClicked() {
-        connectToNetwork.sendMessage();
-    }
+        model.connectToNetwork.sendMessage(shape.toString().split(","));
 
 
-    public void enableSendButton(){
-        String message = messageField.getText();
-        boolean disableButtons = message.isEmpty() || message.trim().isEmpty();
-        sendButton.setDisable(disableButtons);
+
     }
+
 
     public void onCanvasClicked(MouseEvent mouseEvent) {
         if (selectMode.isSelected()) {
@@ -154,18 +137,18 @@ public class PaintController {
     }
 
 
-//TODO move to model
+//TODO move to model?
     public void onCanvasDragged(MouseEvent mouseEvent){
         GraphicsContext graphics = canvas.getGraphicsContext2D();
         canvas.setOnMouseDragged(e ->{
-            double size = Double.parseDouble(penSize.getText());   //TODO ha den här eller i model?
+            double size = Double.parseDouble(penSize.getText());
             double x = e.getX() - size /2;
             double y = e.getY() - size /2;
             if(eraser.isSelected()){
                 graphics.clearRect(x,y,size,size);
             }else{
                 graphics.setFill(colorpicker.getValue());
-                graphics.fillRect(x,y,size,size);
+                model.createShape(x,y);
             }
         });
     }
@@ -179,7 +162,7 @@ public void onRedoButtonClicked(ActionEvent actionEvent){
         model.redo();
 
 }
-    //TODO ska det här vara i model?
+    //TODO move to model?
     private void listChanged(Observable observable){
         var context = canvas.getGraphicsContext2D();
         context.clearRect(0,0, canvas.getWidth(), canvas.getHeight());
@@ -197,7 +180,7 @@ public void onRedoButtonClicked(ActionEvent actionEvent){
     }
 
 
-//TODO skapa tråd att spara i parallellt med att programmet körs + move below to model
+//TODO move to model?
 
    public void onSaveLabelClicked(ActionEvent actionEvent) {
        FileChooser fileChooser = new FileChooser();
@@ -214,14 +197,14 @@ public void onRedoButtonClicked(ActionEvent actionEvent){
            model.saveToFile(filePath.toPath());
     }
     
-    
+    /*
     //TODO move Calendar to model/seperate class
     private Map<LocalDate, String> data = new HashMap<>();
     //maps date to a note
 
     public void onUpdateNotesButtonClicked() {
         load();
-        //load the data when program starts               //TODO fungerar ej
+        //load the data when program starts               //TODO anteckningar ej sparade när man startar om
         data.put(picker.getValue(), notes.getText());
         //inserts values into map
     }
@@ -253,23 +236,10 @@ public void onRedoButtonClicked(ActionEvent actionEvent){
                 System.out.println("Failed to load: " + e);
             }
         }
-    }
-    //Calculator
-
-    public void processNumPad(ActionEvent event){
-        String value = numButton.getText();
-        System.out.println(value);
-
-    }
+    }*/
 
 
-    public void processOperator(ActionEvent actionEvent) {
-    }
 
-    //notes
-
-    public void onFullViewClicked(ActionEvent actionEvent) {
-    }
 
 
 

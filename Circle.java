@@ -43,9 +43,12 @@ public class Circle extends Shape {
         context.strokeOval(getX()-getSize()/2, getY()-getSize()/2, getSize(), getSize());
     }    //skapa ytterkant av 
 
-
-
-
+    @Override
+    public String toString() {
+        return "Circle{circle}" + "," + getX() + "," + getY();
+    //"," + getColor() + ","
+        //                + getSize() + "," + getWidth() + "," + getHeight();
+    }
 }
 
 

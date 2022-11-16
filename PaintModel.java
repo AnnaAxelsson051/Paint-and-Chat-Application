@@ -17,6 +17,9 @@ import java.util.*;
 public class PaintModel {
     //Models can be used to feed multiple View objects
 
+    ConnectToNetwork connectToNetwork = new ConnectToNetwork();
+    //ChatViewModel model = new ChatViewModel();
+
     List<Node> selectionModel = new ArrayList<>();
 
     public ObservableList<? extends Shape> getShapes() {
@@ -115,14 +118,28 @@ public class PaintModel {
     }
 
 
-    public Shape addShape (Shape shape){
-        shapes.add(shape);
-        CommandPair commandpair = new CommandPair();
-        commandpair.undo = () -> shapes.remove(shape);
-        commandpair.redo = () -> shapes.add(shape);
-        //Skapa ett command o spar det i undo/redostack för undoanvändning
-        undoStack.push(commandpair);
-        return shape;
+    private Shape addShape (Shape shape){
+        if(connectToNetwork.connected) {  //mottagare
+            connectToNetwork.sendMessage(shape.toString());
+            //skickar in den ihopbyggda stringen som byggs i to stringmetoden, till server mha send message
+            //(to string bygger stringen o best hur de ska se ut)
+
+            //det första är en id, substringa bort
+            //Börja med tex x och y
+            //skapa en string so består av alla fält från shapen o även vilken shapetyp det
+            // blir en textsträng
+            // ej klasser tex det står att det är en
+            // circkle komma x resp y koordinatens värde o när man har den
+            // textsträngen kan man skicka den
+            // nätverket
+        }
+            shapes.add(shape);
+            CommandPair commandpair = new CommandPair();
+            commandpair.undo = () -> shapes.remove(shape);
+            commandpair.redo = () -> shapes.add(shape);
+            //Skapa ett command o spar det i undo/redostack för undoanvändning
+            undoStack.push(commandpair);
+            return shape;
     }
 
 

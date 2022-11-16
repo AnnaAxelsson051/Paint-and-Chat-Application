@@ -13,33 +13,36 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class PaintModelTest {
     PaintModel paint = new PaintModel();
 
-    //2 tester
-    //Hur vi kan implementera tester i labben tex
-    //Man ha en modell som lagrar shapes o man kan modifiera shapes om man tar
-    // bort shapes med en undo metod ska de tas bort den sneatse ifrån händelserna
-    //Om man lägger till en ska den finnas
-
     @Test
-     void createNewPaintModelAtMouseCoordinatesPositionWhenMouseIsClicked() {
+    void createNewPaintModelAtMouseCoordinatesPositionWhenMouseIsClicked() {  //coordinates
         paint.createShape(12.0, 4.2);
-        var expected = new Position((int) 12.0, (int) 4.2);
-        var actual = paint.getShapes().get(0).getX();
-        Assertions.assertEquals(expected, actual);
-        //assertEquals(new Position(12,4), paint.currentShapeType.get());
+        Assertions.assertEquals(12.0, paint.getShapes().get(0).getX());
+        Assertions.assertEquals(4.2, paint.getShapes().get(0).getY());
     }
 
     @Test
-    void removeLastShapeInListWhenUndoIsSelected(){
-        paint.canvasClicked(13.2, 3.7);
-        paint.canvasClicked(4.0, 10.4);
+    void removeLastShapeInListWhenUndoIsSelected() {
+        paint.createShape(13.2, 3.7);
+        paint.createShape(4.0, 10.4);
         paint.undo();
-        paint.getShapes().stream().reduce((first, second) -> second);
-        var actual = paint.getShapes().get(0);
-        var expected = paint.currentShapeType.get();
-        Assertions.assertEquals(expected, actual);
+        Assertions.assertEquals(1, paint.getShapes().size());
+        Assertions.assertEquals(13.2, paint.getShapes().get(0).getX());
+        Assertions.assertEquals(3.7, paint.getShapes().get(0).getY());
 
 
     }
+}
+
+
+
+
+
+
+
+
+
+
+
 
     /*@Test
     void changeShapesizeToSelectedSizeWhenShapeIsSelected() {
@@ -74,4 +77,3 @@ public class PaintModelTest {
 
 
 
-}
