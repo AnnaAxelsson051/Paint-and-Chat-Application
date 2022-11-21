@@ -56,17 +56,6 @@ public class PaintController {
 
     public Stage stage;
 
-    // Calendar
-
-    public DatePicker picker;
-
-    public TextArea notes;
-
-    public Button saveButton;
-
-
-
-
     PaintModel model = new PaintModel();
     //ChatViewModel model = new ChatViewModel();
 
@@ -92,19 +81,7 @@ public class PaintController {
         messageField.textProperty().bindBidirectional(model.connectToNetwork.messageProperty());
         messagesListView.setItems(model.connectToNetwork.getObservableListMessages());
         sendButton.disableProperty().bind(model.connectToNetwork.messageProperty().isEmpty());
-        /*sendButton.textProperty().bind(Bindings.when(model.messageProperty().isEqualTo("secret"))
-                    .then("Hemligt")
-                    .otherwise("Send message"));*/
         disConnectFromNetworkLabel.setDisable(true);
-
-
-       /* picker.valueProperty().addListener((o, oldDate, date) ->{    //TODO ändra till en bindbidirectional?
-            //listen for when we select a new date and present info connected to it
-        notes.setText(data.getOrDefault(date,""));
-            //Returns a value if there is a key called date, if there is no such key then
-            //an empty string will be returned
-        });
-        picker.setValue(LocalDate.now());*/
     }
 
     public void onConnectToNetworkLabelClicked(ActionEvent actionEvent) {
@@ -121,9 +98,8 @@ public class PaintController {
     }
 
     public void onSendButtonClicked() {
-        model.connectToNetwork.sendMessage(shape.toString().split(","));
-
-
+        //model.connectToNetwork.sendMessage(shape.toString());
+        model.connectToNetwork.sendMessage(messageField.getText());
 
     }
 
@@ -196,51 +172,5 @@ public void onRedoButtonClicked(ActionEvent actionEvent){
            //om anv trycker på cancel
            model.saveToFile(filePath.toPath());
     }
-    
-    /*
-    //TODO move Calendar to model/seperate class
-    private Map<LocalDate, String> data = new HashMap<>();
-    //maps date to a note
-
-    public void onUpdateNotesButtonClicked() {
-        load();
-        //load the data when program starts               //TODO anteckningar ej sparade när man startar om
-        data.put(picker.getValue(), notes.getText());
-        //inserts values into map
-    }
-
-    public void onSaveNotesButtonClicked(ActionEvent actionEvent){
-        //we save the data object (name of the list)
-        try(ObjectOutputStream stream = new ObjectOutputStream(Files.newOutputStream(Paths.get("notes.data")))){
-            //create a stream of the file, call the file notes.data,
-            stream.writeObject(data);      //TODO få savemetoden för calendar att funka
-            //and write the dataobject to the file
-        }catch (Exception e){
-            System.out.println("Failed to save: " + e);
-        }
-
-
-    }
-
-    private void load(){
-        Path file = Paths.get("notes.data");
-        //obtain a reference to the file and see if it exists so we can load
-
-        if (Files.exists(file)){
-            try (ObjectInputStream stream =
-                         new ObjectInputStream(Files.newInputStream(file))){
-                data = (Map<LocalDate, String>) stream.readObject();
-                //read the object, its the same object we read back, we typecast it to map of localdate and string
-                //because we know the type bc we saved the data to it
-            }catch (Exception e){
-                System.out.println("Failed to load: " + e);
-            }
-        }
-    }*/
-
-
-
-
-
 
 }

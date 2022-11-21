@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.Arrays;
 
 public class ConnectToNetwork {
     //ConnectToNetwork
@@ -43,15 +44,16 @@ boolean connected;
             try {
                 while (true) {
                     String string = reader.readLine();  //TODO Skapa tråd och läsa meddelanden
-                    String [] temp = string.split(",");
-                    string.substring(1,3);
-                    //Shape shape = new Shape(string[0], string[1]);
-                    //får in en textsträng göra om fr textsträng tillbaka till shape
-                    // kommer hit kommaseparerat sätta varje värde till shape konstruktorn
-                    if (string.contains("Shape")) {
-                      //  Platform.runLater(() -> observableListShapes.add((Shape) shape));
-                        //när man klippt strängen här göra new shape o stoppa i add i shapelistan
 
+                    if (string.contains("Shape")) {
+                        String[] temp = string.split(",");
+                        String shapeType = temp[0];
+                        double x = Double.parseDouble(temp[1]);
+                        double y = Double.parseDouble(temp[2]);
+                        //göra om fr textsträng tillbaka till shape sätta varje värde till shape konstruktorn
+                        Platform.runLater(() -> observableListShapes
+                                .add(Shape.createShape(ShapeType.valueOf(shapeType.toUpperCase()), x, y)));
+                        //Om du skriver Shapetype.valueOf(string goes here)
                     }else {
                         Platform.runLater(() -> observableListMessages.add(string));
                     }
@@ -135,6 +137,7 @@ boolean connected;
 
     public void sendMessage(String networkFormat) {
         writer.println(networkFormat);
+    //send message får en string som heter networkformat som den printar med println
     }
 }
 

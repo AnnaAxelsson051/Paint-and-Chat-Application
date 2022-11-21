@@ -117,21 +117,32 @@ public class PaintModel {
         //the above triggers listChanged method/lyssnaren below som triggar utritning
     }
 
-
+    //below was private before)
     private Shape addShape (Shape shape){
         if(connectToNetwork.connected) {  //mottagare
-            connectToNetwork.sendMessage(shape.toString());
-            //skickar in den ihopbyggda stringen som byggs i to stringmetoden, till server mha send message
-            //(to string bygger stringen o best hur de ska se ut)
+            //connectToNetwork.sendMessage(shape.toString());
+            /*String shapeAsString = shape.toString();
+            String shapeAsStringClean = shapeAsString.substring
+                    (shapeAsString.indexOf(' ') + 1);
+            connectToNetwork.sendMessage(shapeAsStringClean);*/
 
-            //det första är en id, substringa bort
-            //Börja med tex x och y
-            //skapa en string so består av alla fält från shapen o även vilken shapetyp det
-            // blir en textsträng
-            // ej klasser tex det står att det är en
-            // circkle komma x resp y koordinatens värde o när man har den
-            // textsträngen kan man skicka den
-            // nätverket
+            String shapeAsString = shape.toString();
+            String shapeAsStringClean = shapeAsString.substring
+                    (shapeAsString.indexOf(' ') + 1);
+            connectToNetwork.sendMessage(shapeAsStringClean);
+            shapes.add(shape);
+
+
+
+            //spar det som kommer från toString i en string
+            //tar bort första som skickas av server
+            //skicka sen vidare med sendMessage
+
+            //det första är en id, substringa bort. Börja med tex x och y
+            //skapa en string som består av alla fält från shapen o även vilken
+            // shapetyp det blir en textsträng, ej klasser tex det står att det är en
+            // circle komma x resp y koordinatens värde o när man har den
+            // textsträngen kan man skicka den nätverket
         }
             shapes.add(shape);
             CommandPair commandpair = new CommandPair();

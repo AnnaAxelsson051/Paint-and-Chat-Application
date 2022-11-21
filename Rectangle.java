@@ -42,4 +42,8 @@ public class Rectangle extends Shape {
         context.strokeRect(getX()-getSize()/2, getY()-getSize()/2, getSize(), getSize());
     }    //skapa ytterkant av
 
+    @Override
+    public String toString() {
+        return "Rectangle{rectangle}" + "," + getX() + "," + getY();
+    }
 }
