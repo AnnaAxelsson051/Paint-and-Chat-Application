@@ -7,7 +7,6 @@ import static java.lang.Math.sqrt;
 
 public class Circle extends Shape {
 
-    //gets x and y from super (Shape):
     public Circle (double x, double y){
         super(x, y);
     }
@@ -33,21 +32,18 @@ public class Circle extends Shape {
         return false;
     }
 
-    //draws a circle:
     @Override
     public void draw(GraphicsContext context){
         context.setFill(getColor());
         context.fillOval(getX()-getSize()/2, getY()-getSize()/2, getSize(), getSize());
-        //skapa fylld cirkel
         context.setStroke(Color.BLUE);
         context.strokeOval(getX()-getSize()/2, getY()-getSize()/2, getSize(), getSize());
-    }    //skapa ytterkant av 
+    }    //outer line
 
     @Override
     public String toString() {
-        return "Circle{circle}" + "," + getX() + "," + getY();
-    //"," + getColor() + ","
-        //                + getSize() + "," + getWidth() + "," + getHeight();
+        return "Circle" + "," + getX() + "," + getY();
+    //"," + getColor() + "," + getSize() + "," + getWidth() + "," + getHeight();
     }
 }
 

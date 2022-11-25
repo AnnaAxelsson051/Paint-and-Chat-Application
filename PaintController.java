@@ -41,13 +41,10 @@ public class PaintController {
     //for manual drawing
 
     public CheckBox eraser;
-    //for manual drawing
-
-    //public TextField sizeField;  //***
 
     public Slider sizeSlider;
 
-    //choicebox with objects square circle etc:
+    //choicebox
 
     public ChoiceBox <ShapeType> choiceBox;
 
@@ -57,7 +54,6 @@ public class PaintController {
     public Stage stage;
 
     PaintModel model = new PaintModel();
-    //ChatViewModel model = new ChatViewModel();
 
 
     ObservableList<ShapeType> shapeTypesList=
@@ -73,7 +69,6 @@ public class PaintController {
         public void initialize(){
         colorpicker.valueProperty().bindBidirectional(model.currentColorProperty());
         sizeSlider.valueProperty().bindBidirectional(model.doubleSizeProperty());
-        //connectToNetwork.booleanProperty.bindBidirectional(model.booleanProperty());
         choiceBox.valueProperty().bindBidirectional(model.currentShapeTypeProperty());
         choiceBox.setItems(shapeTypesList);
         model.getShapes().addListener(this::listChanged);
@@ -89,7 +84,6 @@ public class PaintController {
         disConnectFromNetworkLabel.setDisable(false);
         connectToNetworkLabel.disableProperty();
         model.connectToNetwork.connect();
-        //connectToNetwork.createThreads(ListView<String> messagesListView);
         model.connectToNetwork.createThreads();
     }
 
@@ -112,8 +106,6 @@ public class PaintController {
             }
     }
 
-
-//TODO move to model?
     public void onCanvasDragged(MouseEvent mouseEvent){
         GraphicsContext graphics = canvas.getGraphicsContext2D();
         canvas.setOnMouseDragged(e ->{
@@ -138,14 +130,12 @@ public void onRedoButtonClicked(ActionEvent actionEvent){
         model.redo();
 
 }
-    //TODO move to model?
+
     private void listChanged(Observable observable){
         var context = canvas.getGraphicsContext2D();
         context.clearRect(0,0, canvas.getWidth(), canvas.getHeight());
-        //när man tar bort så vill man sudda allt o rita om från början
         for (Shape s : model.getShapes()){
             s.draw(context);
-            //Ritar ut det grafiska gränssnittet när en shape läggs till
         }
     }
 
@@ -156,20 +146,17 @@ public void onRedoButtonClicked(ActionEvent actionEvent){
     }
 
 
-//TODO move to model?
-
    public void onSaveLabelClicked(ActionEvent actionEvent) {
        FileChooser fileChooser = new FileChooser();
-       fileChooser.setTitle("Save as");   //totle of filechooser
-       fileChooser.setInitialDirectory(new File(System.getProperty("user.home"))); //hamnar i hemkatalog
-       fileChooser.getExtensionFilters().clear(); //vi tar bort allt som finns i den
+       fileChooser.setTitle("Save as");
+       fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+       fileChooser.getExtensionFilters().clear();
        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV", "*.csv"));
-       //constructor som tar två parametrar
        File filePath = fileChooser.showSaveDialog(stage);
        //filechooserobjektet returns a file to save to
-       //showsaveDialog tar ett window dvs det fönster vi körs ovanpå och ej kunna klicka
+       //showsaveDialog takes a window vi körs ovanpå och ej kan klicka på bakgrunden
        if (filePath != null)
-           //om anv trycker på cancel
+           //om anv trycker cancel
            model.saveToFile(filePath.toPath());
     }
 

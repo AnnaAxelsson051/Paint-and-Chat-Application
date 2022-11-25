@@ -15,19 +15,14 @@ import java.nio.file.Path;
 import java.util.*;
 
 public class PaintModel {
-    //Models can be used to feed multiple View objects
 
     ConnectToNetwork connectToNetwork = new ConnectToNetwork();
-    //ChatViewModel model = new ChatViewModel();
 
     List<Node> selectionModel = new ArrayList<>();
 
     public ObservableList<? extends Shape> getShapes() {
         return shapes;
     }
-    //som parameter till observerbaralistan skickar vi ett lambda som implementerar inerfacet extractor with a
-    //method observable som tar objektet som vi stoppat in, tala om vilka observerbara fält ska vi få
-    //notifieringar från
     ObservableList<Shape> shapes = FXCollections.observableArrayList(param -> new Observable[]{
             param.colorProperty(),
             param.sizeProperty(),
@@ -36,10 +31,6 @@ public class PaintModel {
     });
 
 
-
-
-
-    //shapetype
     public ObjectProperty<ShapeType> currentShapeType = new SimpleObjectProperty<>(ShapeType.CIRCLE);
     public ObjectProperty<ShapeType> currentShapeTypeProperty() {return currentShapeType;}
     public ShapeType getCurrentShapeType() {
@@ -50,7 +41,6 @@ public class PaintModel {
     }
 
 
-    //color
     public ObjectProperty<Color> currentColor = new SimpleObjectProperty<>(Color.BLACK);
     public ObjectProperty<Color> currentColorProperty() {
         return currentColor;
@@ -74,7 +64,7 @@ public class PaintModel {
         this.doubleSize.set(doubleSize);
     }
 
-  //height
+
   public DoubleProperty doubleHeight = new SimpleDoubleProperty();     //varför inget <> ?
     public DoubleProperty doubleHeightProperty() {return doubleHeight;}
     public double getDoubleHeight() {
@@ -84,7 +74,7 @@ public class PaintModel {
         this.doubleHeight.set(doubleHeight);
     }
 
-    //width
+
     public DoubleProperty doubleWidth = new SimpleDoubleProperty();
     public DoubleProperty doubleWidthProperty() {return doubleWidth;}
     public double getDoubleWidth() {
@@ -105,56 +95,34 @@ public class PaintModel {
                     });
     }
 
-
-
-    //create shapes with mouse coordinates:   //TODO make create/add seperate class
     public void createShape(double x, double y) {
         Shape shape = Shape.createShape(getCurrentShapeType(), x, y);
         shape.setColor(getCurrentColor());
         shape.setSize(getDoubleSize());
         addShape(shape);
-        //adding shapes to a list in model w addShape method in model
-        //the above triggers listChanged method/lyssnaren below som triggar utritning
     }
 
-    //below was private before)
-    private Shape addShape (Shape shape){
-        if(connectToNetwork.connected) {  //mottagare
-            //connectToNetwork.sendMessage(shape.toString());
-            /*String shapeAsString = shape.toString();
-            String shapeAsStringClean = shapeAsString.substring
-                    (shapeAsString.indexOf(' ') + 1);
-            connectToNetwork.sendMessage(shapeAsStringClean);*/
 
+    private Shape addShape (Shape shape){
+        if(connectToNetwork.connected) {
             String shapeAsString = shape.toString();
             String shapeAsStringClean = shapeAsString.substring
                     (shapeAsString.indexOf(' ') + 1);
             connectToNetwork.sendMessage(shapeAsStringClean);
             shapes.add(shape);
-
-
-
             //spar det som kommer från toString i en string
-            //tar bort första som skickas av server
-            //skicka sen vidare med sendMessage
-
-            //det första är en id, substringa bort. Börja med tex x och y
-            //skapa en string som består av alla fält från shapen o även vilken
-            // shapetyp det blir en textsträng, ej klasser tex det står att det är en
-            // circle komma x resp y koordinatens värde o när man har den
-            // textsträngen kan man skicka den nätverket
+            //tar bort första (id) som skickas av server
         }
             shapes.add(shape);
             CommandPair commandpair = new CommandPair();
             commandpair.undo = () -> shapes.remove(shape);
             commandpair.redo = () -> shapes.add(shape);
-            //Skapa ett command o spar det i undo/redostack för undoanvändning
+            //Skapa ett command o spar det i undo/redostack för återanvändning
             undoStack.push(commandpair);
             return shape;
     }
 
 
-//TODO make undo redo seperate class
     Deque<CommandPair> undoStack = new ArrayDeque<>();
     Deque<CommandPair> redoStack = new ArrayDeque<>();
 
@@ -183,19 +151,11 @@ public class PaintModel {
     }
 
 
-
-
-
-//TODO make save to file seperate class
-    //TODO add function for saving as an image?
-
-    //Save shapes to excell
     public void saveToFile(Path file) {
         StringBuffer outPut = new StringBuffer();
         for (Shape p : shapes) {
             if (p instanceof Circle) {
                 outPut.append("<circle cx=");
-                //<circle cx="25" cy="75" r="20"/>      //TODO Create seperate tread for this?
                 outPut.append(p.getX());
                 outPut.append(" cy=");
                 outPut.append(p.getY());
@@ -203,7 +163,6 @@ public class PaintModel {
                 outPut.append(p.getSize());
                 outPut.append("/>");
             }
-            //<rect x="10" y="10" width="30" height="30"/>
             if (p instanceof Rectangle) {
                 outPut.append("<rectangle x=");
                 outPut.append(p.getX());

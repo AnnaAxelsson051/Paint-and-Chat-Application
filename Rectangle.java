@@ -24,10 +24,9 @@ public class Rectangle extends Shape {
     }
 
         public boolean pointRect(double px, double py, double rx, double ry, double rw, double rh) {
-        // is the point inside the rectangle's bounds?
-            if (px >= rx &&        // right of the left edge AND
-                    px <= rx + rw &&   // left of the right edge AND
-                    py >= ry &&        // below the top AND
+            if (px >= rx &&        // right of the left edge
+                    px <= rx + rw &&   // left of the right edge
+                    py >= ry &&        // below the top
                     py <= ry + rh) {   // above the bottom
                 return true;
             }
@@ -37,13 +36,12 @@ public class Rectangle extends Shape {
     public void draw(GraphicsContext context){
         context.setFill(getColor());
         context.fillRect(getX()-getSize()/2, getY()-getSize()/2, getSize(), getSize());
-        //skapa fylld cirkel
         context.setStroke(Color.BLUE);
         context.strokeRect(getX()-getSize()/2, getY()-getSize()/2, getSize(), getSize());
-    }    //skapa ytterkant av
+    }
 
     @Override
     public String toString() {
-        return "Rectangle{rectangle}" + "," + getX() + "," + getY();
+        return "Rectangle" + "," + getX() + "," + getY();
     }
 }

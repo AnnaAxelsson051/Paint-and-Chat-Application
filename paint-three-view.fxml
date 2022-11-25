@@ -4,7 +4,6 @@
 <?import javafx.scene.canvas.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
 <BorderPane prefHeight="900" prefWidth="700.0" styleClass="borderPane" stylesheets="@application.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.iths.tt.javafxtt.Paint.PaintController">
@@ -123,111 +122,34 @@
 </VBox>
 </top>
     <center>
-        <Canvas fx:id="canvas" height="300" onDragDetected="#onCanvasDragged" onMouseClicked="#onCanvasClicked" styleClass="canvas" width="500">
+        <Canvas fx:id="canvas" height="300" onDragDetected="#onCanvasDragged" onMouseClicked="#onCanvasClicked" styleClass="canvas" width="700">
            </Canvas>
     </center>
    <right>
-      <VBox prefHeight="614.0" prefWidth="145" styleClass="calendarSection" BorderPane.alignment="CENTER">
-          <Label styleClass="textLabel" text="Calendar">
-            <VBox.margin>
-               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-            </VBox.margin></Label>
-          <DatePicker fx:id="picker">
-            <padding>
-               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-            </padding></DatePicker>
-          <TextArea fx:id="notes" prefHeight="131.0" prefWidth="145.0" />
-          <Button onAction="#onUpdateNotesButtonClicked" text="Uppdate Notes">
-              <VBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-              </VBox.margin></Button>
-          <Button fx:id="saveButton" onAction="#onSaveNotesButtonClicked" text="Save Notes">
-              <VBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" />
-              </VBox.margin></Button>
-         <ListView fx:id="messagesListView" prefHeight="162.0" prefWidth="145.0" />
-      </VBox>
+
    </right>
 
-    <left><VBox prefHeight="603.0" prefWidth="125.0">
-        <fx:define>
-            <Font fx:id="FONT" size="18" />
-        </fx:define>
-         <Rectangle fill="TRANSPARENT" height="30" stroke="GRAY" width="115.0">
+    <left><VBox prefHeight="603.0" prefWidth="160.0" styleClass="vBoxLeft">
+        <Label styleClass="notePadlabel" text="Chat">
             <VBox.margin>
-               <Insets left="3.0" top="20.0" />
-            </VBox.margin></Rectangle>
-        <StackPane prefHeight="16.0" prefWidth="119.0">
-            <Text fx:id="output" />
-        </StackPane>
-        <HBox spacing="3">
-            <Button fx:id="numButton" onAction="#processNumPad" prefWidth="25" text="7">
-               <HBox.margin>
-                  <Insets bottom="3.0" left="3.0" />
-               </HBox.margin></Button>
-            <Button onAction="#processNumPad" prefWidth="25" text="8" />
-            <Button onAction="#processNumPad" prefWidth="25" text="9" />
-            <Button onAction="#processOperator" prefWidth="25" text="/" />
-        </HBox>
-        <HBox spacing="3">
-            <Button onAction="#processNumPad" prefWidth="25" text="4">
-               <HBox.margin>
-                  <Insets bottom="3.0" left="3.0" />
-               </HBox.margin></Button>
-            <Button onAction="#processNumPad" prefWidth="25" text="5" />
-            <Button onAction="#processNumPad" prefWidth="25" text="6" />
-            <Button onAction="#processOperator" prefWidth="25" text="*" />
-        </HBox>
-        <HBox spacing="3">
-            <Button onAction="#processNumPad" prefWidth="27" text="1">
-               <HBox.margin>
-                  <Insets bottom="3.0" left="3.0" />
-               </HBox.margin></Button>
-            <Button onAction="#processNumPad" prefWidth="27" text="2" />
-            <Button onAction="#processNumPad" prefWidth="27" text="3" />
-            <Button onAction="#processOperator" prefWidth="25" text="-" />
-        </HBox>
-        <HBox spacing="3">
-            <Button onAction="#processNumPad" prefWidth="57" text="0">
-               <HBox.margin>
-                  <Insets left="3.0" />
-               </HBox.margin></Button>
-            <Button onAction="#processOperator" prefWidth="25" text="=" />
-            <Button onAction="#processOperator" prefWidth="23" text="+" />
-        </HBox>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            </VBox.margin></Label>
+        <ListView fx:id="messagesListView" prefHeight="255.0" prefWidth="160.0" />
     </VBox>
 
     </left>
-    <bottom><HBox prefHeight="120" prefWidth="700.0">
+    <bottom><HBox prefHeight="120" prefWidth="700.0" styleClass="hBoxBottom">
         <children>
         <VBox>
-            <Label styleClass="notePadlabel" text="Chat">
-                <VBox.margin>
-                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                </VBox.margin></Label>
-            <MenuBar>
-              <menus>
-                <Menu mnemonicParsing="false" text="File">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="Open" />
-                      <MenuItem mnemonicParsing="false" text="Save" />
-                      <MenuItem mnemonicParsing="false" onAction="#onFullViewClicked" text="Full View" />
-                      <MenuItem mnemonicParsing="false" text="Minimize" />
-                  </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Edit">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="Delete" />
-                      <MenuItem mnemonicParsing="false" text="Undo" />
-                  </items>
-                </Menu>
-              </menus>
-            </MenuBar>
+
         </VBox>
-            <TextArea fx:id="messageField" onKeyReleased="#enableSendButton" prefHeight="120.0" prefWidth="526.0" />
-            <Button fx:id="sendButton" mnemonicParsing="false" onAction="#onSendButtonClicked" prefHeight="25.0" prefWidth="54.0" text="Send">
+            <TextArea fx:id="messageField" prefHeight="44.0" prefWidth="580.0">
                <HBox.margin>
-                  <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </HBox.margin></TextArea>
+            <Button fx:id="sendButton" mnemonicParsing="false" onAction="#onSendButtonClicked" prefHeight="25.0" prefWidth="120.0" text=" Send message">
+               <HBox.margin>
+                  <Insets bottom="40.0" left="10.0" right="40.0" top="40.0" />
                </HBox.margin>
             </Button>
 

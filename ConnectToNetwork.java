@@ -10,7 +10,7 @@ import java.net.Socket;
 import java.util.Arrays;
 
 public class ConnectToNetwork {
-    //ConnectToNetwork
+
 boolean connected;
 
     ObservableList<Shape> observableListShapes = FXCollections.observableArrayList();
@@ -43,7 +43,7 @@ boolean connected;
         var threadShapes = new Thread(() -> {
             try {
                 while (true) {
-                    String string = reader.readLine();  //TODO Skapa tråd och läsa meddelanden
+                    String string = reader.readLine();
 
                     if (string.contains("Shape")) {
                         String[] temp = string.split(",");
@@ -53,7 +53,6 @@ boolean connected;
                         //göra om fr textsträng tillbaka till shape sätta varje värde till shape konstruktorn
                         Platform.runLater(() -> observableListShapes
                                 .add(Shape.createShape(ShapeType.valueOf(shapeType.toUpperCase()), x, y)));
-                        //Om du skriver Shapetype.valueOf(string goes here)
                     }else {
                         Platform.runLater(() -> observableListMessages.add(string));
                     }
@@ -112,8 +111,6 @@ boolean connected;
 
     //messages
 
-
-
     public String getMessage() {
         return message.get();
     }
@@ -137,7 +134,6 @@ boolean connected;
 
     public void sendMessage(String networkFormat) {
         writer.println(networkFormat);
-    //send message får en string som heter networkformat som den printar med println
     }
 }
 

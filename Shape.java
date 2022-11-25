@@ -8,24 +8,16 @@ import javafx.scene.paint.Color;
 
 public abstract class Shape {
 
-
-    //coordinates for mouseclick passed to each individual class:
     private final double x;
     private final double y;
 
-    //Observable fields = those we wanna collect events on:
-    //when we add a shape the list must get notifications of change in list
+    //Observable fields to collect events on
     private ObjectProperty <Color> color = new SimpleObjectProperty<>();
     private ObjectProperty <Double> size = new SimpleObjectProperty<>();
 
     private ObjectProperty <Double> height = new SimpleObjectProperty<>();
     private ObjectProperty <Double> width = new SimpleObjectProperty<>();
 
-
-
-
-
-    //constructor for shape:
     public Shape(double x, double y) {
         this.x = x;
         this.y = y;
@@ -34,7 +26,7 @@ public abstract class Shape {
 
     public abstract boolean isInside(double x, double y);
 
-    //for color:
+
     public Color getColor(){
         return color.get();
     }
@@ -45,7 +37,7 @@ public abstract class Shape {
         return color;
     }
 
-    //for cordinates:
+
     public double getX() {
         return x;
     }
@@ -54,7 +46,6 @@ public abstract class Shape {
     }
 
 
-    //for size:
     public ObjectProperty <Double> sizeProperty(){
         return size;
     }
@@ -63,31 +54,29 @@ public abstract class Shape {
         this.size.set(size);
     }
 
-    //height
+
     public ObjectProperty <Double> heightProperty(){
         return height;
     }
     public double getHeight(){return height.get();}
     public void setHeight(Double height) { this.height.set(height);}
 
-    //width
+
     public ObjectProperty <Double> widthProperty(){
         return width;
     }
     public double getWidth(){return width.get();}
     public void setWidth(Double height) {this.height.set(height);}
 
-    //draw method overridden in individual classes:
     public abstract void draw(GraphicsContext context);
 
-    //statisk factory metod som returns en shape:
+    //statisk factory metod returns a shape
     public static Shape createShape(ShapeType type, double x, double y){
         return switch (type) {
             case CIRCLE -> new Circle(x, y);
             case RECTANGLE -> new Rectangle(x, y);
-            default -> new Arc(x, y);
-            //case ROUND_RECTANGLE -> new RoundRectangle(x, y);
-            //case TRIANGLE -> new Triangle(x,y);
+            default -> new Circle(x, y);
+
         };
 
     }

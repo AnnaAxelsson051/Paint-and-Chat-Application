@@ -1,13 +1,4 @@
 .undoButton{
-    /*-fx-background-image: url('undo11.png');
-    -fx-background-size: 40px;
-    -fx-background-repeat: no-repeat;
-    -fx-border-width:2px;
-    -fx-border-radius: 50%;
-    -fx-border-color: black;
-    -fx-background-color: grey;
-    -fx-background-radius: 20;
-    -fx-radius:20;*/
     -fx-background-image: url('undo11.png');
     -fx-background-radius: 30;
     -fx-border-radius: 30;
@@ -33,7 +24,7 @@
 .shadow{
     -fx-effect: dropShadow(three-pass-box, rgba(0,0,0,0.2), 10.0, 0.0 , 0.0 ,10.0);
 }
-/*text="Eraser"*/
+
 .eraser{
     -fx-background-image: url('eraser5.png');
     -fx-background-size: 40px;
@@ -45,34 +36,21 @@
 .hBox{
     -fx-background-image: url('paint3.png');
 
-}
-
-.canvas{
-    -fx-background-image: url('tech6.jpeg');
 
 }
-
-
 
 .penSize{
-    /*-fx-background-color: linear-gradient(to bottom, #b1f4e0, #99f1d5, #3bd6a8);*/
     -fx-background-color: linear-gradient(to bottom, #faf4e896, #b9a27394, #a6906496);
 
 }
-
-.canvas{
-
-
+.hBoxBottom{
+    -fx-background-color: #b9a27394;
+    -fx-border-color: white;
+    -fx-border-width:1px;
 }
 
-/*lägger bild bredvid text*/
-.undoButton{
-    /*-fx-graphic: url("undo1.jpeg");*/
-}
-
-.calendarSection{
+.vBoxLeft{
     -fx-background-color: linear-gradient(to bottom, #faf4e896, #b9a27394, #a6906496);
-
 }
 
 .notePadLabel{

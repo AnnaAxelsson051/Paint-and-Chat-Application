@@ -14,7 +14,7 @@ public class PaintModelTest {
     PaintModel paint = new PaintModel();
 
     @Test
-    void createNewPaintModelAtMouseCoordinatesPositionWhenMouseIsClicked() {  //coordinates
+    void createNewPaintModelAtMouseCoordinatesPositionWhenMouseIsClicked() {
         paint.createShape(12.0, 4.2);
         Assertions.assertEquals(12.0, paint.getShapes().get(0).getX());
         Assertions.assertEquals(4.2, paint.getShapes().get(0).getY());
