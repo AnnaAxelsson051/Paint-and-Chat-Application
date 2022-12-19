@@ -1,6 +1,6 @@
 # javafx-paint-app
 
-![Screenshot 2022-12-19 at 00 54 36](https://user-images.githubusercontent.com/103879144/208326383-bf633336-00be-456f-a1ba-91c0e51e96f5.png)
+![Screenshot 2022-12-19 at 01 04 09](https://user-images.githubusercontent.com/103879144/208326576-51222721-80ad-47b7-8fc4-65950c7ff0c0.png)
 
 </br>
 
