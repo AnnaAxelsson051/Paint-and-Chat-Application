@@ -1,38 +1,4 @@
-# JavaFX Drawing & Chat application
 
-## Inledning
-
-> I kursen Javaprogrammering på IT-Högskolan skulle vi vid kursens slut redovisa våra färdigheter i Java, JavaFX samt JUnit testing. Detta är min redovisning från denna kurs. Parallellt med kursen på IT-Högskolan läste jag även av eget fördjupningsintresse online-kursen *Java Programming Masterclass* på Udemy.
-
-## Under kursen Javaprogrammering vid IT-Högskolan lärde jag mig mycket om följande
-
-#### MVC mönstret - Model, View, Controller
-> Att ha en arkitektur där dessa tre samspelar för att kunna separera programlogik från användarupplevelse
-> - Model: Innehåller programlogik som definierar hur data kan kommas åt, skapas, ändras eller lagras
-> - View: Innehåller FXML-kod som definierar var olika element visuellt finns utplacerade i fönstret
-> - Controller: Innehåller Vyns logik och definierar hur information visas och hur den kan interageras med
-#### Eventhanterare 
-> - Som används för att notifiera applikationen om när användaren vidtagit vissa åtgärder och då omdirigera dessa till sitt mål
-> - UserKeyEvent, MouseEvent, Action Event, Drag & Drop Events, Key Event, Window Event mm.
-#### Bindningar och properties
-> - Som används för att skapa direkta relationer mellan variabler så att när ändring sker i ett objekt detta automatiskt syns i ett annat 
-#### JUnit tester
-> - Att skriva tester som kontrollerar att programmet fungerar som det ska
-> - Testa för olika förhållanden med hjälp av Assert class
-#### Filhantering
-> - Att implementera en File Chooser som låter användaren navigera bland filer i systemet och spara en fil med visst namn, i visst format och på viss plats
-> - Konvertera och spara objekt i csv - format
-#### UI
-> - **FXML** för en förbättrad användarupplevelse
-> - Att arbeta med **Scene Builder** som genererar FXML markup live
-> - **Canvas API** och 2D och 3D grafik
-> - Att bädda in Css i applikationen för en förbättrad styling
-> - UI Controls slider
-#### OOP 
-> - Records och Enums: Då man bara är intresserad av att lagra data som ej ska ändras
-<br>
-## Projektbeskrivning
-  
   
 ![Screenshot 2022-12-19 at 01 04 09](https://user-images.githubusercontent.com/103879144/208326576-51222721-80ad-47b7-8fc4-65950c7ff0c0.png)
 
@@ -49,3 +15,27 @@
 ![Screenshot 2022-12-19 at 00 57 23](https://user-images.githubusercontent.com/103879144/208326313-cf5a0b02-894e-44e5-b286-307e418b946c.png)
 
 
+## By constructing this program I learnt alot about the following
+
+#### MVC Pattern - Model, View, Controller
+> A software architectural pattern commonly used for developing user interfaces that divide the related program logic into three interconnected elements
+> - Model: Containing business logic that defines how data can be accessed, created, altered and stored
+> - View: Containing FXML code that defines where various elements are dispositioned in the window
+> - Controller: Containing View logic that defines how information is displayed and how it can be interacted with 
+#### Eventhandelers
+> - Used for notifying the application when the user has withtaken some actions and then redirect these to a specipic target
+> - UserKeyEvent, MouseEvent, Action Event, Drag & Drop Events, Key Event, Window Event etc
+#### Bindings and properties
+> - Used for creating direct relationsbetween variables so that when a change occurs in one object this is automatically detected in another one 
+#### JUnit testing
+> - Writing tests that checks so that various functionalities within the code renders the correct result when executed 
+> - Testing for different conditions with Assert class 
+#### File handeling
+> - To implement a File Chooser that allows the user to navigate amongst files and save a certain file with a selected name and format at a selected destination 
+> - Convert and save objects into csv format 
+#### UI
+> - Writing **FXML** for an enhanced user experience
+> - Working with **Scene Builder** that generates FXML markup live
+> - **Canvas API** och 2D och 3D grafik
+> - Enbed Css code into JavaFX to enhance styling
+> - UI Controls slider
