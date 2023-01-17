@@ -1,4 +1,4 @@
-# JavaFX
+# JavaFX Drawing & Chat Application
 
 ## Inledning
 
@@ -7,7 +7,7 @@
 ## Under kursen Javaprogrammering vid IT-Högskolan lärde jag mig mycket om följande
 
 #### MVC mönstret - Model, View, Controller
-Att ha en arkitektur där dessa tre samspelar för att kunna separera programlogik från användarupplevelse
+> Att ha en arkitektur där dessa tre samspelar för att kunna separera programlogik från användarupplevelse
 > - Model: Innehåller programlogik som definierar hur data kan kommas åt, skapas, ändras eller lagras
 > - View: Innehåller FXML-kod som definierar var olika element visuellt finns utplacerade i fönstret
 > - Controller: Innehåller Vyns logik och definierar hur information visas och hur den kan interageras med
