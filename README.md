@@ -6,10 +6,13 @@
 
 ## Under kursen Utveckling mot databaser vid IT-Högskolan lärde jag mig mycket om
 
-> - 2D och 3D grafik
+> - Canvas API och 2D och 3D grafik
 > - FXML för en förbättrad användarupplevelse
-> - Att arbeta med Scene Builder som genererar FXML markup
+> - Att arbeta med Scene Builder som genererar FXML markup live
 > - Att bädda in Css i applikationen för en förbättrad styling
+> - Eventhanterare som används för att notifiera applikationen om när användaren vidtagit vissa åtgärder och då omdirigera dessa till sitt mål, så som userKeyEvent, MouseEvent, Action Event, Drag & Drop Events och mycket annat.
+> - UI Controls slider,
+> Att implementera en File Chooser som låter användaren navigera bland filer i systemet och spara en fil med visst namn,i visst format och på viss plats
 
 ![Screenshot 2022-12-19 at 01 04 09](https://user-images.githubusercontent.com/103879144/208326576-51222721-80ad-47b7-8fc4-65950c7ff0c0.png)
 
