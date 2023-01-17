@@ -22,7 +22,7 @@
 > - Model: Containing business logic that defines how data can be accessed, created, altered and stored
 > - View: Containing FXML code that defines where various elements are dispositioned in the window
 > - Controller: Containing View logic that defines how information is displayed and how it can be interacted with 
-#### Eventhandelers
+#### Event handelers
 > - Used for notifying the application when the user has withtaken some actions and then redirect these to a specipic target
 > - UserKeyEvent, MouseEvent, Action Event, Drag & Drop Events, Key Event, Window Event etc
 #### Bindings and properties
