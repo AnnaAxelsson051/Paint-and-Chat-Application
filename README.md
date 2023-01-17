@@ -10,11 +10,13 @@
 > - FXML för en förbättrad användarupplevelse
 > - Att arbeta med Scene Builder som genererar FXML markup live
 > - Att bädda in Css i applikationen för en förbättrad styling
-> - Eventhanterare som används för att notifiera applikationen om när användaren vidtagit vissa åtgärder och då omdirigera dessa till sitt mål, så som userKeyEvent, MouseEvent, Action Event, Drag & Drop Events och mycket annat.
 > - UI Controls slider,
 > Att implementera en File Chooser som låter användaren navigera bland filer i systemet och spara en fil med visst namn,i visst format och på viss plats
-> - Events, properties, binding
-### MVC mönstret - Model, View, Controller
+> - properties, binding
+#### Eventhanterare 
+> - Som används för att notifiera applikationen om när användaren vidtagit vissa åtgärder och då omdirigera dessa till sitt mål
+> - UserKeyEvent, MouseEvent, Action Event, Drag & Drop Events, Key Event, Window Event mm.
+#### MVC mönstret - Model, View, Controller
 > - för att kunna separera programlogik från användarupplevelse
 > - Model: Innehåller programlogik som definierar hur data kan kommas åt, skapas, ändras eller lagras
 > - View: Varje vy ska ha ett syfte (en program kan innehålla flera Vyer), vyn innehåller kod som definierar var olika element visuellt finns utplacerade i fönstret.
