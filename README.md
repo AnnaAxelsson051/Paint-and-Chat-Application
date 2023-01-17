@@ -3,10 +3,10 @@
 ![Screenshot 2022-12-19 at 01 04 09](https://user-images.githubusercontent.com/103879144/208326576-51222721-80ad-47b7-8fc4-65950c7ff0c0.png)
 
 </br>
-***
+
 ![paint1](https://user-images.githubusercontent.com/103879144/212988957-2b64a9d9-c31e-45ab-9ee5-eabdcd5cf943.png)
 
-***
+
 
 ![Screenshot 2022-12-19 at 00 47 46](https://user-images.githubusercontent.com/103879144/208325928-97f88ad4-1d05-4a67-80f3-6b1469656726.png)
 
