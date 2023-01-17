@@ -6,21 +6,31 @@
 
 ## Under kursen Utveckling mot databaser vid IT-Högskolan lärde jag mig mycket om
 
-> - Canvas API och 2D och 3D grafik
-> - FXML för en förbättrad användarupplevelse
-> - Att arbeta med Scene Builder som genererar FXML markup live
-> - Att bädda in Css i applikationen för en förbättrad styling
-> - UI Controls slider,
-> Att implementera en File Chooser som låter användaren navigera bland filer i systemet och spara en fil med visst namn,i visst format och på viss plats
-> - properties, binding
-#### Eventhanterare 
-> - Som används för att notifiera applikationen om när användaren vidtagit vissa åtgärder och då omdirigera dessa till sitt mål
-> - UserKeyEvent, MouseEvent, Action Event, Drag & Drop Events, Key Event, Window Event mm.
 #### MVC mönstret - Model, View, Controller
-> - för att kunna separera programlogik från användarupplevelse
+> - För att kunna separera programlogik från användarupplevelse
 > - Model: Innehåller programlogik som definierar hur data kan kommas åt, skapas, ändras eller lagras
 > - View: Varje vy ska ha ett syfte (en program kan innehålla flera Vyer), vyn innehåller kod som definierar var olika element visuellt finns utplacerade i fönstret.
 > - Controller: Innehåller Vyns logik och definierar hur information visas och hur den kan interageras med
+#### Eventhanterare 
+> - Som används för att notifiera applikationen om när användaren vidtagit vissa åtgärder och då omdirigera dessa till sitt mål
+> - UserKeyEvent, MouseEvent, Action Event, Drag & Drop Events, Key Event, Window Event mm.
+#### Bindningar och properties
+> - Som används för att skapa direkta relationer mellan variabler så att när ändring sker i ett objekt detta automatiskt syns i ett annat 
+#### Filhantering
+> - Att implementera en File Chooser som låter användaren navigera bland filer i systemet och spara en fil med visst namn, i visst format och på viss plats
+> - Spara objekt i csv - format
+#### UI
+> - **FXML** för en förbättrad användarupplevelse
+> - Att arbeta med **Scene Builder** som genererar FXML markup live
+> - **Canvas API** och 2D och 3D grafik
+> - Att bädda in Css i applikationen för en förbättrad styling
+> - UI Controls slider
+#### OOP 
+> - Records och Enums: Då man bara är intresserad av att lagra data som ej ska ändras
+
+
+
+
 
 
 ![Screenshot 2022-12-19 at 01 04 09](https://user-images.githubusercontent.com/103879144/208326576-51222721-80ad-47b7-8fc4-65950c7ff0c0.png)
