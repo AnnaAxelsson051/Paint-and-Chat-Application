@@ -13,6 +13,13 @@
 > - Eventhanterare som används för att notifiera applikationen om när användaren vidtagit vissa åtgärder och då omdirigera dessa till sitt mål, så som userKeyEvent, MouseEvent, Action Event, Drag & Drop Events och mycket annat.
 > - UI Controls slider,
 > Att implementera en File Chooser som låter användaren navigera bland filer i systemet och spara en fil med visst namn,i visst format och på viss plats
+> - Events, properties, binding
+### MVC mönstret - Model, View, Controller
+> - för att kunna separera programlogik från användarupplevelse
+> - Model: Innehåller programlogik som definierar hur data kan kommas åt, skapas, ändras eller lagras
+> - View: Varje vy ska ha ett syfte (en program kan innehålla flera Vyer), vyn innehåller kod som definierar var olika element visuellt finns utplacerade i fönstret.
+> - Controller: Innehåller Vyns logik och definierar hur information visas och hur den kan interageras med
+
 
 ![Screenshot 2022-12-19 at 01 04 09](https://user-images.githubusercontent.com/103879144/208326576-51222721-80ad-47b7-8fc4-65950c7ff0c0.png)
 
