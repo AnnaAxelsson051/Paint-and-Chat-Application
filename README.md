@@ -1,4 +1,10 @@
-# javafx-paint-app
+# JavaFX
+
+## Inledning
+
+> I kursen Javaprogrammering på IT-Högskolan skulle vi vid kursens slut redovisa våra färdigheter i Java, JavaFX samt Objektorienterad programmering. Detta är min redovisning från denna kurs. Parallellt med kursen på IT-Högskolan läste jag även av eget fördjupningsintresse online-kursen *Java Programming Masterclass* på Udemy.
+
+
 
 ![Screenshot 2022-12-19 at 01 04 09](https://user-images.githubusercontent.com/103879144/208326576-51222721-80ad-47b7-8fc4-65950c7ff0c0.png)
 
