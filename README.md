@@ -30,11 +30,8 @@
 > - UI Controls slider
 #### OOP 
 > - Records och Enums: Då man bara är intresserad av att lagra data som ej ska ändras
-
-
-
-
-
+<br>
+## Projektbeskrivning
 
 ![Screenshot 2022-12-19 at 01 04 09](https://user-images.githubusercontent.com/103879144/208326576-51222721-80ad-47b7-8fc4-65950c7ff0c0.png)
 
