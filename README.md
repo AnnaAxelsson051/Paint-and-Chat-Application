@@ -1,4 +1,4 @@
-# JavaFX Drawing & Chat Application
+# JavaFX Drawing & Chat application
 
 ## Inledning
 
