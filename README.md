@@ -2,23 +2,26 @@
 
 ## Inledning
 
-> I kursen Javaprogrammering på IT-Högskolan skulle vi vid kursens slut redovisa våra färdigheter i Java, JavaFX samt Objektorienterad programmering och JUnit testing. Detta är min redovisning från denna kurs. Parallellt med kursen på IT-Högskolan läste jag även av eget fördjupningsintresse online-kursen *Java Programming Masterclass* på Udemy.
+> I kursen Javaprogrammering på IT-Högskolan skulle vi vid kursens slut redovisa våra färdigheter i Java, JavaFX samt JUnit testing. Detta är min redovisning från denna kurs. Parallellt med kursen på IT-Högskolan läste jag även av eget fördjupningsintresse online-kursen *Java Programming Masterclass* på Udemy.
 
-## Under kursen Utveckling mot databaser vid IT-Högskolan lärde jag mig mycket om
+## Under kursen Javaprogrammering vid IT-Högskolan lärde jag mig mycket om följande
 
 #### MVC mönstret - Model, View, Controller
-> - För att kunna separera programlogik från användarupplevelse
+Att ha en arkitektur där dessa tre samspelar för att kunna separera programlogik från användarupplevelse
 > - Model: Innehåller programlogik som definierar hur data kan kommas åt, skapas, ändras eller lagras
-> - View: Varje vy ska ha ett syfte (en program kan innehålla flera Vyer), vyn innehåller kod som definierar var olika element visuellt finns utplacerade i fönstret.
+> - View: Innehåller FXML-kod som definierar var olika element visuellt finns utplacerade i fönstret
 > - Controller: Innehåller Vyns logik och definierar hur information visas och hur den kan interageras med
 #### Eventhanterare 
 > - Som används för att notifiera applikationen om när användaren vidtagit vissa åtgärder och då omdirigera dessa till sitt mål
 > - UserKeyEvent, MouseEvent, Action Event, Drag & Drop Events, Key Event, Window Event mm.
 #### Bindningar och properties
 > - Som används för att skapa direkta relationer mellan variabler så att när ändring sker i ett objekt detta automatiskt syns i ett annat 
+#### JUnit tester
+> - Att skriva tester som kontrollerar att programmet fungerar som det ska
+> - Testa för olika förhållanden med hjälp av Assert class
 #### Filhantering
 > - Att implementera en File Chooser som låter användaren navigera bland filer i systemet och spara en fil med visst namn, i visst format och på viss plats
-> - Spara objekt i csv - format
+> - Konvertera och spara objekt i csv - format
 #### UI
 > - **FXML** för en förbättrad användarupplevelse
 > - Att arbeta med **Scene Builder** som genererar FXML markup live
