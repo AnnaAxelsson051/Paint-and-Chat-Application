@@ -19,24 +19,24 @@
 ### By constructing this program I learnt alot about the following
 
 #### MVC Pattern - Model, View, Controller
-> A software architectural pattern commonly used for developing user interfaces that divide the related program logic into three interconnected elements
+> An architectural pattern commonly used for developing user interfaces that divide the related program logic into three interconnected elements
 > - Model: Containing business logic that defines how data can be accessed, created, altered and stored
-> - View: Containing FXML code that defines where various elements are dispositioned in the window
+> - View: Containing FXML code that defines where various elements are dispositioned
 > - Controller: Containing View logic that defines how information is displayed and how it can be interacted with 
 #### Event handelers
-> - Used for notifying the application when the user has withtaken some actions and then redirect these to a specipic target
+> - Used for notifying the application when user has withtaken some actions and redirects these to a specipic target
 > - UserKeyEvent, MouseEvent, Action Event, Drag & Drop Events, Key Event, Window Event etc
 #### Bindings and properties
-> - Used for creating direct relationsbetween variables so that when a change occurs in one object this is automatically detected in another one 
+> - For creating direct relations between variables so when changes occur in one object this is automatically detected in another one 
 #### JUnit testing
 > - Writing tests that checks so that various functionalities within the code renders the correct result when executed 
 > - Testing for different conditions with Assert class 
 #### File handeling
-> - To implement a File Chooser that allows the user to navigate amongst files and save a certain file with a selected name and format at a selected destination 
+> - To implement a File Chooser that allows user to navigate amongst files and save a certain file with a selected name and format at a selected destination 
 > - Convert and save objects into csv format 
 #### UI
 > - Writing **FXML** for an enhanced user experience
 > - Working with **Scene Builder** that generates FXML markup live
-> - **Canvas API** och 2D och 3D grafik
+> - **Canvas API** and 2D and 3D graphics
 > - Enbed Css code into JavaFX to enhance styling
 > - UI Controls slider
