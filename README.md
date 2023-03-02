@@ -35,7 +35,7 @@
 
 ### Canvas och shapes
 
-Canvas iär en bild som kan ritas på genom att anvönda ett set av grafiska kommandon som erbjuds av en GraphicsContext. En canvas node kontrueras med bredd och höjd som specificerar storleken på en bild på vilken canvas ritkommandon renderas.
+> Canvas iär en bild som kan ritas på genom att anvönda ett set av grafiska kommandon som erbjuds av en GraphicsContext. En canvas node kontrueras med bredd och höjd som specificerar storleken på en bild på vilken canvas ritkommandon renderas.
 
 > Förutom fri ritning kan olika shapes ritas ut valfritt antal gånger i programmet. Nya shapes kan skapas med hjälp av en Factory / Builder pattern. och shapes som ritas ut representeras av en objekthierarki under programmets körning. Storlek och färg på shapes kan sättas på objektet som ska ritas ut. Utritning av nya shapes sker genom att klicka med musen där objektet ska ritas ut. (Centrum eller hörn). Redan utritade objekt kan väljas genom att gå över i select mode och klicka på skärmen. Musens koordinater används för att leta upp det objekt användaren klickat på. Med hjälp av en metod som frågar om koordinaterna är inom shapens area.
 På den valda shapen kan man sedan ändra färg och storlek.
@@ -60,7 +60,7 @@ lösning som implementerar Multilevel Undo och Redo genom knapptryckningar över
 
 ### Nätverks server
 
-Denna applikation innehåller kod till en nätverksserver som användaren kan ansluta till som klient med TCP
+> Denna applikation innehåller kod till en nätverksserver som användaren kan ansluta till som klient med TCP
 Sockets. Till servern kan man sedan skicka kommandon i form av textsträngar kodade i utf-8. 
 När servern mottager ett kommando kommer den att skicka ut det till alla anslutna klienter inklusive
 den som skickade in kommandot och på så sätt får man en applikation som är kompatibel
