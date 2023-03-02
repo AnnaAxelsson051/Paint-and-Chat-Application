@@ -17,13 +17,13 @@
 
 </br> 
 
-### Project structure
+## Projektstruktur
 
-#### Introduktion
+### Introduktion
 
-> Detta är en applikation med grafiskt gränssnitt skriven med JavaFX enligt MVC Model View Controller Koden har tester skrivna med Junit5. Det är ett ritprogram där användaren kan rita på en Canvas i JavaFX (GUI), och spara ritade objekt som SVG. Applikationen innehåller bland annat designmönster och nätverkskommunikation.
+> Detta är en applikation med grafiskt gränssnitt konstruerad med JavaFX enligt MVC - Model View Controller. Koden har tester skrivna med Junit5. Det är ett ritprogram där användaren kan rita på en Canvas i JavaFX (GUI), och spara ritade objekt som SVG. Applikationen innehåller bland annat designmönster och nätverkskommunikation.
 
-#### MVC
+### MVC
 
 > Applikationen är implemeterad som en MVC applikation
 
@@ -33,11 +33,9 @@
 
 > Properties gör det bland annat möjligt att koppla ihop scenen så att vyn uppdateras automatiskt när man modifierar datan som finns bakom den. Properties är obervables som kan vara skrivbara eller endast läsbara. Varje property wrappar ett existerande Java objekt och adderar funktionalitet för lyssnande och bindningar.
 
-### Canvas
+### Canvas och shapes
 
 Canvas iär en bild som kan ritas på genom att anvönda ett set av grafiska kommandon som erbjuds av en GraphicsContext. En canvas node kontrueras med bredd och höjd som specificerar storleken på en bild på vilken canvas ritkommandon renderas.
-
-### Shapes
 
 > Förutom fri ritning kan olika shapes ritas ut valfritt antal gånger i programmet. Nya shapes kan skapas med hjälp av en Factory / Builder pattern. och shapes som ritas ut representeras av en objekthierarki under programmets körning. Storlek och färg på shapes kan sättas på objektet som ska ritas ut. Utritning av nya shapes sker genom att klicka med musen där objektet ska ritas ut. (Centrum eller hörn). Redan utritade objekt kan väljas genom att gå över i select mode och klicka på skärmen. Musens koordinater används för att leta upp det objekt användaren klickat på. Med hjälp av en metod som frågar om koordinaterna är inom shapens area.
 På den valda shapen kan man sedan ändra färg och storlek.
