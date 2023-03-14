@@ -63,6 +63,4 @@ lösning som implementerar Multilevel Undo och Redo genom knapptryckningar över
 Sockets. På det sättet kan flera användare sitta vid var sin dator
 och rita på en gemensam bild och alla ser hela tiden allt som händer. Som extra funktion finns möjligheten att chatta med varandra från applikationen med hjälp av samma server som man redan är uppkopplad till. 
 
-### By constructing this program I learnt alot about the following
-
 
