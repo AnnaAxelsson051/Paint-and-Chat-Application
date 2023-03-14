@@ -17,9 +17,7 @@
 
 </br> 
 
-## Projektstruktur
-
-### Introduktion
+## Projektbeskrivning
 
 > Detta är en applikation med grafiskt gränssnitt konstruerad med JavaFX enligt MVC - Model View Controller. Koden har tester skrivna med Junit5. Det är ett ritprogram där användaren kan rita på en Canvas i JavaFX (GUI), och spara ritade objekt i SVG-format. Applikationen innehåller bland annat designmönster och nätverkskommunikation.
 
