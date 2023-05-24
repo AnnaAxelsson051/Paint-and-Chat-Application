@@ -1,6 +1,8 @@
 # Paint & Chat Application
 
-> This is a combined drawing and chat application with a GUI built with JavaFX and tests in JUnit5. The app allows drawn images to be exported in svg-format. Images can be drawn "by hand" or using pre selected shapes, the user can select already drawn lines or images and modify their size and color, or use the multilevel undo/redo functionality. The app includes network server connection via TCP Sockets which enables multiple users to simultaneously draw on the same image whilst chatting. 
+Created by: Anna Axelsson
+
+> This is a combined drawing and chat application with a GUI, built with JavaFX and tests in JUnit5. The app allows drawn images to be exported in svg-format. Images can be drawn "by hand" or using pre selected shapes, the user can select already drawn lines or images and modify their size and color, or use the multilevel undo/redo functionality. The app includes network server connection via TCP Sockets which enables multiple users to simultaneously draw on the same image whilst chatting. 
 
 ## Technologies used
 
