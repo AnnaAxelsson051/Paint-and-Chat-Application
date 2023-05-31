@@ -4,12 +4,14 @@ This is a combined drawing and chat application with a GUI, built with JavaFX an
 
 ## Technologies used
 
+- JavaFX
+- FXML
+- CSS
 - MVC
 - Design Patterns
 - Network communication
 - Scene builder
 - Canvas 
-- CSS
 
 ---
 
