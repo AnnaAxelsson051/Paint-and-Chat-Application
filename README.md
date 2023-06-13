@@ -3,7 +3,7 @@
 ---
 ## Description
 
-This is a combined drawing and chat application with a GUI, built with JavaFX and tests in JUnit5. Images can be drawn freely or using pre selected shapes, the user can select already drawn lines or images and modify their size and color, or use the multilevel undo/redo functionality. Drawn images can be exported in svg-format. The app includes network server connection via TCP Sockets, which enables multiple users to simultaneously draw on the same image whilst chatting. 
+This is a combined drawing and chat application with a GUI, built with JavaFX and tests in JUnit5. Images can be drawn freely or using pre selected shapes, the user can select already drawn lines or images and modify their size and color, or use the multilevel undo/redo functionality. Drawn images can be exported in SVG-format. The app includes network server connection via TCP Sockets, which enables multiple users to simultaneously draw on the same image whilst chatting. 
 
 ---
 
@@ -19,7 +19,7 @@ This is a combined drawing and chat application with a GUI, built with JavaFX an
 - Canvas 
 
 ---
-## Application user interface
+## User Interface
 
 ![Screenshot 2022-12-19 at 00 47 46](https://user-images.githubusercontent.com/103879144/208325928-97f88ad4-1d05-4a67-80f3-6b1469656726.png)
 
