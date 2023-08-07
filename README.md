@@ -7,20 +7,25 @@
 ---
 ## Description
 
-This is a combined drawing and chat application with a GUI, built with JavaFX and tests in JUnit5. Images can be drawn freely or using pre selected shapes, the user can select already drawn lines or images and modify their size and color, or use the multilevel undo/redo functionality to undo/redo drawn lines, shapes and colors. Drawn images can be exported in SVG-format. The app includes network server connection via TCP Sockets, which enables multiple users to simultaneously draw on the same image whilst chatting. 
+A full stack Paint application that merges drawing and chat functionalities within a user-friendly GUI. Built with JavaFX, the app features a comprehensive suite of tools, including freehand drawing, predefined shapes, and image manipulation where lines, sizes and colors are adjustable. The multilevel undo/redo capability allows seamless correction and experimentation. Exports are supported in SVG format, making images easily shareable. The application includes TCP Sockets-based network server for real-time collaborative drawing and chatting.
 
 ---
 
 ## Technologies used:
 
 - JavaFX
+- JUnit
+- TCP Sockets
+- SVG Export
+- GUI
 - FXML
 - CSS
 - MVC
-- Design Patterns
-- Network communication
 - Scene builder
-- Canvas 
+- Canvas
+- GraphicsContext
+- Event Handling
+
 
 
 
