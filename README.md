@@ -11,7 +11,7 @@ A full stack Paint application that merges drawing and chat functionalities with
 
 ---
 
-## Technologies used:
+## Technologies used
 
 - JavaFX
 - JUnit
